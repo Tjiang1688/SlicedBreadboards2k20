@@ -14,8 +14,8 @@ public class PathSeg {
     public double speed;
 
     //encoder tick target for motors
-    int leftTarget;
-    int rightTarget;
+    public int leftTarget;
+    public int rightTarget;
 
     ElapsedTime runtime;
     double timeOut;
