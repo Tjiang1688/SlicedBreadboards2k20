@@ -1,0 +1,67 @@
+public class placeGlyphInCryptobox extends _____ {
+
+   motor motorRight;
+   motor motorLeft;
+   motor motorVertical;
+
+   //maybe put it behind the block on the robot? depends if enough space
+   seonsor pressureSenosor;
+
+   public void start() {
+       //left and right clamp motors
+       motorRight = _________.motor.get(_____)
+       motorLeft = ______.motor.get(_____)
+       //motor stuff
+       motorVertical = __________.motor.get(_____)
+
+       if (clampOpenButton/*whatever is used, change to whatever necessary*/ = pressed) {
+          //change to make it so that the clamps open on the glyph
+           motorRight.setPower(_____)
+           motorLeft.setPower(_____)
+       }
+
+       placeGlyph();
+       releaseGlyph();
+   }
+
+
+//go forward until glyph is secure in cryptobox release clamps back off sense height other person do column
+
+
+   public void placeGlyph(height) {
+       /*
+       move to certain height:
+       sense if block on level 1 then move forwardUntilEnd(amount needed to go forward) releaseGlyph on level 1 if else sense if block on level 2 then move forwardUntilEnd
+       releaseGlyph on level 2 etc... until level 4 if level 4 has block change column
+        */
+   }
+
+   public void releaseGlyph() {
+       /*
+       if block (sensor behind block on robot?) press pressure sensor >= ___ open clamps move back
+        */
+   }
+
+
+/////////////////////////////////////////////////////////////////////////////////////Separator Between Putting Glyph In Cryptobox(Up)And Picking Glyph Up(Down)///////////////////////////////////////////////////////
+
+
+   public void pickGlyphUp() {
+
+
+       //close over glyph
+       private void clampGlyph () {
+            /*
+           move to glyph
+           closing clamp on glyph
+           */
+           motorRight.setPower(_____)
+           motorLeft.setPower(_____)
+           //carry up a little to avoid friction with the ground
+           motorVertical.setPower(_____)//power to lift up a little bit to prevent friction
+
+       }
+
+   }
+}
+
