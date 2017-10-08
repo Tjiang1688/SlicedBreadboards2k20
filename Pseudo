@@ -1,4 +1,5 @@
 //still haven't finished everything
+//only defined methods, not process
 public class placeGlyphInCryptobox extends _____ {
 
    motor motorRight;
@@ -21,8 +22,7 @@ public class placeGlyphInCryptobox extends _____ {
            motorLeft.setPower(_____)
        }
 
-       placeGlyph();
-       releaseGlyph();
+       
    }
 
 
