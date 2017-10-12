@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.game;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
+import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegistrar;
 
 /**
@@ -17,7 +18,8 @@ public class RegisterOpModes {
 
     @OpModeRegistrar
     public static void registerMyOpModes(OpModeManager manager) {
-
+        manager.register("drivetraintest", org.firstinspires.ftc.teamcode.game.testmodes.drivetraintest.class);
+        manager.register("ultrasonictest", org.firstinspires.ftc.teamcode.game.testmodes.ultrasonictest.class);
     }
 
 }

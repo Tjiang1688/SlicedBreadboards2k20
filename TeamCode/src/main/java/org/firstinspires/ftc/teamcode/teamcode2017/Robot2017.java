@@ -28,8 +28,8 @@ public class Robot2017 {
 
     public DcMotor  leftMotor;
     public DcMotor  rightMotor;
-
-    public DcMotor  gripmotor; // possibly a servo???
+    public Servo jewelservo;
+    public Servo  gripservo; // possibly a motor
     public DcMotor liftmotor;
 
     public Servo    griprelic;
@@ -82,10 +82,11 @@ public class Robot2017 {
         leftMotor   = hwMap.dcMotor.get("leftmotor");
         rightMotor  = hwMap.dcMotor.get("rightmotor");
 
-        gripmotor = hwMap.dcMotor.get("gripmotor");
+        gripservo = hwMap.servo.get("gripmotor");
 
         ods = hwMap.opticalDistanceSensor.get("ods");
         ultrasonic = hwMap.ultrasonicSensor.get("ultrasonicsensor");
+        jewelservo = hwMap.servo.get("jewelservo");
     }
 
     public void initOds() {

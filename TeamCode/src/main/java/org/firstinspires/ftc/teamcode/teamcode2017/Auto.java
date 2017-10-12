@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.teamcode2017.Robot2017;
 import org.firstinspires.ftc.teamcode.game.robot.*;
 import org.lasarobotics.vision.ftc.resq.Beacon;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
@@ -19,7 +20,7 @@ import java.util.Deque;
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous", group="opmode")
 public class Auto extends LinearVisionOpMode{
     //variables
-    private Robot1 robot;
+    private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
 
     private final double PERIODIC_INTERVAL = 100; //in milliseconds
@@ -100,7 +101,7 @@ public class Auto extends LinearVisionOpMode{
     }
 
     private void initSB() throws InterruptedException {
-        robot = new Robot1(TeamColor.red, StartPosition.left);
+        robot = new Robot2017(TeamColor.red, StartPosition.left);
         robot.init(hardwareMap);
         robot.setTelemetry(telemetry);
 
@@ -112,16 +113,28 @@ public class Auto extends LinearVisionOpMode{
     private void stopSB() {
 
     }
-    private void gripglyph(float height){
-
+    private void gripglyph(){
+        robot.gripservo.setPosition(.3);
+    }
+    private void placeglyph(float height){
+        //move up and down, input height could be either 1, 2, 3, or 4
+        //or we could make constants for each height
+        //
+    }
+    private void ungripglyph(){
+        robot.gripservo.setPosition(.5);
+    }
+    private void jewelknock(boolean side){ //true = left, false = right
+        //PathSeg forward, need to get field measurements, etc
+        //servo moving side to side
+        robot.jewelservo.setPosition(1); //base off of side
     }
     private void move(){
-
+        //don't necessarily need this
+        //need to test PathSeg and startpath() in Robot2017 class
     }
     private void readpictograph(){
-
+        //back burner
     }
-    private void jewelknock(){
 
-    }
 }
