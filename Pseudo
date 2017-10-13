@@ -1,68 +1,49 @@
-//still haven't finished everything
-//only defined methods, not process
+/*might not be finished, tell me if good
+only defined methods, not process, I don't know if someone else will do it
+ */make sure to change all of the underscores _____ into the number they need to be
+
 public class placeGlyphInCryptobox extends _____ {
+    //motorClamp is for motor that opens and closes clamp... duh
+    motor motorClose;
+    motor motorVertical;
 
-   motor motorRight;
-   motor motorLeft;
-   motor motorVertical;
+    //sensor to sense if block is in front of block being carried
+    sensor blockSensor;
+    //maybe put it behind the block on the robot? depends if enough space
+    seonsor pressureSensor;
 
-   //maybe put it behind the block on the robot? depends if enough space
-   seonsor pressureSenosor;
-
-   public void start() {
-       //left and right clamp motors
-       motorRight = _________.motor.get(_____)
-       motorLeft = ______.motor.get(_____)
-       //motor stuff
-       motorVertical = __________.motor.get(_____)
-
-       if (clampOpenButton/*whatever is used, change to whatever necessary*/ = pressed) {
-          //change to make it so that the clamps open on the glyph
-           motorRight.setPower(_____)
-           motorLeft.setPower(_____)
-       }
-
-       
-   }
+    public void start() {
+        //clamp motor, got this off the FTC sample code (not copied) so this might need to change
+        motorClose = _____.motor.get(_____)
+        //motor stuff
+        motorVertical = _____.motor.get(_____)
+    }
 
 
 //go forward until glyph is secure in cryptobox release clamps back off sense height other person do column
-
-
-   public void placeGlyph(height) {
-       /*
-       move to certain height:
-       sense if block on level 1 then move forwardUntilEnd(amount needed to go forward) releaseGlyph on level 1 if else sense if block on level 2 then move forwardUntilEnd
-       releaseGlyph on level 2 etc... until level 4 if level 4 has block change column
-        */
-   }
-
-   public void releaseGlyph() {
-       /*
-       if block (sensor behind block on robot?) press pressure sensor >= ___ open clamps move back
-        */
-   }
-
-
-/////////////////////////////////////////////////////////////////////////////////////Separator Between Putting Glyph In Cryptobox(Up)And Picking Glyph Up(Down)///////////////////////////////////////////////////////
-
-
-   public void pickGlyphUp() {
-
-
-       //close over glyph
-       private void clampGlyph () {
-            /*
-           move to glyph
-           closing clamp on glyph
-           */
-           motorRight.setPower(_____)
-           motorLeft.setPower(_____)
-           //carry up a little to avoid friction with the ground
-           motorVertical.setPower(_____)//power to lift up a little bit to prevent friction
-
-       }
-
-   }
+    public void placeGlyph(height) {
+        for(int i = 0; int < 4; i++)
+        {
+            if(blockSensor = true /*true that block is in front*/)
+            {
+                motorVertical.setPower(_____)//set power to move up to next block
+            }
+            else if(blockSensor = false)
+            {
+                //move robot forward, change this to wheel motors <---------------------------------------------------------------------------------------- IMPORTANT MAKE SURE TO READ!
+                //after that set power to let go of block but make sure not to make it too big because it might bump into the cryptobox walls
+                motorClamp.setPower(_____)
+                //move robot backward, change this to wheel motors <--------------------------------------------------------------------------------------- IMPORTANT MAKE SURE TO READ!
+            }
+        }
+    }
+    
+/////////////////////////////////////////////////////////////////////////////////////Seperator Between Putting Glyph In Cryptobox(Up)And Picking Glyph Up(Down)///////////////////////////////////////////////////////
+    
+    private void clampGlyph () {
+        //close over glyph
+        motorClamp.setPower(_____)
+        //carry up a little to avoid friction with the ground
+        motorVertical.setPower(_____)
+    }
 }
-
