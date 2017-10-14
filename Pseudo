@@ -1,6 +1,8 @@
 /*might not be finished, tell me if good
 only defined methods, not process, I don't know if someone else will do it
- */make sure to change all of the underscores _____ into the number they need to be
+make sure to change all of the underscores _____ into the number they need to be
+will need to change according to hardware 
+ */
 
 public class placeGlyphInCryptobox extends _____ {
     //motorClamp is for motor that opens and closes clamp... duh
