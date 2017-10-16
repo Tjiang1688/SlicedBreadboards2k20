@@ -32,15 +32,32 @@ public class placeGlyphInCryptobox extends _____ {
             }
             else if(blockSensor = false)
             {
-                //move robot forward, change this to wheel motors <---------------------------------------------------------------------------------------- IMPORTANT MAKE SURE TO READ!
+                //move robot forward, change this to wheel motor
                 //after that set power to let go of block but make sure not to make it too big because it might bump into the cryptobox walls
                 motorClamp.setPower(_____)
-                //move robot backward, change this to wheel motors <--------------------------------------------------------------------------------------- IMPORTANT MAKE SURE TO READ!
+                //move robot backward, change this to wheel motors
             }
         }
     }
-    
-/////////////////////////////////////////////////////////////////////////////////////Seperator Between Putting Glyph In Cryptobox(Up)And Picking Glyph Up(Down)///////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//other section of code
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     private void clampGlyph () {
         //close over glyph
