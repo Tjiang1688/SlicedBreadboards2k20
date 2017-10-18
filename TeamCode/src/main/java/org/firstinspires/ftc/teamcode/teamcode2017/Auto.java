@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
+import org.firstinspires.ftc.teamcode.game.robot.PathSeg;
 import org.firstinspires.ftc.teamcode.teamcode2017.Robot2017;
 import org.firstinspires.ftc.teamcode.game.robot.*;
 import org.lasarobotics.vision.ftc.resq.Beacon;
@@ -31,6 +31,8 @@ public class Auto extends LinearVisionOpMode{
     static final double DISTANCE_BEACON_THRESHOLD = 25;
 
     static final int BEACON_ANALYSIS_CONFIDENCE = 50;
+    static final double GRIP_POS = .3;
+    static final double UNGRIP_POS = .5;
 
     private boolean debugOn = true;
 
@@ -59,6 +61,8 @@ public class Auto extends LinearVisionOpMode{
             if (runtime.milliseconds() >= nextPeriodicTime) {
                 nextPeriodicTime = runtime.milliseconds() + PERIODIC_INTERVAL;
             }
+            //queue all the paths here, in order
+            robot.drive.queuePath(new PathSeg(48, 48, 3, runtime, 10000)); // needs to be path to go to jewels
 
 
             //Wait for a hardware cycle to allow other processes to run
@@ -114,7 +118,7 @@ public class Auto extends LinearVisionOpMode{
 
     }
     private void gripglyph(){
-        robot.gripservo.setPosition(.3);
+        robot.gripservo.setPosition(GRIP_POS);
     }
     private void placeglyph(float height){
         //move up and down, input height could be either 1, 2, 3, or 4
@@ -122,7 +126,10 @@ public class Auto extends LinearVisionOpMode{
         //
     }
     private void ungripglyph(){
-        robot.gripservo.setPosition(.5);
+        robot.gripservo.setPosition(UNGRIP_POS);
+    }
+    private void jewelcolor(){
+        //see
     }
     private void jewelknock(boolean side){ //true = left, false = right
         //PathSeg forward, need to get field measurements, etc

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.game.testmodes;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.game.robot.*;
 
@@ -37,6 +38,7 @@ public class drivetraintest extends LinearOpMode {
 
         DcMotor leftmotor = hardwareMap.dcMotor.get("leftmotor");
         DcMotor rightmotor = hardwareMap.dcMotor.get("rightmotor");
+        rightmotor.setDirection(DcMotorSimple.Direction.REVERSE);
         double leftPow = 0;
         double rightPow = 0;
         //motor power is from -1.0 to 1.0;
@@ -47,8 +49,8 @@ public class drivetraintest extends LinearOpMode {
             // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards
 
             //float to double, get power from controller
-            double desiredLeftPow = (double) gamepad1.left_stick_y;
-            double desiredRightPow = (double) gamepad1.right_stick_y;
+            double desiredLeftPow = (double) gamepad1.right_stick_y;
+            double desiredRightPow = (double) gamepad1.left_stick_y;
 
             //normalize values
             double maxDesiredPow = Math.max(Math.abs(desiredLeftPow), Math.abs(desiredRightPow));

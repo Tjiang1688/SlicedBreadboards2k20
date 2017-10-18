@@ -17,12 +17,12 @@ import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Deque;
 
-@Autonomous(name="LinearSMAuto", group="vision opmode")  // @Autonomous(...) is the other common choice
+@Autonomous(name="StateMachine", group="vision opmode")  // @Autonomous(...) is the other common choice
 public class StateMachine extends LinearVisionOpMode {
     /***
      * GAME VARIABLES
      */
-    private Robot1 robot;
+    private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
 
     private final double PERIODIC_INTERVAL = 100; //in milliseconds
@@ -138,7 +138,7 @@ public class StateMachine extends LinearVisionOpMode {
     }
 
     private void initSB() throws InterruptedException {
-        robot = new Robot1(TeamColor.red, StartPosition.left);
+        robot = new Robot2017(TeamColor.red, StartPosition.left);
         robot.init(hardwareMap);
         robot.setTelemetry(telemetry);
 
@@ -268,26 +268,8 @@ public class StateMachine extends LinearVisionOpMode {
             case ANALYZE_BEACON: {
                 states.pop();
 
-                analyzeBeacon();
-
-                break;
-            }
-
-            case LAUNCH_PARTICLE: {
-                DcMotor launchMotor = robot.launchMotor;
-
-                launchMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                launchMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-                launchMotor.setTargetPosition(robot.launcher.FIRE_LAUNCH_POS);
-                launchMotor.setPower(robot.launcher.LAUNCH_POWER);
-
-                while (opModeIsActive() && launchMotor.isBusy()) {
-                    telemetry.addData("Launch.current.pos", launchMotor.getCurrentPosition());
-                }
-
-                launchMotor.setPower(0);
-
+               telemetry.addData("done", "done");
+                telemetry.update();
                 break;
             }
         }
@@ -314,36 +296,6 @@ public class StateMachine extends LinearVisionOpMode {
         }
     }
 
-    private void analyzeBeacon() {
-        Beacon.BeaconAnalysis analysis = beacon.getAnalysis();
-        double confidence = 0;
-
-        while (! (confidence >= BEACON_ANALYSIS_CONFIDENCE)) {
-            confidence = analysis.getConfidence();
-            telemetry.addData("Beacon confidence", confidence);
-            telemetry.update();
-        }
-
-        if (robot.teamColor == TeamColor.blue) {
-            if (analysis.isLeftBlue()) {
-                robot.pressBeaconSide("left");
-            } else {
-                robot.pressBeaconSide("right");
-            }
-        } else { //team color red
-            if (analysis.isLeftRed()) {
-                pressButton("left");
-            } else {
-                pressButton("right");
-            }
-        }
-    }
-
-    private void pressButton(String side) {
-        robot.pressBeaconSide(side);
-        pressBeacon();
-        robot.resetBeaconPress();
-    }
 
     private void pressBeacon() {
         double leftPower = 0;
