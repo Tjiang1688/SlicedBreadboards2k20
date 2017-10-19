@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.game.robot.PathSeg;
 import org.firstinspires.ftc.teamcode.teamcode2017.Robot2017;
 import org.firstinspires.ftc.teamcode.game.robot.*;
+import org.lasarobotics.vision.android.Cameras;
 import org.lasarobotics.vision.ftc.resq.Beacon;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 import org.lasarobotics.vision.opmode.extensions.CameraControlExtension;
@@ -31,8 +32,8 @@ public class Auto extends LinearVisionOpMode{
     static final double DISTANCE_BEACON_THRESHOLD = 25;
 
     static final int BEACON_ANALYSIS_CONFIDENCE = 50;
-    static final double GRIP_POS = .3;
-    static final double UNGRIP_POS = .5;
+    static final int GRIP_POS = 3;
+    static final int UNGRIP_POS = 5;
 
     private boolean debugOn = true;
 
@@ -62,7 +63,7 @@ public class Auto extends LinearVisionOpMode{
                 nextPeriodicTime = runtime.milliseconds() + PERIODIC_INTERVAL;
             }
             //queue all the paths here, in order
-            robot.drive.queuePath(new PathSeg(48, 48, 3, runtime, 10000)); // needs to be path to go to jewels
+            robot.drive.queuePath(new PathSeg(48, 48, runtime, 10000)); // needs to be path to go to jewels
 
 
             //Wait for a hardware cycle to allow other processes to run
@@ -118,15 +119,18 @@ public class Auto extends LinearVisionOpMode{
 
     }
     private void gripglyph(){
-        robot.gripservo.setPosition(GRIP_POS);
+        robot.gripmotor.setTargetPosition(GRIP_POS);
+        robot.gripmotor.setPower(1.0);
     }
     private void placeglyph(float height){
         //move up and down, input height could be either 1, 2, 3, or 4
         //or we could make constants for each height
         //
+
     }
     private void ungripglyph(){
-        robot.gripservo.setPosition(UNGRIP_POS);
+        robot.gripmotor.setTargetPosition(GRIP_POS);
+        robot.gripmotor.setPower(1.0);
     }
     private void jewelcolor(){
         //see
@@ -143,5 +147,67 @@ public class Auto extends LinearVisionOpMode{
     private void readpictograph(){
         //back burner
     }
+    public void initVision() throws InterruptedException {
+        //Wait for vision to initialize - this should be the first thing you do
+        waitForVisionStart();
 
+        /**
+         * Set the camera used for detection
+         * PRIMARY = Front-facing, larger camera
+         * SECONDARY = Screen-facing, "selfie" camera :D
+         **/
+        this.setCamera(Cameras.SECONDARY);
+
+        /**
+         * Set the frame size
+         * Larger = sometimes more accurate, but also much slower
+         * After this method runs, it will set the "width" and "height" of the frame
+         **/
+        this.setFrameSize(new Size(900, 900));
+
+        /**
+         * Enable extensions. Use what you need.
+         * If you turn on the BEACON extension, it's best to turn on ROTATION too.
+         */
+        enableExtension(Extensions.BEACON);         //Beacon detection
+        enableExtension(Extensions.ROTATION);       //Automatic screen rotation correction
+        enableExtension(Extensions.CAMERA_CONTROL); //Manual camera control
+
+        beacon.setAnalysisMethod(Beacon.AnalysisMethod.REALTIME);
+
+        /**
+         * Set color tolerances
+         * 0 is default, -1 is minimum and 1 is maximum tolerance
+         */
+        beacon.setColorToleranceRed(0);
+        beacon.setColorToleranceBlue(0);
+
+        /**
+         * Set the rotation parameters of the screen
+         * If colors are being flipped or output appears consistently incorrect, try changing these.
+         *
+         * First, tell the extension whether you are using a secondary camera
+         * (or in some devices, a front-facing camera that reverses some colors).
+         *
+         * It's a good idea to disable global auto rotate in Android settings. You can do this
+         * by calling disableAutoRotate() or enableAutoRotate().
+         *
+         * It's also a good idea to force the phone into a specific orientation (or auto rotate) by
+         * calling either setActivityOrientationAutoRotate() or setActivityOrientationFixed(). If
+         * you don't, the camera reader may have problems reading the current orientation.
+         */
+        rotation.setIsUsingSecondaryCamera(false);
+        rotation.disableAutoRotate();
+        rotation.setActivityOrientationFixed(ScreenOrientation.PORTRAIT);
+
+        /**
+         * Set camera control extension preferences
+         *
+         * Enabling manual settings will improve analysis rate and may lead to better results under
+         * tested conditions. If the environment changes, expect to change these values.
+         */
+        cameraControl.setColorTemperature(CameraControlExtension.ColorTemperature.AUTO);
+        cameraControl.setAutoExposureCompensation();
+
+    }
 }

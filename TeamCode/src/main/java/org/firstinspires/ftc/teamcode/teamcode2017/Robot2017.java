@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.teamcode2017;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -29,7 +30,7 @@ public class Robot2017 {
     public DcMotor  leftMotor;
     public DcMotor  rightMotor;
     public Servo jewelservo;
-    public Servo  gripservo; // possibly a motor
+    public DcMotor  gripmotor; // possibly a motor
     public DcMotor liftmotor;
 
     public Servo    griprelic;
@@ -82,7 +83,7 @@ public class Robot2017 {
         leftMotor   = hwMap.dcMotor.get("leftmotor");
         rightMotor  = hwMap.dcMotor.get("rightmotor");
 
-        gripservo = hwMap.servo.get("gripmotor");
+        gripmotor = hwMap.dcMotor.get("gripmotor");
 
         ods = hwMap.opticalDistanceSensor.get("ods");
         ultrasonic = hwMap.ultrasonicSensor.get("ultrasonicsensor");
@@ -128,8 +129,12 @@ public class Robot2017 {
             rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            gripmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            gripmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            gripmotor.setDirection(DcMotorSimple.Direction.FORWARD);
             leftMotor.setDirection(leftDefaultDir);
             rightMotor.setDirection(rightDefaultDir);
+            gripmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
 
         public void powerDrive(double leftPow, double rightPow) {

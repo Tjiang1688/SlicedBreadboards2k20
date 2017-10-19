@@ -25,13 +25,12 @@ public class PathSeg {
 
     public PathSeg(double leftDistance,
                    double rightDistance,
-                   double speed,
                    ElapsedTime runtime,
                    double timeOut) {
 
         this.leftDistance = leftDistance;
         this.rightDistance = rightDistance;
-        this.speed = speed;
+        speed = .4;
 
         this.runtime = runtime;
         this.timeOut = timeOut;
