@@ -1,5 +1,5 @@
-//definitely not finished
-
+//definitely not finished, and I really don't think I can do this, so someone else finish
+//some of it copied and pasted
 //this is just stuff I figured out, change around if needed
 
 //this is more stuff I figured out, change around if needed
@@ -31,6 +31,10 @@ public class createPathFromJewelsToCryptoBox extends _____ {
         leftMotor.setPower(0);
         rightMotor.setPower(0);
         resetMotors();
+    }
+    //senses if done if it is stop if not keep going
+    public boolean pathDone() {
+        pathSeg path = paths.peek();
     }
 
 }
