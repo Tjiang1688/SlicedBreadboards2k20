@@ -338,7 +338,7 @@ public class LinearSMAutoStatic extends LinearVisionOpMode {
                 states.pop();
 
                 //rotate
-                robot.drive.queuePath(new PathSeg(14 * 1.08, -14 * 1.08, 0.35, runtime, 10000));
+                robot.drive.queuePath(new PathSeg(14 * 1.08, -14 * 1.08, runtime, 10000));
                 robot.drive.startPath();
 
                 while (!robot.drive.pathDone() && opModeIsActive()) {
@@ -348,7 +348,7 @@ public class LinearSMAutoStatic extends LinearVisionOpMode {
 
                 sleep(10);
 
-                robot.drive.queuePath(new PathSeg(12 * 7.2, 12 * 7.2, 0.5, runtime, 15000));
+                robot.drive.queuePath(new PathSeg(12 * 7.2, 12 * 7.2, runtime, 15000));
                 robot.drive.startPath();
 
                 while (!robot.drive.pathDone() && opModeIsActive()) {
@@ -407,10 +407,10 @@ public class LinearSMAutoStatic extends LinearVisionOpMode {
 
                 if (beaconCount == 2) {
                     if (robot.teamColor.equals(TeamColor.blue)) {
-                        robot.drive.queuePath(new PathSeg(14, -14, 0.45, runtime, 10000));
+                        robot.drive.queuePath(new PathSeg(14, -14, runtime, 10000));
 
                     } else {
-                        robot.drive.queuePath(new PathSeg(-14, 14, 0.45, runtime, 10000));
+                        robot.drive.queuePath(new PathSeg(-14, 14, runtime, 10000));
                     }
 
                     robot.drive.startPath();
@@ -444,9 +444,9 @@ public class LinearSMAutoStatic extends LinearVisionOpMode {
 
                 if (beaconCount == 2) {
                     if (robot.teamColor.equals(TeamColor.blue)) {
-                        robot.drive.queuePath(new PathSeg(-14 * 0.85, 14 * 0.85, 0.4, runtime, 10000));
+                        robot.drive.queuePath(new PathSeg(-14 * 0.85, 14 * 0.85, runtime, 10000));
                     } else {
-                        robot.drive.queuePath(new PathSeg(14 * 0.85, -14 * 0.85, 0.4, runtime, 10000));
+                        robot.drive.queuePath(new PathSeg(14 * 0.85, -14 * 0.85, runtime, 10000));
                     }
 
                     robot.drive.startPath();
@@ -460,7 +460,7 @@ public class LinearSMAutoStatic extends LinearVisionOpMode {
                     telemetry.update();
                     sleep(1000);
 
-                    robot.drive.queuePath(new PathSeg(12 * 1.8, 12 * 1.8, 0.4, runtime, 10000.0));
+                    robot.drive.queuePath(new PathSeg(12 * 1.8, 12 * 1.8, runtime, 10000.0));
                     events.push(EVENT.LINE_DETECTED);
                     states.push(STATE.START_PATH);
 
@@ -473,9 +473,9 @@ public class LinearSMAutoStatic extends LinearVisionOpMode {
 
             case PARK: {
                 if (robot.teamColor.equals(TeamColor.blue)) {
-                    robot.drive.queuePath(new PathSeg(-14 * 0.1, 14 * 0.1, 0.35, runtime, 10000));
+                    robot.drive.queuePath(new PathSeg(-14 * 0.1, 14 * 0.1, runtime, 10000));
                 } else {
-                    robot.drive.queuePath(new PathSeg(14 * 0.1, -14 * 0.1, 0.35, runtime, 10000));
+                    robot.drive.queuePath(new PathSeg(14 * 0.1, -14 * 0.1, runtime, 10000));
                 }
                 robot.drive.startPath();
 
@@ -488,7 +488,7 @@ public class LinearSMAutoStatic extends LinearVisionOpMode {
                 telemetry.update();
                 sleep(1000);
 
-                robot.drive.queuePath(new PathSeg(-48, -48, 0.4, runtime, 10000.0));
+                robot.drive.queuePath(new PathSeg(-48, -48, runtime, 10000.0));
                 states.push(STATE.START_PATH);
             }
 

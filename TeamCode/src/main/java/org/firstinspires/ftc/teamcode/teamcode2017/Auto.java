@@ -18,6 +18,8 @@ import org.opencv.core.Size;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Deque;
+import org.lasarobotics.vision.android.Cameras;
+
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous", group="opmode")
 public class Auto extends LinearVisionOpMode{
     //variables
@@ -26,7 +28,11 @@ public class Auto extends LinearVisionOpMode{
 
     private final double PERIODIC_INTERVAL = 100; //in milliseconds
     private double nextPeriodicTime;
-
+    static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder
+    static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
+    static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
+    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+            (WHEEL_DIAMETER_INCHES * Math.PI);
     //test at tournament in field, configure variables
     static final double LIGHT_THRESHOLD = 0.5; //higher = more light reflected, whiter color
     static final double DISTANCE_BEACON_THRESHOLD = 25;
@@ -118,15 +124,22 @@ public class Auto extends LinearVisionOpMode{
     private void stopSB() {
 
     }
-    private void gripglyph(){
+    /*private void gripglyph(){
         robot.gripmotor.setTargetPosition(GRIP_POS);
         robot.gripmotor.setPower(1.0);
     }
     private void placeglyph(float height){
-        //move up and down, input height could be either 1, 2, 3, or 4
+        //move up and down, input height could be either 1, 2, 3, or 4 /// well technically we don't need that
         //or we could make constants for each height
         //
+        int target = robot.liftmotor.getCurrentPosition() + (int)(height * COUNTS_PER_INCH);
 
+        robot.liftmotor.setTargetPosition(target);
+
+       robot.liftmotor.setPower(Math.abs(.4));
+
+        ungripglyph();
+        //move back here
     }
     private void ungripglyph(){
         robot.gripmotor.setTargetPosition(GRIP_POS);
@@ -139,6 +152,7 @@ public class Auto extends LinearVisionOpMode{
         //PathSeg forward, need to get field measurements, etc
         //servo moving side to side
         robot.jewelservo.setPosition(1); //base off of side
+        //need to test this
     }
     private void move(){
         //don't necessarily need this
@@ -147,67 +161,16 @@ public class Auto extends LinearVisionOpMode{
     private void readpictograph(){
         //back burner
     }
-    public void initVision() throws InterruptedException {
-        //Wait for vision to initialize - this should be the first thing you do
-        waitForVisionStart();
 
-        /**
-         * Set the camera used for detection
-         * PRIMARY = Front-facing, larger camera
-         * SECONDARY = Screen-facing, "selfie" camera :D
-         **/
-        this.setCamera(Cameras.SECONDARY);
+    public void analyzeJewels(){
 
-        /**
-         * Set the frame size
-         * Larger = sometimes more accurate, but also much slower
-         * After this method runs, it will set the "width" and "height" of the frame
-         **/
-        this.setFrameSize(new Size(900, 900));
-
-        /**
-         * Enable extensions. Use what you need.
-         * If you turn on the BEACON extension, it's best to turn on ROTATION too.
-         */
-        enableExtension(Extensions.BEACON);         //Beacon detection
-        enableExtension(Extensions.ROTATION);       //Automatic screen rotation correction
-        enableExtension(Extensions.CAMERA_CONTROL); //Manual camera control
-
-        beacon.setAnalysisMethod(Beacon.AnalysisMethod.REALTIME);
-
-        /**
-         * Set color tolerances
-         * 0 is default, -1 is minimum and 1 is maximum tolerance
-         */
-        beacon.setColorToleranceRed(0);
-        beacon.setColorToleranceBlue(0);
-
-        /**
-         * Set the rotation parameters of the screen
-         * If colors are being flipped or output appears consistently incorrect, try changing these.
-         *
-         * First, tell the extension whether you are using a secondary camera
-         * (or in some devices, a front-facing camera that reverses some colors).
-         *
-         * It's a good idea to disable global auto rotate in Android settings. You can do this
-         * by calling disableAutoRotate() or enableAutoRotate().
-         *
-         * It's also a good idea to force the phone into a specific orientation (or auto rotate) by
-         * calling either setActivityOrientationAutoRotate() or setActivityOrientationFixed(). If
-         * you don't, the camera reader may have problems reading the current orientation.
-         */
-        rotation.setIsUsingSecondaryCamera(false);
-        rotation.disableAutoRotate();
-        rotation.setActivityOrientationFixed(ScreenOrientation.PORTRAIT);
-
-        /**
-         * Set camera control extension preferences
-         *
-         * Enabling manual settings will improve analysis rate and may lead to better results under
-         * tested conditions. If the environment changes, expect to change these values.
-         */
-        cameraControl.setColorTemperature(CameraControlExtension.ColorTemperature.AUTO);
-        cameraControl.setAutoExposureCompensation();
 
     }
+    public android.hardware.Camera initVision(){
+        android.hardware.Camera camera = android.hardware.Camera.open(0);
+
+        return camera;
+        //make sure to camera.release() after using
+    }*/
+
 }

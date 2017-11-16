@@ -10,7 +10,7 @@ import android.view.WindowManager;
 
 import org.lasarobotics.vision.opmode.TestableVisionOpMode;
 import org.lasarobotics.vision.opmode.VisionEnabledActivity;
-
+@Autonomous(name="CameraTestActivity", group="vision opmode")
 public class CameraTestActivity extends VisionEnabledActivity {
 
     private TestableVisionOpMode opmode;

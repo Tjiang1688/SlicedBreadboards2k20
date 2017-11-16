@@ -22,6 +22,7 @@ import org.opencv.core.Size;
  * Vision OpMode run by the Camera Test Activity
  * Use TestableVisionOpModes in testing apps ONLY (but you can easily convert between opmodes just by changingt t
  */
+@Autonomous(name="CameraTestVisionOpMode", group="vision opmode")
 public class CameraTestVisionOpMode extends TestableVisionOpMode {
 
     @Override

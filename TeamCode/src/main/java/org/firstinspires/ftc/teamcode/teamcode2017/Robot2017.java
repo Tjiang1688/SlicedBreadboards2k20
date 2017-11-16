@@ -24,25 +24,21 @@ public class Robot2017 {
     public TeamColor teamColor;
     public StartPosition startPosition;
 
-    public OpticalDistanceSensor ods;
-    public UltrasonicSensor ultrasonic;
+    //public OpticalDistanceSensor ods;
+    //public UltrasonicSensor ultrasonic;
 
     public DcMotor  leftMotor;
     public DcMotor  rightMotor;
-    public Servo jewelservo;
-    public DcMotor  gripmotor; // possibly a motor
-    public DcMotor liftmotor;
+    //public Servo jewelservo;
+    //public DcMotor  gripmotor; // possibly a motor
+    //public DcMotor liftmotor;
+    public DcMotor armmotor;
+    //public Servo    griprelic;
 
-    public Servo    griprelic;
 
-    public static final double L_BEACON_UP = 1;
-    public static final double L_BEACON_DOWN = 0;
+    //public DcMotor  relicmotor;
 
-    public DcMotor  relicmotor;
-
-    public static final double BEACON_UP = 0.6;
-    public static final double BEACON_L = 1.5;
-
+    public static final int ARM_MOVE_DISTANCE = 440;
     /* local OpMode members. */
     private HardwareMap hwMap;
 
@@ -72,7 +68,7 @@ public class Robot2017 {
     public void init(HardwareMap hwMap) {
         initHardwareMap(hwMap);
         initDriveTrain();
-        initOds();
+        //initOds();
 
         hwMap.logDevices();
     }
@@ -83,15 +79,16 @@ public class Robot2017 {
         leftMotor   = hwMap.dcMotor.get("leftmotor");
         rightMotor  = hwMap.dcMotor.get("rightmotor");
 
-        gripmotor = hwMap.dcMotor.get("gripmotor");
-
-        ods = hwMap.opticalDistanceSensor.get("ods");
-        ultrasonic = hwMap.ultrasonicSensor.get("ultrasonicsensor");
-        jewelservo = hwMap.servo.get("jewelservo");
+        //gripmotor = hwMap.dcMotor.get("gripmotor");
+        //liftmotor = hwMap.dcMotor.get("liftmotor");
+        armmotor = hwMap.dcMotor.get("armmotor");
+        //ods = hwMap.opticalDistanceSensor.get("ods");
+        //ultrasonic = hwMap.ultrasonicSensor.get("ultrasonicsensor");
+        //jewelservo = hwMap.servo.get("jewelservo");
     }
 
     public void initOds() {
-        ods.enableLed(true);
+        //ods.enableLed(true);
     }
 
     /**
@@ -129,12 +126,15 @@ public class Robot2017 {
             rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            gripmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            gripmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            gripmotor.setDirection(DcMotorSimple.Direction.FORWARD);
+            //gripmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            //gripmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            //gripmotor.setDirection(DcMotor.Direction.FORWARD);
             leftMotor.setDirection(leftDefaultDir);
             rightMotor.setDirection(rightDefaultDir);
-            gripmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            //gripmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            //liftmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            //liftmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            //liftmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
 
         public void powerDrive(double leftPow, double rightPow) {

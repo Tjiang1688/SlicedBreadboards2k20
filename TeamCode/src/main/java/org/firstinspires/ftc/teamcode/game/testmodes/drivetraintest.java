@@ -38,6 +38,7 @@ public class drivetraintest extends LinearOpMode {
 
         DcMotor leftmotor = hardwareMap.dcMotor.get("leftmotor");
         DcMotor rightmotor = hardwareMap.dcMotor.get("rightmotor");
+        DcMotor arm = hardwareMap.dcMotor.get("armmotor");
         rightmotor.setDirection(DcMotorSimple.Direction.REVERSE);
         double leftPow = 0;
         double rightPow = 0;
@@ -51,6 +52,14 @@ public class drivetraintest extends LinearOpMode {
             //float to double, get power from controller
             double desiredLeftPow = (double) gamepad1.right_stick_y;
             double desiredRightPow = (double) gamepad1.left_stick_y;
+            if (gamepad1.b){
+                arm.setPower(.5);
+            } else if (gamepad1.a) {
+                arm.setPower(-.5);
+            }
+            else{
+                arm.setPower(0);
+            }
 
             //normalize values
             double maxDesiredPow = Math.max(Math.abs(desiredLeftPow), Math.abs(desiredRightPow));

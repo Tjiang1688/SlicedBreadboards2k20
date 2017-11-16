@@ -1,21 +1,44 @@
-/*
- * Copyright (c) 2016 Arthur Pachachura, LASA Robotics, and contributors
- * MIT licensed
- */
-package org.lasarobotics.vision.opmode;
-
-import org.lasarobotics.vision.opmode.extensions.BeaconExtension;
-import org.lasarobotics.vision.opmode.extensions.CameraControlExtension;
-import org.lasarobotics.vision.opmode.extensions.ImageRotationExtension;
-import org.lasarobotics.vision.opmode.extensions.VisionExtension;
-import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
+package org.firstinspires.ftc.teamcode.game.testmodes;
 
 /**
- * Easy-to-use, extensible vision op mode
- * For more custom implementations, use ManualVisionOpMode or modify core extensions in opmode.extensions.*
+ * Created by 18mjiang on 10/23/17.
  */
-public abstract class VisionOpMode extends VisionOpModeCore {
+
+/*
+ * Copyright (c) 2015 LASA Robotics and Contributors
+ * MIT licensed
+ */
+
+
+        import org.firstinspires.ftc.robotcore.internal.android.dex.util.ExceptionWithContext;
+        import org.lasarobotics.vision.android.Cameras;
+        import org.lasarobotics.vision.ftc.resq.Beacon;
+        import org.lasarobotics.vision.image.Drawing;
+        import org.lasarobotics.vision.opmode.TestableVisionOpMode;
+        import org.lasarobotics.vision.opmode.VisionOpMode;
+        import org.lasarobotics.vision.opmode.extensions.BeaconExtension;
+        import org.lasarobotics.vision.opmode.extensions.CameraControlExtension;
+        import org.lasarobotics.vision.opmode.extensions.ImageRotationExtension;
+        import org.lasarobotics.vision.opmode.extensions.VisionExtension;
+        import org.lasarobotics.vision.util.ScreenOrientation;
+        import org.lasarobotics.vision.util.color.Color;
+        import org.lasarobotics.vision.util.color.ColorGRAY;
+        import org.lasarobotics.vision.util.color.ColorRGBA;
+        import org.opencv.core.Mat;
+        import org.opencv.core.Point;
+        import org.opencv.core.Size;
+        import org.opencv.imgproc.Imgproc;
+
+        import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+        import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+
+/**
+ * Vision OpMode run by the Camera Test Activity
+ * Use TestableVisionOpModes in testing apps ONLY (but you can easily convert between opmodes just by changingt t
+ */
+@TeleOp(name="cameratest", group="vision opmode")
+public class cameratest extends TestableVisionOpMode {
 
     /***
      * CUSTOM EXTENSION INITIALIZATION
@@ -34,16 +57,16 @@ public abstract class VisionOpMode extends VisionOpModeCore {
     private int extensions = 0;
     private boolean extensionsInitialized = false;
 
-    public VisionOpMode() {
+    public cameratest() {
         super();
     }
 
-    VisionOpMode(boolean enableOpenCV) {
+    cameratest(boolean enableOpenCV) {
         super();
         this.enableOpenCV = enableOpenCV;
     }
 
-    private boolean isEnabled(Extensions extension) {
+    private boolean isEnabled(VisionOpMode.Extensions extension) {
         return (extensions & extension.id) > 0;
     }
 
@@ -52,7 +75,7 @@ public abstract class VisionOpMode extends VisionOpModeCore {
      *
      * @param extension Extension ID
      */
-    protected void enableExtension(Extensions extension) {
+    protected void enableExtension(VisionOpMode.Extensions extension) {
         //Don't initialize extension if we haven't ever called init() yet
         if (extensionsInitialized)
             extension.instance.init(this);
@@ -65,7 +88,7 @@ public abstract class VisionOpMode extends VisionOpModeCore {
      *
      * @param extension Extension ID
      */
-    private void disableExtension(Extensions extension) {
+    private void disableExtension(VisionOpMode.Extensions extension) {
         extensions -= extensions & extension.id;
 
         extension.instance.stop(this);
@@ -75,18 +98,21 @@ public abstract class VisionOpMode extends VisionOpModeCore {
     public void init() {
         if (enableOpenCV) super.init();
 
-        for (Extensions extension : Extensions.values())
+        for (VisionOpMode.Extensions extension : VisionOpMode.Extensions.values())
             if (isEnabled(extension))
                 extension.instance.init(this);
 
         extensionsInitialized = true;
+        this.setCamera(Cameras.SECONDARY);
+        telemetry.addData(Cameras.SECONDARY.name(), Cameras.SECONDARY.getID());
+        telemetry.update();
     }
 
     @Override
     public void loop() {
         if (enableOpenCV) super.loop();
 
-        for (Extensions extension : Extensions.values())
+        for (VisionOpMode.Extensions extension : VisionOpMode.Extensions.values())
             if (isEnabled(extension))
                 extension.instance.loop(this);
     }
@@ -94,7 +120,7 @@ public abstract class VisionOpMode extends VisionOpModeCore {
     @Override
     public Mat frame(Mat rgba, Mat gray) {
 
-        for (Extensions extension : Extensions.values())
+        for (VisionOpMode.Extensions extension : VisionOpMode.Extensions.values())
             if (isEnabled(extension)) {
                 //Pipe the rgba of the previous point into the gray of the next
                 Imgproc.cvtColor(rgba, gray, Imgproc.COLOR_RGBA2GRAY);
@@ -108,7 +134,7 @@ public abstract class VisionOpMode extends VisionOpModeCore {
     public void stop() {
         super.stop();
 
-        for (Extensions extension : Extensions.values())
+        for (VisionOpMode.Extensions extension : VisionOpMode.Extensions.values())
             if (isEnabled(extension))
                 disableExtension(extension); //disable and stop
     }
@@ -121,8 +147,8 @@ public abstract class VisionOpMode extends VisionOpModeCore {
         CAMERA_CONTROL(1, cameraControl), //high priority
         ROTATION(4, rotation); //low priority
 
-       public  final int id;
-        public final VisionExtension instance;
+        final int id;
+        final VisionExtension instance;
 
         Extensions(int id, VisionExtension instance) {
             this.id = id;
