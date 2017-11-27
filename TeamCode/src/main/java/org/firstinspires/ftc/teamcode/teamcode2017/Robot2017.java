@@ -29,9 +29,10 @@ public class Robot2017 {
 
     public DcMotor  leftMotor;
     public DcMotor  rightMotor;
-    //public Servo jewelservo;
-    //public DcMotor  gripmotor; // possibly a motor
-    //public DcMotor liftmotor;
+    public Servo jewelservo;
+    public DcMotor  gripmotor; // possibly a motor
+    public DcMotor lift1;
+    public DcMotor lift2;
     public DcMotor armmotor;
     //public Servo    griprelic;
 
@@ -79,8 +80,14 @@ public class Robot2017 {
         leftMotor   = hwMap.dcMotor.get("leftmotor");
         rightMotor  = hwMap.dcMotor.get("rightmotor");
 
-        //gripmotor = hwMap.dcMotor.get("gripmotor");
-        //liftmotor = hwMap.dcMotor.get("liftmotor");
+        gripmotor = hwMap.dcMotor.get("gripmotor");
+        gripmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        gripmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        gripmotor.setDirection(DcMotor.Direction.FORWARD);
+        lift1 = hwMap.dcMotor.get("lift1");
+        lift2 = hwMap.dcMotor.get("lift2");
+        lift1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lift2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armmotor = hwMap.dcMotor.get("armmotor");
         //ods = hwMap.opticalDistanceSensor.get("ods");
         //ultrasonic = hwMap.ultrasonicSensor.get("ultrasonicsensor");
@@ -104,9 +111,10 @@ public class Robot2017 {
         static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
         static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
                 (WHEEL_DIAMETER_INCHES * Math.PI);
-
-        DcMotor.Direction leftDefaultDir = DcMotor.Direction.FORWARD;
-        DcMotor.Direction rightDefaultDir = DcMotor.Direction.REVERSE;
+        static final double     ROBOT_WIDTH = 17.0;
+        static final double     TURN_LENGTH = ROBOT_WIDTH*Math.PI/4;
+        DcMotor.Direction leftDefaultDir = DcMotor.Direction.REVERSE;
+        DcMotor.Direction rightDefaultDir = DcMotor.Direction.FORWARD;
 
         Queue<PathSeg> paths = new LinkedBlockingQueue();
 
@@ -126,17 +134,34 @@ public class Robot2017 {
             rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            //gripmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            //gripmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            //gripmotor.setDirection(DcMotor.Direction.FORWARD);
+
             leftMotor.setDirection(leftDefaultDir);
             rightMotor.setDirection(rightDefaultDir);
-            //gripmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //liftmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            //liftmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            //liftmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
+        public void turnLeft() {
+            PathSeg left = new PathSeg(-TURN_LENGTH, TURN_LENGTH);
+            queuePath(left);
+            startPath();
+            while(!pathDone()){
 
+            }
+        }
+        public void turnRight(){
+            PathSeg left = new PathSeg(TURN_LENGTH, -TURN_LENGTH);
+            queuePath(left);
+            startPath();
+            while(!pathDone()){
+
+            }
+        }
+        public void move(double length){
+            PathSeg path = new PathSeg(length, length);
+            queuePath(path);
+            startPath();
+            while(!pathDone()){
+
+            }
+        }
         public void powerDrive(double leftPow, double rightPow) {
             leftMotor.setPower(leftPow);
             rightMotor.setPower(rightPow);

@@ -24,17 +24,12 @@ public class PathSeg {
     static final double timeError = 50; //50 milliseconds
 
     public PathSeg(double leftDistance,
-                   double rightDistance,
-                   ElapsedTime runtime,
-                   double timeOut) {
+                   double rightDistance) {
 
         this.leftDistance = leftDistance;
         this.rightDistance = rightDistance;
         speed = .4;
 
-        this.runtime = runtime;
-        this.timeOut = timeOut;
-        this.startTime = runtime.milliseconds();
     }
 
     public boolean isTimedOut() {

@@ -39,7 +39,13 @@ public class drivetraintest extends LinearOpMode {
         DcMotor leftmotor = hardwareMap.dcMotor.get("leftmotor");
         DcMotor rightmotor = hardwareMap.dcMotor.get("rightmotor");
         DcMotor arm = hardwareMap.dcMotor.get("armmotor");
-        rightmotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        DcMotor gripmotor = hardwareMap.dcMotor.get("gripmotor");
+        leftmotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        leftmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        gripmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         double leftPow = 0;
         double rightPow = 0;
         //motor power is from -1.0 to 1.0;
@@ -52,14 +58,24 @@ public class drivetraintest extends LinearOpMode {
             //float to double, get power from controller
             double desiredLeftPow = (double) gamepad1.right_stick_y;
             double desiredRightPow = (double) gamepad1.left_stick_y;
-            if (gamepad1.b){
-                arm.setPower(.5);
-            } else if (gamepad1.a) {
-                arm.setPower(-.5);
+            if (gamepad1.y){
+                arm.setPower(.3);
+            } else if (gamepad1.x) {
+                arm.setPower(-.3);
             }
             else{
                 arm.setPower(0);
             }
+
+            if(gamepad1.a){
+                gripmotor.setPower(.2);
+            } else if(gamepad1.b){
+                gripmotor.setPower(-.2);
+            } else{
+                gripmotor.setPower(0);
+            }
+            telemetry.addData("armmotor position", arm.getCurrentPosition());
+            telemetry.addData("gripmotor position", gripmotor.getCurrentPosition());
 
             //normalize values
             double maxDesiredPow = Math.max(Math.abs(desiredLeftPow), Math.abs(desiredRightPow));

@@ -18,6 +18,8 @@ import org.opencv.core.Size;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Deque;
+import java.util.concurrent.TimeUnit;
+
 import org.lasarobotics.vision.android.Cameras;
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous", group="opmode")
@@ -69,9 +71,14 @@ public class Auto extends LinearVisionOpMode{
                 nextPeriodicTime = runtime.milliseconds() + PERIODIC_INTERVAL;
             }
             //queue all the paths here, in order
-            robot.drive.queuePath(new PathSeg(48, 48, runtime, 10000)); // needs to be path to go to jewels
+            robot.drive.queuePath(new PathSeg(48, 48)); // needs to be path to go to jewels
+            robot.drive.startPath();
+            while(!robot.drive.pathDone()){
 
-
+            }
+            gripglyph();
+            //move here
+            placeglyph();
             //Wait for a hardware cycle to allow other processes to run
             waitOneFullHardwareCycle();
         }
@@ -124,26 +131,28 @@ public class Auto extends LinearVisionOpMode{
     private void stopSB() {
 
     }
-    /*private void gripglyph(){
-        robot.gripmotor.setTargetPosition(GRIP_POS);
-        robot.gripmotor.setPower(1.0);
+    private void gripglyph() throws InterruptedException {
+        robot.gripmotor.setPower(-.2);
+        wait(1400);
+        robot.gripmotor.setPower(0);
+        robot.lift2.setPower(.3);
+        wait(400);
+        robot.lift2.setPower(0);
     }
-    private void placeglyph(float height){
+    private void placeglyph() throws InterruptedException{
         //move up and down, input height could be either 1, 2, 3, or 4 /// well technically we don't need that
         //or we could make constants for each height
         //
-        int target = robot.liftmotor.getCurrentPosition() + (int)(height * COUNTS_PER_INCH);
-
-        robot.liftmotor.setTargetPosition(target);
-
-       robot.liftmotor.setPower(Math.abs(.4));
-
+        robot.armmotor.setPower(.5);
+        wait(600);
         ungripglyph();
+        robot.armmotor.setPower(-.5);
         //move back here
     }
-    private void ungripglyph(){
-        robot.gripmotor.setTargetPosition(GRIP_POS);
-        robot.gripmotor.setPower(1.0);
+    private void ungripglyph() throws InterruptedException{
+        robot.gripmotor.setPower(.2);
+        wait(200);
+        robot.gripmotor.setPower(0);
     }
     private void jewelcolor(){
         //see
@@ -171,6 +180,6 @@ public class Auto extends LinearVisionOpMode{
 
         return camera;
         //make sure to camera.release() after using
-    }*/
+    }
 
 }

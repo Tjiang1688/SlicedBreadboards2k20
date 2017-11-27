@@ -42,75 +42,55 @@ public class driverControlled extends LinearOpMode {
         double leftPow = 0;
         double rightPow = 0;
         double armPow = 0;
+        double gripPow = 0;
+        double liftPow = 0;
         //motor power is from -1.0 to 1.0;
-        double quantize = 0.1;
         while (opModeIsActive()) {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
             // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards
             //float to double, get power from controller
-            double lowerPow = Math.min(leftPow, rightPow);
-            armPow = 0;
-            if(gamepad1.x){
-                rightPow += .001;
-                leftPow += .001;
-                if(rightPow > 1.0){
-                    rightPow = 1.0;
-                }
-                if(leftPow > 1.0){
-                    leftPow = 1.0;
-                }
-            }
-            else if(gamepad1.y){
-                rightPow -= .001;
-                leftPow -= .001;
-                if(rightPow < -1.0){
-                    rightPow = -1.0;
-                }
-                if(leftPow < -1.0){
-                    leftPow = -1.0;
-                }
-            }
-            else{
-                if(lowerPow < .05 || lowerPow > -.05){
-                    rightPow = 0;
-                    leftPow = 0;
-                }
-                else if(lowerPow<0){
-                    rightPow += .001;
-                    leftPow += .001;
+            rightPow = (double) gamepad1.right_stick_y;
+            leftPow = (double) gamepad1.left_stick_y;
 
-                }
-                else if(lowerPow>0){
-                    rightPow -= .001;
-                    leftPow -= .001;
-
-                }
-            }
             if(gamepad1.a){
                 armPow = .5;
                 telemetry.addData("Current position", robot.armmotor.getCurrentPosition());
             }
-            if(gamepad1.b){
+            else if(gamepad1.b){
                 armPow = -.5;
                 telemetry.addData("Current position", robot.armmotor.getCurrentPosition());
             }
-            if(gamepad1.dpad_left){
-                rightPow += .001;
-                leftPow -= .001;
+            else{
+                armPow = 0;
             }
-            else if(gamepad1.dpad_right){
-                rightPow -= .001;
-                leftPow += .001;
+
+            if(gamepad1.x){
+                gripPow = .2;
+            }else if(gamepad1.y){
+                gripPow = -.2;
             }
             else{
-                rightPow = min(leftPow, rightPow);
-                leftPow = rightPow;
+                gripPow = 0;
             }
+
+            if(gamepad1.dpad_up){
+                liftPow = .4;
+            }
+            else if(gamepad1.dpad_down){
+                liftPow = -.4;
+            }
+            else{
+                liftPow = 0;
+            }
+
 
             robot.leftMotor.setPower(leftPow);
             robot.rightMotor.setPower(rightPow);
             robot.armmotor.setPower(armPow);
+            robot.gripmotor.setPower(gripPow);
+            robot.lift1.setPower(liftPow);
+            robot.lift2.setPower(liftPow);
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
     }

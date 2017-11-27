@@ -229,7 +229,7 @@ public class LinearSMAuto2PCNTRPark extends LinearVisionOpMode {
 
                 //go towards beacon
 
-                robot.drive.queuePath(new PathSeg(14 * 0.95, -14 * 0.95, runtime, 10000));
+                robot.drive.queuePath(new PathSeg(14 * 0.95, -14 * 0.95));
                 robot.drive.startPath();
 
                 while (!robot.drive.pathDone() && opModeIsActive()) {
@@ -239,7 +239,7 @@ public class LinearSMAuto2PCNTRPark extends LinearVisionOpMode {
 
                 sleep(10);
 
-                robot.drive.queuePath(new PathSeg(12 * 5.7, 12 * 5.7, runtime, 15000));
+                robot.drive.queuePath(new PathSeg(12 * 5.7, 12 * 5.7));
                 robot.drive.startPath();
 
                 while (!robot.drive.pathDone() && opModeIsActive()) {
@@ -300,7 +300,7 @@ public class LinearSMAuto2PCNTRPark extends LinearVisionOpMode {
 
                 if (beaconCount == 2) {
                     if (robot.teamColor.equals(TeamColor.blue)) {
-                        robot.drive.queuePath(new PathSeg(14, -14, runtime, 10000));
+                        robot.drive.queuePath(new PathSeg(14, -14));
                         robot.drive.startPath();
 
                         while (!robot.drive.pathDone() && opModeIsActive()) {
@@ -335,7 +335,7 @@ public class LinearSMAuto2PCNTRPark extends LinearVisionOpMode {
 
                 if (beaconCount == 2) {
                     if (robot.teamColor.equals(TeamColor.blue)) {
-                        robot.drive.queuePath(new PathSeg(-14 * 0.85, 14 * 0.85, runtime, 10000));
+                        robot.drive.queuePath(new PathSeg(-14 * 0.85, 14 * 0.85));
                         robot.drive.startPath();
 
                         while (!robot.drive.pathDone() && opModeIsActive()) {
@@ -349,7 +349,7 @@ public class LinearSMAuto2PCNTRPark extends LinearVisionOpMode {
                     } else {
                  //       beaconRotRight();
                     }
-                    robot.drive.queuePath(new PathSeg(12 * 1.8, 12 * 1.8, runtime, 10000.0));
+                    robot.drive.queuePath(new PathSeg(12 * 1.8, 12 * 1.8));
                     events.push(EVENT.LINE_DETECTED);
                     states.push(STATE.START_PATH);
 
@@ -362,7 +362,7 @@ public class LinearSMAuto2PCNTRPark extends LinearVisionOpMode {
 
             case PARK: {
                 if (robot.teamColor.equals(TeamColor.blue)) {
-                    robot.drive.queuePath(new PathSeg(-14 * 0.1, 14 * 0.1, runtime, 10000));
+                    robot.drive.queuePath(new PathSeg(-14 * 0.1, 14 * 0.1));
                     robot.drive.startPath();
 
                     while (!robot.drive.pathDone() && opModeIsActive()) {
@@ -377,7 +377,7 @@ public class LinearSMAuto2PCNTRPark extends LinearVisionOpMode {
                 } else {
                    // parkRotRed();
                 }
-                robot.drive.queuePath(new PathSeg(-48, -48, runtime, 10000.0));
+                robot.drive.queuePath(new PathSeg(-48, -48));
                 states.push(STATE.START_PATH);
             }
 
