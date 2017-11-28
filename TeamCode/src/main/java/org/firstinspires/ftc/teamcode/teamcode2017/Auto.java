@@ -78,6 +78,8 @@ public class Auto extends LinearVisionOpMode{
             }
             gripglyph();
             //move here
+            analyzeJewels();
+            //move here
             placeglyph();
             //Wait for a hardware cycle to allow other processes to run
             waitOneFullHardwareCycle();
@@ -154,26 +156,36 @@ public class Auto extends LinearVisionOpMode{
         wait(200);
         robot.gripmotor.setPower(0);
     }
-    private void jewelcolor(){
-        //see
-    }
-    private void jewelknock(boolean side){ //true = left, false = right
-        //PathSeg forward, need to get field measurements, etc
-        //servo moving side to side
-        robot.jewelservo.setPosition(1); //base off of side
-        //need to test this
-    }
-    private void move(){
-        //don't necessarily need this
-        //need to test PathSeg and startpath() in Robot2017 class
-    }
+
     private void readpictograph(){
         //back burner
     }
 
     public void analyzeJewels(){
+        int[] rgb = {robot.colorSensor.red(), robot.colorSensor.green(), robot.colorSensor.blue()};
+        if(robot.colorSensor.red()>120){
+            if(robot.teamColor.equals(TeamColor.red)){
+                robot.drive.turnLeft();
+                robot.drive.turnLeft();
 
+            }
+            else{
+                robot.drive.turnRight();
+                robot.drive.turnRight();
+            }
+        }
+        else if(robot.colorSensor.blue()>120){
+            if(robot.teamColor.equals(TeamColor.blue)){
+                robot.drive.turnLeft();
+                robot.drive.turnLeft();
 
+            }
+            else{
+                robot.drive.turnRight();
+                robot.drive.turnRight();
+            }
+        }
+        //ends facing away from jewels
     }
     public android.hardware.Camera initVision(){
         android.hardware.Camera camera = android.hardware.Camera.open(0);

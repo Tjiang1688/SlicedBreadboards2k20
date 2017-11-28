@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.teamcode2017;
 
+import com.qualcomm.hardware.hitechnic.HiTechnicNxtColorSensor;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -24,22 +26,14 @@ public class Robot2017 {
     public TeamColor teamColor;
     public StartPosition startPosition;
 
-    //public OpticalDistanceSensor ods;
-    //public UltrasonicSensor ultrasonic;
-
     public DcMotor  leftMotor;
     public DcMotor  rightMotor;
-    public Servo jewelservo;
     public DcMotor  gripmotor; // possibly a motor
     public DcMotor lift1;
     public DcMotor lift2;
     public DcMotor armmotor;
-    //public Servo    griprelic;
+    public ColorSensor colorSensor;
 
-
-    //public DcMotor  relicmotor;
-
-    public static final int ARM_MOVE_DISTANCE = 440;
     /* local OpMode members. */
     private HardwareMap hwMap;
 
@@ -47,8 +41,6 @@ public class Robot2017 {
     private ElapsedTime time;
 
     public DriveTrain drive;
-
-    public static final double LIGHT_THRESHOLD = 0.5;
 
     public Robot2017() {
 
@@ -89,13 +81,11 @@ public class Robot2017 {
         lift1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lift2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armmotor = hwMap.dcMotor.get("armmotor");
+        colorSensor = hwMap.colorSensor.get("colorSensor");
+        colorSensor.enableLed(true);
         //ods = hwMap.opticalDistanceSensor.get("ods");
         //ultrasonic = hwMap.ultrasonicSensor.get("ultrasonicsensor");
         //jewelservo = hwMap.servo.get("jewelservo");
-    }
-
-    public void initOds() {
-        //ods.enableLed(true);
     }
 
     /**
