@@ -21,6 +21,7 @@ import org.firstinspires.ftc.teamcode.game.robot.*;
 
 @TeleOp(name="driverControlled", group="red")  // @Autonomous(...) is the other common choice
 //@Disabled
+
 public class driverControlled extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -29,7 +30,6 @@ public class driverControlled extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry.addData("Status", "Initialized");
-        telemetry.addData("x to accelerate, y to deccelerate", "");
         telemetry.update();
         Robot2017 robot = new Robot2017();
         robot.init(hardwareMap);
@@ -46,20 +46,20 @@ public class driverControlled extends LinearOpMode {
         double liftPow = 0;
         //motor power is from -1.0 to 1.0;
         while (opModeIsActive()) {
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.update();
             // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards
             //float to double, get power from controller
             rightPow = (double) gamepad1.right_stick_y;
             leftPow = (double) gamepad1.left_stick_y;
-
+            telemetry.addData("left", robot.leftMotor.getCurrentPosition());
+            telemetry.addData("right", robot.rightMotor.getCurrentPosition());
+            telemetry.update();
             if(gamepad1.a){
                 armPow = .5;
-                telemetry.addData("Current position", robot.armmotor.getCurrentPosition());
+
             }
             else if(gamepad1.b){
                 armPow = -.5;
-                telemetry.addData("Current position", robot.armmotor.getCurrentPosition());
+
             }
             else{
                 armPow = 0;
@@ -90,7 +90,7 @@ public class driverControlled extends LinearOpMode {
             robot.armmotor.setPower(armPow);
             robot.gripmotor.setPower(gripPow);
             robot.lift1.setPower(liftPow);
-            robot.lift2.setPower(liftPow);
+            //robot.lift2.setPower(liftPow);
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
     }

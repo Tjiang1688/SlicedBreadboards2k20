@@ -30,13 +30,12 @@ public class Robot2017 {
     public DcMotor  rightMotor;
     public DcMotor  gripmotor; // possibly a motor
     public DcMotor lift1;
-    public DcMotor lift2;
+    //public DcMotor lift2;
     public DcMotor armmotor;
     public ColorSensor colorSensor;
-
+    public HiTechnicNxtColorSensor cs;
     /* local OpMode members. */
     private HardwareMap hwMap;
-
     private Telemetry telemetry;
     private ElapsedTime time;
 
@@ -61,7 +60,6 @@ public class Robot2017 {
     public void init(HardwareMap hwMap) {
         initHardwareMap(hwMap);
         initDriveTrain();
-        //initOds();
 
         hwMap.logDevices();
     }
@@ -77,15 +75,14 @@ public class Robot2017 {
         gripmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         gripmotor.setDirection(DcMotor.Direction.FORWARD);
         lift1 = hwMap.dcMotor.get("lift1");
-        lift2 = hwMap.dcMotor.get("lift2");
+        //lift2 = hwMap.dcMotor.get("lift2");
         lift1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        lift2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //lift2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armmotor = hwMap.dcMotor.get("armmotor");
         colorSensor = hwMap.colorSensor.get("colorSensor");
         colorSensor.enableLed(true);
-        //ods = hwMap.opticalDistanceSensor.get("ods");
-        //ultrasonic = hwMap.ultrasonicSensor.get("ultrasonicsensor");
-        //jewelservo = hwMap.servo.get("jewelservo");
+        //check if can cast over
+        cs = (HiTechnicNxtColorSensor) hwMap.colorSensor.get("colorSensor");
     }
 
     /**

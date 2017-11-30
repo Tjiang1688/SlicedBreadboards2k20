@@ -46,7 +46,13 @@ public class Auto extends LinearVisionOpMode{
     private boolean debugOn = true;
 
     public void runOpMode() throws InterruptedException {
-        initSB();
+        robot = new Robot2017(TeamColor.red, StartPosition.left);
+        robot.init(hardwareMap);
+        robot.initDriveTrain();
+        robot.drive.resetMotors();
+        robot.setTelemetry(telemetry);
+        robot.setTime(runtime);
+        inputGameConfig();
 
         if (debugOn) {
             //while (true) { telemetry.addData("Debug:", "init good"); }
@@ -55,7 +61,8 @@ public class Auto extends LinearVisionOpMode{
         //Wait for the match to begin, presses start button
         waitForStart();
 
-        startSB();
+        runtime.reset();
+
 
         if (debugOn) {
             //while (true) { telemetry.addData("Debug:", "start good"); }
@@ -76,6 +83,9 @@ public class Auto extends LinearVisionOpMode{
             while(!robot.drive.pathDone()){
 
             }
+            robot.drive.turnLeft();
+            robot.drive.turnRight();
+            armForward();
             gripglyph();
             //move here
             analyzeJewels();
@@ -85,9 +95,12 @@ public class Auto extends LinearVisionOpMode{
             waitOneFullHardwareCycle();
         }
 
-        stopSB();
     }
-
+    private void armForward() throws InterruptedException{
+        robot.armmotor.setPower(.5);
+        wait(1400);
+        robot.armmotor.setPower(0);
+    }
     private void inputGameConfig() throws InterruptedException{
         telemetry.addData("Input team color", "Red (press b) or Blue (press x)");
         telemetry.update();
@@ -120,26 +133,13 @@ public class Auto extends LinearVisionOpMode{
         wait(1000);
     }
 
-    private void initSB() throws InterruptedException {
-        robot = new Robot2017(TeamColor.red, StartPosition.left);
-        robot.init(hardwareMap);
-        robot.setTelemetry(telemetry);
-
-        inputGameConfig();
-    }
-    private void startSB() {
-        runtime.reset();
-    }
-    private void stopSB() {
-
-    }
     private void gripglyph() throws InterruptedException {
         robot.gripmotor.setPower(-.2);
         wait(1400);
         robot.gripmotor.setPower(0);
-        robot.lift2.setPower(.3);
+        robot.lift1.setPower(.3);
         wait(400);
-        robot.lift2.setPower(0);
+        robot.lift1.setPower(0);
     }
     private void placeglyph() throws InterruptedException{
         //move up and down, input height could be either 1, 2, 3, or 4 /// well technically we don't need that
