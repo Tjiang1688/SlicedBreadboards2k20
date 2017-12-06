@@ -30,9 +30,9 @@ public class Robot2017 {
     public DcMotor  rightMotor;
     public DcMotor  gripmotor; // possibly a motor
     public DcMotor lift1;
-    //public DcMotor lift2;
+    public DcMotor lift2;
     public DcMotor armmotor;
-    public ColorSensor colorSensor;
+    //public ColorSensor colorSensor;
     public HiTechnicNxtColorSensor cs;
     /* local OpMode members. */
     private HardwareMap hwMap;
@@ -75,12 +75,13 @@ public class Robot2017 {
         gripmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         gripmotor.setDirection(DcMotor.Direction.FORWARD);
         lift1 = hwMap.dcMotor.get("lift1");
-        //lift2 = hwMap.dcMotor.get("lift2");
+        lift2 = hwMap.dcMotor.get("lift2");
         lift1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //lift2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lift2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lift2.setDirection(DcMotor.Direction.REVERSE);
         armmotor = hwMap.dcMotor.get("armmotor");
-        colorSensor = hwMap.colorSensor.get("colorSensor");
-        colorSensor.enableLed(true);
+        //colorSensor = hwMap.colorSensor.get("colorSensor");
+        //colorSensor.enableLed(true);
         //check if can cast over
         cs = (HiTechnicNxtColorSensor) hwMap.colorSensor.get("colorSensor");
     }

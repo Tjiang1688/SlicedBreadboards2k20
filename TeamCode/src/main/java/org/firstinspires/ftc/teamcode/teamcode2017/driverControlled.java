@@ -1,10 +1,7 @@
 package org.firstinspires.ftc.teamcode.teamcode2017;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import org.firstinspires.ftc.teamcode.game.robot.*;
 
 /**
  * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
@@ -44,8 +41,10 @@ public class driverControlled extends LinearOpMode {
         double armPow = 0;
         double gripPow = 0;
         double liftPow = 0;
+        double lift2Pow = 0;
         //motor power is from -1.0 to 1.0;
         while (opModeIsActive()) {
+
             // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards
             //float to double, get power from controller
             rightPow = (double) gamepad1.right_stick_y;
@@ -75,22 +74,31 @@ public class driverControlled extends LinearOpMode {
             }
 
             if(gamepad1.dpad_up){
-                liftPow = .4;
+                liftPow = -.4;
             }
             else if(gamepad1.dpad_down){
-                liftPow = -.4;
+                liftPow = .2;
             }
             else{
                 liftPow = 0;
             }
 
+            if(gamepad1.dpad_right){
+                lift2Pow = -.4;
+            }
+            else if(gamepad1.dpad_left){
+                lift2Pow = .2;
+            }
+            else {
+                lift2Pow = 0;
+            }
 
             robot.leftMotor.setPower(leftPow);
             robot.rightMotor.setPower(rightPow);
             robot.armmotor.setPower(armPow);
             robot.gripmotor.setPower(gripPow);
             robot.lift1.setPower(liftPow);
-            //robot.lift2.setPower(liftPow);
+            robot.lift2.setPower(lift2Pow);
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
     }

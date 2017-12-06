@@ -42,13 +42,13 @@ public class jeweltest extends LinearOpMode {
 
         while (opModeIsActive()) {
             //wait for line detected
-            analyzeJewels();
+            //analyzeJewels();
         }
 
 
     }
 
-    public void analyzeJewels(){
+    /*public void analyzeJewels(){
         int[] rgb = {robot.colorSensor.red(), robot.colorSensor.green(), robot.colorSensor.blue()};
         if(robot.colorSensor.red()>120){
             if(robot.teamColor.equals(TeamColor.red)){
@@ -73,7 +73,7 @@ public class jeweltest extends LinearOpMode {
             }
         }
         //ends facing away from jewels
-    }
+    }*/
 
 
 }
