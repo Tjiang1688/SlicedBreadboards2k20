@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.game.testmodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -9,7 +10,8 @@ import org.firstinspires.ftc.teamcode.game.robot.*;
 /**
  * Created by e.xing on 12/7/2016.
  */
-@TeleOp(name="ultrasonictest", group="testmode")
+//@TeleOp(name="ultrasonictest", group="testmode")
+@Disabled
 public class ultrasonictest extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 

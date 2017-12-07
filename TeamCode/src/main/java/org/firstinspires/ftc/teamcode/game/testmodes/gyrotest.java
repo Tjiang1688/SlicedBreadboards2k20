@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.game.robot.Robot1;
  * Created by e.xing on 2/9/2017.
  */
 
-@TeleOp(name="gyrotest", group="testmode")  // @Autonomous(...) is the other common choice
+//@TeleOp(name="gyrotest", group="testmode")  // @Autonomous(...) is the other common choice
 @Disabled
 public class gyrotest extends LinearOpMode {
 

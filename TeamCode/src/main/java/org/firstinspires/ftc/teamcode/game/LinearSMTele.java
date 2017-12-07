@@ -15,8 +15,8 @@ import java.util.Deque;
 /**
  * Created by e.xing on 2/10/2017.
  */
-@TeleOp(name = "LinearSMTele", group = "TeleOp")
-//@Disabled
+//@TeleOp(name = "LinearSMTele", group = "TeleOp")
+@Disabled
 public class LinearSMTele extends LinearOpMode {
     /***
      * GAME VARIABLES

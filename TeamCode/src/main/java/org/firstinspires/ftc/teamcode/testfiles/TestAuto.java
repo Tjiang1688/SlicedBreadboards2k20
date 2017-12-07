@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.testfiles;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -29,7 +30,8 @@ import android.graphics.Color;
 import java.util.EventListener;
 import java.util.EventObject;
 
-@Autonomous(name = "GeneralAuto", group = "Autonomous")
+//@Autonomous(name = "GeneralAuto", group = "Autonomous")
+@Disabled
 public class TestAuto extends LinearVisionOpMode{
     Robot1 robot = new Robot1();
     float[] color = new float[3];

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.game.testmodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -8,7 +9,8 @@ import org.firstinspires.ftc.teamcode.game.robot.*;
 /**
  * Created by e.xing on 2/10/2017.
  */
-@TeleOp(name="beaconpresstest", group="testmode")
+//@TeleOp(name="beaconpresstest", group="testmode")
+@Disabled
 public class beaconpresstest extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 

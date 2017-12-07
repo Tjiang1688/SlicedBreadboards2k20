@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.game.testmodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -10,7 +11,8 @@ import org.firstinspires.ftc.teamcode.game.robot.Robot1;
 /**
  * Created by e.xing on 2/9/2017.
  */
-@TeleOp(name="launchtest", group="testmode")
+//@TeleOp(name="launchtest", group="testmode")
+@Disabled
 public class launchtest extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 

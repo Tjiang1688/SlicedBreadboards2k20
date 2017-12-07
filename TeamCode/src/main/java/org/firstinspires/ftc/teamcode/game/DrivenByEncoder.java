@@ -1,14 +1,15 @@
 package org.firstinspires.ftc.teamcode.game;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.game.robot.Robot1;
 
-@Autonomous(name="DrivenByEncoder", group="Opmode")  // @Autonomous(...) is the other common choice
-//@Disabled
+//@Autonomous(name="DrivenByEncoder", group="Opmode")  // @Autonomous(...) is the other common choice
+@Disabled
 public class DrivenByEncoder extends LinearOpMode {
 
     /* Declare OpMode members. */

@@ -4,13 +4,15 @@ package org.firstinspires.ftc.teamcode.testfiles;
  * Created by 18mjiang on 1/13/17.
  */
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.game.robot.Robot1;
 import org.firstinspires.ftc.teamcode.game.robot.StartPosition;
 import org.firstinspires.ftc.teamcode.game.robot.TeamColor;
 
-@Autonomous(name = "FollowLineTest", group = "Autonomous")
+//@Autonomous(name = "FollowLineTest", group = "Autonomous")
+@Disabled
 public class FollowLine extends LinearOpMode {
     Robot1 robot;
     final double WHITE_THRESHOLD = 0.5;

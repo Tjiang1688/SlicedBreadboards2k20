@@ -30,6 +30,7 @@ package org.firstinspires.ftc.teamcode.game.testmodes;
         import org.opencv.imgproc.Imgproc;
 
         import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+        import com.qualcomm.robotcore.eventloop.opmode.Disabled;
         import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
@@ -37,7 +38,8 @@ package org.firstinspires.ftc.teamcode.game.testmodes;
  * Vision OpMode run by the Camera Test Activity
  * Use TestableVisionOpModes in testing apps ONLY (but you can easily convert between opmodes just by changingt t
  */
-@TeleOp(name="cameratest", group="vision opmode")
+//@TeleOp(name="cameratest", group="vision opmode")
+@Disabled
 public class cameratest extends TestableVisionOpMode {
 
     /***

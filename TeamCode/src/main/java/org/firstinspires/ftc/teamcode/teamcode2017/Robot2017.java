@@ -33,6 +33,7 @@ public class Robot2017 {
     public DcMotor lift2;
     public DcMotor armmotor;
     //public ColorSensor colorSensor;
+    public Servo jewelservo;
     public HiTechnicNxtColorSensor cs;
     /* local OpMode members. */
     private HardwareMap hwMap;
@@ -40,6 +41,8 @@ public class Robot2017 {
     private ElapsedTime time;
 
     public DriveTrain drive;
+    final float jewelservodown = 1;
+    final float jewelservoup = 0;
 
     public Robot2017() {
 
@@ -80,6 +83,7 @@ public class Robot2017 {
         lift2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lift2.setDirection(DcMotor.Direction.REVERSE);
         armmotor = hwMap.dcMotor.get("armmotor");
+        jewelservo = hwMap.servo.get("jewelservo");
         //colorSensor = hwMap.colorSensor.get("colorSensor");
         //colorSensor.enableLed(true);
         //check if can cast over

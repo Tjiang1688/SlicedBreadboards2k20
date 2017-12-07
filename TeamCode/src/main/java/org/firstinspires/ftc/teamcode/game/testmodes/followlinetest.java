@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.game.testmodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -17,7 +18,8 @@ import org.opencv.core.Size;
 /**
  * Created by e.xing on 2/10/2017.
  */
-@TeleOp(name="followlinetest", group="testmode")
+//@TeleOp(name="followlinetest", group="testmode")
+@Disabled
 public class followlinetest extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 

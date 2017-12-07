@@ -1,12 +1,12 @@
 package org.firstinspires.ftc.teamcode.teamcode2017;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.game.robot.*;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
-@Autonomous(name="Autonomous", group="opmode")
+@TeleOp(name="Autonomous", group="red")
 public class Auto extends LinearOpMode{
     //variables
     private Robot2017 robot;

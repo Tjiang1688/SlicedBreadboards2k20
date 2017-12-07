@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.game;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -23,7 +24,8 @@ import java.util.Deque;
 /**
  * Created by e.xing on 2/9/2017.
  */
-@Autonomous(name="LinearSMAutoStatic", group="auto")  // @Autonomous(...) is the other common choice
+//@Autonomous(name="LinearSMAutoStatic", group="auto")  // @Autonomous(...) is the other common choice
+@Disabled
 public class LinearSMAutoStatic extends LinearVisionOpMode {
     /***
      * VISION VARIABLES

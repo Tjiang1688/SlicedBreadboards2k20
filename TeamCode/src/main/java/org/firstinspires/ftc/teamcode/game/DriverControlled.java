@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode.game;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -17,8 +18,8 @@ import org.firstinspires.ftc.teamcode.game.robot.*;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="OldDriverControlled", group="Linear Opmode")  // @Autonomous(...) is the other common choice
-//@Disabled
+//@TeleOp(name="OldDriverControlled", group="Linear Opmode")  // @Autonomous(...) is the other common choice
+@Disabled
 public class DriverControlled extends LinearOpMode {
 
     /* Declare OpMode members. */

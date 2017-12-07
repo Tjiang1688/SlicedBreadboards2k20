@@ -10,10 +10,6 @@ import android.graphics.Color;
 public class colortest extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
-
-    static final double EDGE_LINE_THRESHOLD = 0.5;
-    static final double MID_LINE_THRESHOLD = 0.61;
-
     public void runOpMode() throws InterruptedException {
         HiTechnicNxtColorSensor cs = (HiTechnicNxtColorSensor) hardwareMap.colorSensor.get("colorSensor");
         cs.enableLed(true);

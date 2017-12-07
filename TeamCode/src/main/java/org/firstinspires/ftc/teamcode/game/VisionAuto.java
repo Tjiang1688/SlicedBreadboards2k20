@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.game;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -32,7 +33,8 @@ import org.opencv.core.Size;
  * Should this happen, open up an issue on GitHub. :)
  */
 
-@TeleOp(name="VisionAuto", group="VisionOpmode")
+//@TeleOp(name="VisionAuto", group="VisionOpmode")
+@Disabled
 public class VisionAuto extends LinearVisionOpMode {
     Robot1 robot = new Robot1(TeamColor.red, StartPosition.left);
     private ElapsedTime runtime = new ElapsedTime();
