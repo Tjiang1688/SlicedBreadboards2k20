@@ -5,6 +5,8 @@ import org.firstinspires.ftc.teamcode.game.robot.*;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import java.util.concurrent.TimeUnit;
+
 
 @TeleOp(name="Autonomous", group="red")
 public class Auto extends LinearOpMode{
@@ -23,56 +25,48 @@ public class Auto extends LinearOpMode{
         robot.setTelemetry(telemetry);
         robot.setTime(runtime);
         inputGameConfig();
+
         //Wait for the match to begin, presses start button
         waitForStart();
 
-        runtime.reset();
-
-        nextPeriodicTime = runtime.milliseconds();
         //Main loop
         //Camera frames and OpenCV analysis will be delivered to this method as quickly as possible
         //This loop will exit once the opmode is closed
         while (opModeIsActive()) {
-
-            if (runtime.milliseconds() >= nextPeriodicTime) {
-                nextPeriodicTime = runtime.milliseconds() + PERIODIC_INTERVAL;
-            }
-            //queue all the paths here, in order
-            robot.drive.queuePath(new PathSeg(48, 48)); // needs to be path to go to jewels
-            robot.drive.startPath();
-            while(!robot.drive.pathDone()){
-
-            }
-            robot.drive.turnLeft();
-            robot.drive.turnRight();
-            armForward();
             gripglyph();
+            wait1(1500);
+
             robot.drive.move(36);
             if(robot.startPosition == StartPosition.right){
                 robot.drive.turnLeft();
+                telemetry.addData("turning left", "team right");
             }
-            if(robot.startPosition == StartPosition.left){
+            else if(robot.startPosition == StartPosition.left){
                 robot.drive.turnRight();
+                telemetry.addData("turning right", "team left");
             }
+            telemetry.update();
+            wait1(1000);
             robot.drive.move(8);
-
+            armForward();
+            wait1(1000);
             //move here
-            analyzeJewels();
+            //analyzeJewels();
             //move here
-            placeglyph();
+            ungripglyph();
+            wait1(10000);
         }
 
     }
     private void armForward() throws InterruptedException{
-        robot.armmotor.setPower(.5);
-        wait(1400);
+        robot.armmotor.setPower(-.5);
+        wait1(1400);
         robot.armmotor.setPower(0);
     }
     private void inputGameConfig() throws InterruptedException{
         telemetry.addData("Input team color", "Red (press b) or Blue (press x)");
         telemetry.update();
         while (!gamepad1.b && !gamepad1.x) {
-            wait(10);
         }
 
         if (gamepad1.b == true) {
@@ -81,13 +75,10 @@ public class Auto extends LinearOpMode{
             robot.teamColor = TeamColor.blue;
         }
         telemetry.addData("Chosen team color", robot.teamColor);
-        telemetry.update();
-        wait(1000);
 
         telemetry.addData("Input which side", "Left or right (use triggers)");
         telemetry.update();
         while (gamepad1.left_trigger < 0.5 && gamepad1.right_trigger < 0.5) {
-            wait(10);
         }
 
         if (gamepad1.left_trigger >= 0.5) {
@@ -97,38 +88,29 @@ public class Auto extends LinearOpMode{
         }
         telemetry.addData("Chosen start postion", robot.startPosition);
         telemetry.update();
-        wait(1000);
     }
 
     private void gripglyph() throws InterruptedException {
         robot.gripmotor.setPower(-.2);
-        wait(1400);
+        wait1(600);
         robot.gripmotor.setPower(0);
-        robot.lift1.setPower(.3);
-        wait(400);
+        robot.lift1.setPower(-.4);
+        wait1(400);
         robot.lift1.setPower(0);
-    }
-    private void placeglyph() throws InterruptedException{
-        //move up and down, input height could be either 1, 2, 3, or 4 /// well technically we don't need that
-        //or we could make constants for each height
-        //
-        robot.armmotor.setPower(.5);
-        wait(600);
-        ungripglyph();
-        robot.armmotor.setPower(-.5);
-        //move back here
     }
     private void ungripglyph() throws InterruptedException{
         robot.gripmotor.setPower(.2);
-        wait(200);
+        wait1(200);
         robot.gripmotor.setPower(0);
     }
 
     private void readpictograph(){
         //back burner
     }
-
-public void analyzeJewels(){
+    public void wait1(int t) throws InterruptedException{
+        TimeUnit.MILLISECONDS.sleep(t);
+    }
+/*public void analyzeJewels(){
         int[] rgb = {robot.cs.red(), robot.cs.green(), robot.cs.blue()};
         if(robot.cs.red()>15){
             if(robot.teamColor.equals(TeamColor.red)){
@@ -153,7 +135,7 @@ public void analyzeJewels(){
             }
         }
         //ends facing away from jewels
-    }
+    }*/
     public android.hardware.Camera initVision(){
         android.hardware.Camera camera = android.hardware.Camera.open(0);
 

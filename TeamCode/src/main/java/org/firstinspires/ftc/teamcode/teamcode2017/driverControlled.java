@@ -31,7 +31,6 @@ public class driverControlled extends LinearOpMode {
         Robot2017 robot = new Robot2017();
         robot.init(hardwareMap);
         robot.initDriveTrain();
-        robot.drive.resetMotors();
         // Wait for the game to start (driver presses PLAY)
         // run until the end of the match (driver presses STOP)
         waitForStart();
@@ -51,12 +50,12 @@ public class driverControlled extends LinearOpMode {
             leftPow = (double) gamepad1.left_stick_y;
             telemetry.addData("left", robot.leftMotor.getCurrentPosition());
             telemetry.addData("right", robot.rightMotor.getCurrentPosition());
-            telemetry.update();
             if(gamepad1.a){
                 armPow = .5;
 
             }
             else if(gamepad1.b){
+                //out
                 armPow = -.5;
 
             }
@@ -65,6 +64,7 @@ public class driverControlled extends LinearOpMode {
             }
 
             if(gamepad1.x){
+                //ungrip
                 gripPow = .2;
             }else if(gamepad1.y){
                 gripPow = -.2;
@@ -92,11 +92,14 @@ public class driverControlled extends LinearOpMode {
             else {
                 lift2Pow = 0;
             }
+            telemetry.addData("grip", robot.lift2.getCurrentPosition());
+            telemetry.update();
 
             robot.leftMotor.setPower(leftPow);
             robot.rightMotor.setPower(rightPow);
             robot.armmotor.setPower(armPow);
             robot.gripmotor.setPower(gripPow);
+
             robot.lift1.setPower(liftPow);
             robot.lift2.setPower(lift2Pow);
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop

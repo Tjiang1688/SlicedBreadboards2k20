@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.game.robot.StartPosition;
 import org.firstinspires.ftc.teamcode.game.robot.TeamColor;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This is NOT an opmode.
@@ -34,7 +35,7 @@ public class Robot2017 {
     public DcMotor armmotor;
     //public ColorSensor colorSensor;
     public Servo jewelservo;
-    public HiTechnicNxtColorSensor cs;
+    //public HiTechnicNxtColorSensor cs;
     /* local OpMode members. */
     private HardwareMap hwMap;
     private Telemetry telemetry;
@@ -43,6 +44,7 @@ public class Robot2017 {
     public DriveTrain drive;
     final float jewelservodown = 1;
     final float jewelservoup = 0;
+    final int lift2d = 4600;
 
     public Robot2017() {
 
@@ -87,7 +89,7 @@ public class Robot2017 {
         //colorSensor = hwMap.colorSensor.get("colorSensor");
         //colorSensor.enableLed(true);
         //check if can cast over
-        cs = (HiTechnicNxtColorSensor) hwMap.colorSensor.get("colorSensor");
+        //cs = (HiTechnicNxtColorSensor) hwMap.colorSensor.get("colorSensor");
     }
 
     /**
@@ -105,8 +107,8 @@ public class Robot2017 {
                 (WHEEL_DIAMETER_INCHES * Math.PI);
         static final double     ROBOT_WIDTH = 17.0;
         static final double     TURN_LENGTH = ROBOT_WIDTH*Math.PI/4;
-        DcMotor.Direction leftDefaultDir = DcMotor.Direction.REVERSE;
-        DcMotor.Direction rightDefaultDir = DcMotor.Direction.FORWARD;
+        DcMotor.Direction leftDefaultDir = DcMotor.Direction.FORWARD;
+        DcMotor.Direction rightDefaultDir = DcMotor.Direction.REVERSE;
 
         Queue<PathSeg> paths = new LinkedBlockingQueue();
 
@@ -130,29 +132,25 @@ public class Robot2017 {
             leftMotor.setDirection(leftDefaultDir);
             rightMotor.setDirection(rightDefaultDir);
         }
-        public void turnLeft() {
-            PathSeg left = new PathSeg(-TURN_LENGTH, TURN_LENGTH);
-            queuePath(left);
-            startPath();
-            while(!pathDone()){
-
-            }
+        public void turnLeft() throws InterruptedException{
+            PathSeg left = new PathSeg(-TURN_LENGTH, TURN_LENGTH, time);
+            startPath(left);
+            wait1(1000);
         }
-        public void turnRight(){
-            PathSeg left = new PathSeg(TURN_LENGTH, -TURN_LENGTH);
-            queuePath(left);
-            startPath();
-            while(!pathDone()){
-
-            }
+        public void turnRight() throws InterruptedException{
+            PathSeg right = new PathSeg(TURN_LENGTH, -TURN_LENGTH, time);
+            startPath(right);
+            wait1(1000);
         }
-        public void move(double length){
-            PathSeg path = new PathSeg(length, length);
-            queuePath(path);
-            startPath();
-            while(!pathDone()){
-
-            }
+        public void turn(int degree) throws InterruptedException{
+            PathSeg turn = new PathSeg(TURN_LENGTH*degree/90, -TURN_LENGTH*degree/90, time);
+            startPath(turn);
+            wait1(degree*10);
+        }
+        public void move(double length)throws InterruptedException{
+            PathSeg path = new PathSeg(length, length, time);
+            startPath(path);
+           wait1((int)length/12*500);
         }
         public void powerDrive(double leftPow, double rightPow) {
             leftMotor.setPower(leftPow);
@@ -170,9 +168,6 @@ public class Robot2017 {
         }
 
         private void startPath(PathSeg path) {
-            if (!paths.contains(path)) {
-                return;
-            }
 
             // Turn On RUN_TO_POSITION
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -222,6 +217,8 @@ public class Robot2017 {
             paths.remove(path);
             stop();
         }
-
+        private void wait1(int t) throws InterruptedException{
+            TimeUnit.MILLISECONDS.sleep(t);
+        }
     }
 }

@@ -18,17 +18,19 @@ public class PathSeg {
     public int rightTarget;
 
     ElapsedTime runtime;
-    double timeOut;
+    double timeOut = 10000;
     double startTime;
 
     static final double timeError = 50; //50 milliseconds
 
     public PathSeg(double leftDistance,
-                   double rightDistance) {
+                   double rightDistance,
+                   ElapsedTime runtime) {
 
         this.leftDistance = leftDistance;
         this.rightDistance = rightDistance;
         speed = .4;
+        this.runtime = runtime;
 
     }
 

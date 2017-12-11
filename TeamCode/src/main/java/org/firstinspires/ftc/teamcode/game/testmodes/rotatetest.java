@@ -32,7 +32,7 @@ public class rotatetest extends LinearOpMode {
 
         while (opModeIsActive()) {
             //robot.drive.queuePath(new PathSeg(14, -14, 0.45, runtime, 10000));
-            robot.drive.queuePath(new PathSeg(14 * 1.2, -14 * 1.2));
+            robot.drive.queuePath(new PathSeg(14 * 1.2, -14 * 1.2, runtime));
             robot.drive.startPath();
 
             while (!robot.drive.pathDone() && opModeIsActive()) {
@@ -44,7 +44,7 @@ public class rotatetest extends LinearOpMode {
             telemetry.update();
             sleep(1000);
 
-            robot.drive.queuePath(new PathSeg(12 * 6.7, 12 * 6.7));
+            robot.drive.queuePath(new PathSeg(12 * 6.7, 12 * 6.7, runtime));
             robot.drive.startPath();
 
             while (!robot.drive.pathDone() && opModeIsActive()) {

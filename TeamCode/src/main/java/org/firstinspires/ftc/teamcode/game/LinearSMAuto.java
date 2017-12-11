@@ -319,7 +319,7 @@ public class LinearSMAuto extends LinearVisionOpMode {
                 states.pop();
 
                 //go towards beacon
-                robot.drive.queuePath(new PathSeg(48, 48));
+                robot.drive.queuePath(new PathSeg(48, 48, runtime));
                 events.push(EVENT.LINE_DETECTED);
 
                 states.push(STATE.START_PATH);
