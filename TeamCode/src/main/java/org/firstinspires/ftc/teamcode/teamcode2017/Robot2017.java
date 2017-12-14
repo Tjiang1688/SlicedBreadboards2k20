@@ -33,9 +33,9 @@ public class Robot2017 {
     public DcMotor lift1;
     public DcMotor lift2;
     public DcMotor armmotor;
-    //public ColorSensor colorSensor;
+
     public Servo jewelservo;
-    //public HiTechnicNxtColorSensor cs;
+    public ColorSensor cs;
     /* local OpMode members. */
     private HardwareMap hwMap;
     private Telemetry telemetry;
@@ -89,7 +89,9 @@ public class Robot2017 {
         //colorSensor = hwMap.colorSensor.get("colorSensor");
         //colorSensor.enableLed(true);
         //check if can cast over
-        //cs = (HiTechnicNxtColorSensor) hwMap.colorSensor.get("colorSensor");
+        cs = hwMap.colorSensor.get("colorSensor");
+        cs.enableLed(true);
+
     }
 
     /**

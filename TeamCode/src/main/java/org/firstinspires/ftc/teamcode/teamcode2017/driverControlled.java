@@ -42,6 +42,9 @@ public class driverControlled extends LinearOpMode {
         double liftPow = 0;
         double lift2Pow = 0;
         //motor power is from -1.0 to 1.0;
+        telemetry.addData("Status", "Initialized");
+        telemetry.addData("colorsensor", robot.cs.getDeviceName());
+        telemetry.update();
         while (opModeIsActive()) {
 
             // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards
@@ -83,6 +86,13 @@ public class driverControlled extends LinearOpMode {
                 liftPow = 0;
             }
 
+            if(gamepad1.left_trigger> .5){
+                robot.jewelservo.setPosition(robot.jewelservo.getPosition() + .01);
+            }
+            else if(gamepad1.right_trigger > .5){
+                robot.jewelservo.setPosition(robot.jewelservo.getPosition() - .01);
+            }
+            telemetry.addData("jewelservo position", robot.jewelservo.getPosition());
             if(gamepad1.dpad_right){
                 lift2Pow = -.4;
             }
@@ -93,6 +103,10 @@ public class driverControlled extends LinearOpMode {
                 lift2Pow = 0;
             }
             telemetry.addData("grip", robot.lift2.getCurrentPosition());
+            telemetry.addData("red", robot.cs.red());
+            telemetry.addData("green", robot.cs.green());
+            telemetry.addData("blue", robot.cs.blue());
+
             telemetry.update();
 
             robot.leftMotor.setPower(leftPow);

@@ -33,9 +33,27 @@ public class Auto extends LinearOpMode{
         //Camera frames and OpenCV analysis will be delivered to this method as quickly as possible
         //This loop will exit once the opmode is closed
         while (opModeIsActive()) {
-            gripglyph();
-            wait1(1500);
+            /* plan:
+             * gripglyph
+             * put jewelservo down
+             * drive backwards towards jewel
+             * colorsense
+             * knock the correct jewel
+             * move jewelservo back up
+             * turn back to the right direction
+             * turn like 135 degrees ish
+             * drive forward until you reach cryptobox (trig calculations?)
+             * park there, let go of glyph
+             *
+             *
+             *
+             *
+             */
 
+            gripglyph();
+            wait1(100);
+            analyzeJewels();
+            wait1(300);
             robot.drive.move(36);
             if(robot.startPosition == StartPosition.right){
                 robot.drive.turnLeft();
@@ -110,32 +128,35 @@ public class Auto extends LinearOpMode{
     public void wait1(int t) throws InterruptedException{
         TimeUnit.MILLISECONDS.sleep(t);
     }
-/*public void analyzeJewels(){
-        int[] rgb = {robot.cs.red(), robot.cs.green(), robot.cs.blue()};
+public void analyzeJewels() throws InterruptedException{
+        robot.jewelservo.setPosition(robot.jewelservodown);
         if(robot.cs.red()>15){
             if(robot.teamColor.equals(TeamColor.red)){
-                robot.drive.turnLeft();
-                robot.drive.turnLeft();
+                robot.drive.turn(-30);
+                robot.jewelservo.setPosition(robot.jewelservoup);
+                robot.drive.turn(30);
 
             }
             else{
-                robot.drive.turnRight();
-                robot.drive.turnRight();
+                robot.drive.turn(30);
+                robot.jewelservo.setPosition(robot.jewelservoup);
+                robot.drive.turn(-30);
             }
         }
         else if(robot.cs.blue()>15){
             if(robot.teamColor.equals(TeamColor.blue)){
-                robot.drive.turnLeft();
-                robot.drive.turnLeft();
-
+                robot.drive.turn(-30);
+                robot.jewelservo.setPosition(robot.jewelservoup);
+                robot.drive.turn(30);
             }
             else{
-                robot.drive.turnRight();
-                robot.drive.turnRight();
+                robot.drive.turn(30);
+                robot.jewelservo.setPosition(robot.jewelservoup);
+                robot.drive.turn(-30);
             }
         }
         //ends facing away from jewels
-    }*/
+    }
     public android.hardware.Camera initVision(){
         android.hardware.Camera camera = android.hardware.Camera.open(0);
 
