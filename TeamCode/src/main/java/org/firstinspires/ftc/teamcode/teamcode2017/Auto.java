@@ -14,9 +14,6 @@ public class Auto extends LinearOpMode{
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
 
-    private final double PERIODIC_INTERVAL = 100; //in milliseconds
-    private double nextPeriodicTime;
-
     public void runOpMode() throws InterruptedException {
         robot = new Robot2017(TeamColor.red, StartPosition.left);
         robot.init(hardwareMap);
@@ -28,27 +25,7 @@ public class Auto extends LinearOpMode{
 
         //Wait for the match to begin, presses start button
         waitForStart();
-
-        //Main loop
-        //Camera frames and OpenCV analysis will be delivered to this method as quickly as possible
-        //This loop will exit once the opmode is closed
         while (opModeIsActive()) {
-            /* plan:
-             * gripglyph
-             * put jewelservo down
-             * drive backwards towards jewel
-             * colorsense
-             * knock the correct jewel
-             * move jewelservo back up
-             * turn back to the right direction
-             * turn like 135 degrees ish
-             * drive forward until you reach cryptobox (trig calculations?)
-             * park there, let go of glyph
-             *
-             *
-             *
-             *
-             */
 
             gripglyph();
             wait1(100);
@@ -62,18 +39,21 @@ public class Auto extends LinearOpMode{
                 robot.drive.turn(-32);
                 robot.drive.move(20);
             }
+            //blue left
             else if(robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.blue){
                 robot.drive.turnLeft();
                 robot.drive.move(24);
                 robot.drive.turn(32);
                 robot.drive.move(20);
             }
+            //red left
             else if(robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.red){
                 robot.drive.turnRight();
                 robot.drive.move(21);
                 robot.drive.turn(58);
                 robot.drive.move(20);
             }
+            //blue right
             else if(robot.startPosition == StartPosition.right && robot.teamColor == TeamColor.blue){
                 robot.drive.turnLeft();
                 robot.drive.move(21);
@@ -87,10 +67,7 @@ public class Auto extends LinearOpMode{
             robot.lift1.setPower(-.4);
             wait1(600);
             robot.lift1.setPower(0);
-
-
-
-
+            idle();
         }
 
     }

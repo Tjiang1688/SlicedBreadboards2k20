@@ -87,10 +87,10 @@ public class driverControlled extends LinearOpMode {
             }
 
             if(gamepad1.left_trigger> .5){
-                robot.jewelservo.setPosition(robot.jewelservo.getPosition() + .01);
+                robot.jewelservo.setPosition(.5);
             }
             else if(gamepad1.right_trigger > .5){
-                robot.jewelservo.setPosition(robot.jewelservo.getPosition() - .01);
+                robot.jewelservo.setPosition(.4);
             }
             telemetry.addData("jewelservo position", robot.jewelservo.getPosition());
             if(gamepad1.dpad_right){
