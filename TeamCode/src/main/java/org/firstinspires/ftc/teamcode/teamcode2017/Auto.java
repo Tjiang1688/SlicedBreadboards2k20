@@ -55,35 +55,6 @@ public class Auto extends LinearOpMode{
             analyzeJewels();
             wait1(300);
 
-
-
-
-
-            if(robot.startPosition == StartPosition.right){
-                robot.drive.turnLeft();
-                telemetry.addData("turning left", "team right");
-            }
-            else if(robot.startPosition == StartPosition.left){
-                robot.drive.turnRight();
-                telemetry.addData("turning right", "team left");
-            }
-            robot.drive.move(36);
-            telemetry.update();
-            wait1(1000);
-            if(robot.startPosition == StartPosition.right){
-                robot.drive.turnLeft();
-                telemetry.addData("turning left", "team right");
-            }
-            else if(robot.startPosition == StartPosition.left){
-                robot.drive.turnRight();
-                telemetry.addData("turning right", "team left");
-            }
-            robot.drive.move(3);
-            armForward();
-            wait1(1000);
-            ungripglyph();
-            wait1(10000);
-
             //red right
             if(robot.startPosition == StartPosition.right && robot.teamColor == TeamColor.red){
                 robot.drive.turnRight();
@@ -97,10 +68,16 @@ public class Auto extends LinearOpMode{
                 robot.drive.turn(32);
                 robot.drive.move(20);
             }
-            if(robot.startPosition == StartPosition.right && robot.teamColor == TeamColor.red){
+            else if(robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.red){
                 robot.drive.turnRight();
-                robot.drive.move(24);
-                robot.drive.turn(-32);
+                robot.drive.move(21);
+                robot.drive.turn(58);
+                robot.drive.move(20);
+            }
+            else if(robot.startPosition == StartPosition.right && robot.teamColor == TeamColor.blue){
+                robot.drive.turnLeft();
+                robot.drive.move(21);
+                robot.drive.turn(-58);
                 robot.drive.move(20);
             }
             armForward();
