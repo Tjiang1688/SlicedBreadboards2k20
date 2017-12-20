@@ -109,8 +109,8 @@ public class Robot2017 {
                 (WHEEL_DIAMETER_INCHES * Math.PI);
         static final double     ROBOT_WIDTH = 17.0;
         static final double     TURN_LENGTH = ROBOT_WIDTH*Math.PI/4;
-        DcMotor.Direction leftDefaultDir = DcMotor.Direction.FORWARD;
-        DcMotor.Direction rightDefaultDir = DcMotor.Direction.REVERSE;
+        DcMotor.Direction leftDefaultDir = DcMotor.Direction.REVERSE;
+        DcMotor.Direction rightDefaultDir = DcMotor.Direction.FORWARD;
 
         Queue<PathSeg> paths = new LinkedBlockingQueue();
 

@@ -125,7 +125,7 @@ public class Auto extends LinearOpMode{
     }
 public void analyzeJewels() throws InterruptedException{
         robot.jewelservo.setPosition(robot.jewelservodown);
-        if(robot.cs.red()>15){
+        if(robot.cs.red()>robot.cs.blue()){
             if(robot.teamColor.equals(TeamColor.red)){
                 robot.drive.turn(-30);
                 robot.jewelservo.setPosition(robot.jewelservoup);
@@ -138,7 +138,7 @@ public void analyzeJewels() throws InterruptedException{
                 robot.drive.turn(-30);
             }
         }
-        else if(robot.cs.blue()>15){
+        else{
             if(robot.teamColor.equals(TeamColor.blue)){
                 robot.drive.turn(-30);
                 robot.jewelservo.setPosition(robot.jewelservoup);

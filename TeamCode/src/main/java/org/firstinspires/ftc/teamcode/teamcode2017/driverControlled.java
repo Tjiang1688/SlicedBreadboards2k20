@@ -31,6 +31,7 @@ public class driverControlled extends LinearOpMode {
         Robot2017 robot = new Robot2017();
         robot.init(hardwareMap);
         robot.initDriveTrain();
+        robot.drive.resetMotors();
         // Wait for the game to start (driver presses PLAY)
         // run until the end of the match (driver presses STOP)
         waitForStart();
@@ -87,12 +88,11 @@ public class driverControlled extends LinearOpMode {
             }
 
             if(gamepad1.left_trigger> .5){
-                robot.jewelservo.setPosition(.5);
+                robot.jewelservo.setPosition(1);
             }
             else if(gamepad1.right_trigger > .5){
-                robot.jewelservo.setPosition(.4);
+                robot.jewelservo.setPosition(0);
             }
-            telemetry.addData("jewelservo position", robot.jewelservo.getPosition());
             if(gamepad1.dpad_right){
                 lift2Pow = -.4;
             }
@@ -102,6 +102,8 @@ public class driverControlled extends LinearOpMode {
             else {
                 lift2Pow = 0;
             }
+            telemetry.addData("jewelservo position", robot.jewelservo.getPosition());
+            telemetry.addData("jewelservo direction", robot.jewelservo.getDirection());
             telemetry.addData("grip", robot.lift2.getCurrentPosition());
             telemetry.addData("red", robot.cs.red());
             telemetry.addData("green", robot.cs.green());
