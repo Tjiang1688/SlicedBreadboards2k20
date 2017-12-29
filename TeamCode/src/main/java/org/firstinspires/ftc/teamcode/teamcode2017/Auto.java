@@ -28,37 +28,53 @@ public class Auto extends LinearOpMode{
         while (opModeIsActive()) {
 
             gripglyph();
-            wait1(100);
+            wait1(1000);
             analyzeJewels();
-            wait1(300);
+            wait1(1000);
 
             //red right
             if(robot.startPosition == StartPosition.right && robot.teamColor == TeamColor.red){
                 robot.drive.turnRight();
+                wait1(1000);
                 robot.drive.move(24);
+                wait1(1000);
                 robot.drive.turn(-32);
+                wait1(1000);
                 robot.drive.move(20);
+                wait1(1000);
             }
             //blue left
             else if(robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.blue){
                 robot.drive.turnLeft();
+                wait1(1000);
                 robot.drive.move(24);
+                wait1(1000);
                 robot.drive.turn(32);
+                wait1(1000);
                 robot.drive.move(20);
+                wait1(1000);
             }
             //red left
             else if(robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.red){
                 robot.drive.turnRight();
+                wait1(1000);
                 robot.drive.move(21);
+                wait1(1000);
                 robot.drive.turn(58);
+                wait1(1000);
                 robot.drive.move(20);
+                wait1(1000);
             }
             //blue right
             else if(robot.startPosition == StartPosition.right && robot.teamColor == TeamColor.blue){
                 robot.drive.turnLeft();
+                wait1(1000);
                 robot.drive.move(21);
+                wait1(1000);
                 robot.drive.turn(-58);
+                wait1(1000);
                 robot.drive.move(20);
+                wait1(1000);
             }
             armForward();
             wait1(1000);
@@ -123,31 +139,49 @@ public class Auto extends LinearOpMode{
     public void wait1(int t) throws InterruptedException{
         TimeUnit.MILLISECONDS.sleep(t);
     }
-public void analyzeJewels() throws InterruptedException{
+    public void analyzeJewels() throws InterruptedException{
         robot.jewelservo.setPosition(robot.jewelservodown);
+        wait1(2000);
+        telemetry.addData("red", robot.cs.red());
+        telemetry.addData("blue", robot.cs.blue());
+        telemetry.update();
+        while(robot.cs.red() == 0 && robot.cs.blue() == 0){
+            robot.drive.turn(1);
+        }
         if(robot.cs.red()>robot.cs.blue()){
             if(robot.teamColor.equals(TeamColor.red)){
                 robot.drive.turn(-30);
+                wait1(1000);
                 robot.jewelservo.setPosition(robot.jewelservoup);
+                wait1(1000);
                 robot.drive.turn(30);
-
+                wait1(1000);
             }
             else{
                 robot.drive.turn(30);
+                wait1(1000);
                 robot.jewelservo.setPosition(robot.jewelservoup);
+                wait1(1000);
                 robot.drive.turn(-30);
+                wait1(1000);
             }
         }
         else{
             if(robot.teamColor.equals(TeamColor.blue)){
                 robot.drive.turn(-30);
+                wait1(1000);
                 robot.jewelservo.setPosition(robot.jewelservoup);
+                wait1(1000);
                 robot.drive.turn(30);
+                wait1(1000);
             }
             else{
                 robot.drive.turn(30);
+                wait1(1000);
                 robot.jewelservo.setPosition(robot.jewelservoup);
+                wait1(1000);
                 robot.drive.turn(-30);
+                wait1(1000);
             }
         }
         //ends facing away from jewels

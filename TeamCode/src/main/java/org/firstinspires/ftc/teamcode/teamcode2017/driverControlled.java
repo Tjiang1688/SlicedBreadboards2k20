@@ -46,12 +46,13 @@ public class driverControlled extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.addData("colorsensor", robot.cs.getDeviceName());
         telemetry.update();
+        robot.jewelservo.setPosition(robot.jewelservoup);
         while (opModeIsActive()) {
 
             // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards
             //float to double, get power from controller
-            rightPow = (double) gamepad1.right_stick_y;
-            leftPow = (double) gamepad1.left_stick_y;
+            rightPow = (double) gamepad1.right_stick_y/3*2;
+            leftPow = (double) gamepad1.left_stick_y/3*2;
             telemetry.addData("left", robot.leftMotor.getCurrentPosition());
             telemetry.addData("right", robot.rightMotor.getCurrentPosition());
             if(gamepad1.a){
@@ -77,31 +78,37 @@ public class driverControlled extends LinearOpMode {
                 gripPow = 0;
             }
 
-            if(gamepad1.dpad_up){
+            if(gamepad1.right_trigger > .5){
                 liftPow = -.4;
             }
-            else if(gamepad1.dpad_down){
+            else if(gamepad1.right_bumper){
                 liftPow = .2;
             }
             else{
                 liftPow = 0;
             }
 
-            if(gamepad1.left_trigger> .5){
-                robot.jewelservo.setPosition(1);
+            if(gamepad1.dpad_down){
+                robot.jewelservo.setPosition(robot.jewelservodown);
             }
-            else if(gamepad1.right_trigger > .5){
-                robot.jewelservo.setPosition(0);
+            else if(gamepad1.dpad_up){
+                robot.jewelservo.setPosition(robot.jewelservoup);
             }
-            if(gamepad1.dpad_right){
+            if(gamepad1.left_trigger > .5){
                 lift2Pow = -.4;
             }
-            else if(gamepad1.dpad_left){
+            else if(gamepad1.left_bumper){
                 lift2Pow = .2;
             }
             else {
                 lift2Pow = 0;
             }
+
+            double[] targets = {rightPow, leftPow};
+            double[] powers = {robot.rightMotor.getPower(),
+                    robot.leftMotor.getPower()};
+            targets = accel(powers, targets);
+
             telemetry.addData("jewelservo position", robot.jewelservo.getPosition());
             telemetry.addData("jewelservo direction", robot.jewelservo.getDirection());
             telemetry.addData("grip", robot.lift2.getCurrentPosition());
@@ -121,13 +128,16 @@ public class driverControlled extends LinearOpMode {
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
     }
-    private double min(double a, double b){
-        if(Math.abs(a) > Math.abs(b)){
-            return b;
+    private double[] accel(double[] powers, double[] targets){
+        for(int i = 0; i<powers.length; i++){
+            if(powers[i]<targets[i]-.0003){
+                targets[i] += .0003;
+            }
+            else if (powers[i]>targets[i]+.0003) {
+                targets[i] -= .0003;
+            }
+
         }
-        else if(Math.abs(a) < Math.abs(b)){
-            return a;
-        }
-        return a;
+        return targets;
     }
 }

@@ -29,7 +29,7 @@ public class PathSeg {
 
         this.leftDistance = leftDistance;
         this.rightDistance = rightDistance;
-        speed = .4;
+        speed = .2;
         this.runtime = runtime;
 
     }

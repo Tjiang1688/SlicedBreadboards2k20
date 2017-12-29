@@ -42,8 +42,8 @@ public class Robot2017 {
     private ElapsedTime time;
 
     public DriveTrain drive;
-    final float jewelservodown = 1;
-    final float jewelservoup = 0;
+    final float jewelservodown = (float) .87;
+    final float jewelservoup = (float) 0.2;
     final int lift2d = 4600;
 
     public Robot2017() {
@@ -145,7 +145,7 @@ public class Robot2017 {
             wait1(1000);
         }
         public void turn(int degree) throws InterruptedException{
-            PathSeg turn = new PathSeg(TURN_LENGTH*degree/90, -TURN_LENGTH*degree/90, time);
+            PathSeg turn = new PathSeg(-TURN_LENGTH*degree/90, TURN_LENGTH*degree/90, time);
             startPath(turn);
             wait1(degree*10);
         }
