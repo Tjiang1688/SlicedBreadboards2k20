@@ -31,50 +31,50 @@ public class Auto extends LinearOpMode{
             wait1(1000);
             analyzeJewels();
             wait1(1000);
+            robot.drive.move(28);
+
 
             //red right
             if(robot.startPosition == StartPosition.right && robot.teamColor == TeamColor.red){
                 robot.drive.turnRight();
-                wait1(1000);
                 robot.drive.move(24);
-                wait1(1000);
+                robot.drive.turnRight();
+                robot.drive.move(28);
+                robot.drive.turnLeft();
                 robot.drive.turn(-32);
-                wait1(1000);
                 robot.drive.move(20);
-                wait1(1000);
             }
             //blue left
             else if(robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.blue){
                 robot.drive.turnLeft();
-                wait1(1000);
                 robot.drive.move(24);
-                wait1(1000);
+                robot.drive.turnLeft();
+                robot.drive.move(28);
+                robot.drive.turnRight();
+                robot.drive.move(24);
                 robot.drive.turn(32);
-                wait1(1000);
                 robot.drive.move(20);
-                wait1(1000);
             }
             //red left
             else if(robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.red){
                 robot.drive.turnRight();
-                wait1(1000);
                 robot.drive.move(21);
-                wait1(1000);
+                robot.drive.turnRight();
+                robot.drive.move(28);
+                robot.drive.turnLeft();
                 robot.drive.turn(58);
-                wait1(1000);
                 robot.drive.move(20);
-                wait1(1000);
             }
             //blue right
             else if(robot.startPosition == StartPosition.right && robot.teamColor == TeamColor.blue){
                 robot.drive.turnLeft();
-                wait1(1000);
+                robot.drive.move(24);
+                robot.drive.turnLeft();
+                robot.drive.move(28);
+                robot.drive.turnRight();
                 robot.drive.move(21);
-                wait1(1000);
                 robot.drive.turn(-58);
-                wait1(1000);
                 robot.drive.move(20);
-                wait1(1000);
             }
             armForward();
             wait1(1000);
@@ -84,6 +84,7 @@ public class Auto extends LinearOpMode{
             wait1(600);
             robot.lift1.setPower(0);
             idle();
+            wait1(30000);
         }
 
     }
@@ -145,11 +146,15 @@ public class Auto extends LinearOpMode{
         telemetry.addData("red", robot.cs.red());
         telemetry.addData("blue", robot.cs.blue());
         telemetry.update();
+        int count = 0;
         while(robot.cs.red() == 0 && robot.cs.blue() == 0){
             robot.drive.turn(1);
+            count++;
         }
         if(robot.cs.red()>robot.cs.blue()){
+            telemetry.addData("ball color", "red");
             if(robot.teamColor.equals(TeamColor.red)){
+                telemetry.addData("turning left", "");
                 robot.drive.turn(-30);
                 wait1(1000);
                 robot.jewelservo.setPosition(robot.jewelservoup);
@@ -158,6 +163,7 @@ public class Auto extends LinearOpMode{
                 wait1(1000);
             }
             else{
+                telemetry.addData("turning right", "");
                 robot.drive.turn(30);
                 wait1(1000);
                 robot.jewelservo.setPosition(robot.jewelservoup);
@@ -166,8 +172,10 @@ public class Auto extends LinearOpMode{
                 wait1(1000);
             }
         }
-        else{
+        else if(robot.cs.red()<robot.cs.blue()){
+            telemetry.addData("ball color", "red");
             if(robot.teamColor.equals(TeamColor.blue)){
+                telemetry.addData("turning left", "");
                 robot.drive.turn(-30);
                 wait1(1000);
                 robot.jewelservo.setPosition(robot.jewelservoup);
@@ -176,6 +184,7 @@ public class Auto extends LinearOpMode{
                 wait1(1000);
             }
             else{
+                telemetry.addData("turning right", "");
                 robot.drive.turn(30);
                 wait1(1000);
                 robot.jewelservo.setPosition(robot.jewelservoup);
@@ -184,6 +193,7 @@ public class Auto extends LinearOpMode{
                 wait1(1000);
             }
         }
+        robot.drive.turn(-count);
         //ends facing away from jewels
     }
     public android.hardware.Camera initVision(){

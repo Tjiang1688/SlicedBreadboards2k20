@@ -42,7 +42,7 @@ public class Robot2017 {
     private ElapsedTime time;
 
     public DriveTrain drive;
-    final float jewelservodown = (float) .87;
+    final float jewelservodown = (float) .95;
     final float jewelservoup = (float) 0.2;
     final int lift2d = 4600;
 
@@ -137,22 +137,24 @@ public class Robot2017 {
         public void turnLeft() throws InterruptedException{
             PathSeg left = new PathSeg(-TURN_LENGTH, TURN_LENGTH, time);
             startPath(left);
-            wait1(1000);
+            wait1(2000);
         }
         public void turnRight() throws InterruptedException{
             PathSeg right = new PathSeg(TURN_LENGTH, -TURN_LENGTH, time);
             startPath(right);
-            wait1(1000);
+            wait1(2000);
         }
         public void turn(int degree) throws InterruptedException{
             PathSeg turn = new PathSeg(-TURN_LENGTH*degree/90, TURN_LENGTH*degree/90, time);
             startPath(turn);
-            wait1(degree*10);
+            wait1(Math.abs(degree*10));
+            wait1(1000);
         }
         public void move(double length)throws InterruptedException{
             PathSeg path = new PathSeg(length, length, time);
             startPath(path);
-           wait1((int)length/12*500);
+            wait1((int)length/12*500);
+            wait1(1000);
         }
         public void powerDrive(double leftPow, double rightPow) {
             leftMotor.setPower(leftPow);

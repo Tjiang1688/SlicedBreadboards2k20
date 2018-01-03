@@ -54,7 +54,7 @@ public class singleJoystick extends LinearOpMode {
 
             if(gamepad1.right_stick_x <0){
                 rightPow = 1.0;
-                leftPow = (double) gamepad1.left_stick_y;
+                leftPow = (double) gamepad1.right_stick_y;
             }
             else if (gamepad2.right_stick_x > 0){
                 rightPow = (double) gamepad1.right_stick_y;
@@ -62,7 +62,7 @@ public class singleJoystick extends LinearOpMode {
             }
             else{
                 rightPow = (double) gamepad1.right_stick_y;
-                leftPow = (double) gamepad1.left_stick_y;
+                leftPow = (double) gamepad1.right_stick_y;
             }
             telemetry.addData("left", robot.leftMotor.getCurrentPosition());
             telemetry.addData("right", robot.rightMotor.getCurrentPosition());

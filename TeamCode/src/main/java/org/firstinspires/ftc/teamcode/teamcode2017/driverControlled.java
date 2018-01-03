@@ -70,9 +70,9 @@ public class driverControlled extends LinearOpMode {
 
             if(gamepad1.x){
                 //ungrip
-                gripPow = .2;
+                gripPow = .1;
             }else if(gamepad1.y){
-                gripPow = -.2;
+                gripPow = -.1;
             }
             else{
                 gripPow = 0;
