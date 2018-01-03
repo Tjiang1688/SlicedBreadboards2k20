@@ -42,7 +42,7 @@ public class Robot2017 {
     private ElapsedTime time;
 
     public DriveTrain drive;
-    final float jewelservodown = (float) .95;
+    final float jewelservodown = (float) 1.0;
     final float jewelservoup = (float) 0.2;
     final int lift2d = 4600;
 
