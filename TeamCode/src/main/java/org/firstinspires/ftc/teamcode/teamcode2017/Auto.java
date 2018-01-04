@@ -31,47 +31,33 @@ public class Auto extends LinearOpMode{
             wait1(1000);
             analyzeJewels();
             wait1(1000);
-            robot.drive.move(28);
+            robot.drive.move(3);
 
 
             //red right
-            if(robot.startPosition == StartPosition.right && robot.teamColor == TeamColor.red){
+            if(robot.startPosition == StartPosition.right && robot.teamColor == TeamColor.blue){
                 robot.drive.turnRight();
-                robot.drive.move(24);
-                robot.drive.turnRight();
-                robot.drive.move(28);
-                robot.drive.turnLeft();
+                robot.drive.move(48);
                 robot.drive.turn(-32);
                 robot.drive.move(20);
             }
             //blue left
-            else if(robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.blue){
+            else if(robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.red){
                 robot.drive.turnLeft();
-                robot.drive.move(24);
-                robot.drive.turnLeft();
-                robot.drive.move(28);
-                robot.drive.turnRight();
-                robot.drive.move(24);
+                robot.drive.move(48);
                 robot.drive.turn(32);
                 robot.drive.move(20);
             }
             //red left
-            else if(robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.red){
+            else if(robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.blue){
                 robot.drive.turnRight();
                 robot.drive.move(21);
-                robot.drive.turnRight();
-                robot.drive.move(28);
-                robot.drive.turnLeft();
                 robot.drive.turn(58);
                 robot.drive.move(20);
             }
             //blue right
-            else if(robot.startPosition == StartPosition.right && robot.teamColor == TeamColor.blue){
+            else if(robot.startPosition == StartPosition.right && robot.teamColor == TeamColor.red){
                 robot.drive.turnLeft();
-                robot.drive.move(24);
-                robot.drive.turnLeft();
-                robot.drive.move(28);
-                robot.drive.turnRight();
                 robot.drive.move(21);
                 robot.drive.turn(-58);
                 robot.drive.move(20);

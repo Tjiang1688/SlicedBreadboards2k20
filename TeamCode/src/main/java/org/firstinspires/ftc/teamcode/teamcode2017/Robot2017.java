@@ -151,7 +151,7 @@ public class Robot2017 {
             wait1(1000);
         }
         public void move(double length)throws InterruptedException{
-            PathSeg path = new PathSeg(length, length, time);
+            PathSeg path = new PathSeg(-length, -length, time);
             startPath(path);
             wait1((int)length/12*500);
             wait1(1000);
