@@ -78,27 +78,28 @@ public class driverControlled extends LinearOpMode {
                 gripPow = 0;
             }
 
-            if(gamepad1.right_trigger > .5){
+            if(gamepad1.dpad_up){
                 liftPow = -.4;
             }
-            else if(gamepad1.right_bumper){
+            else if(gamepad1.dpad_down){
                 liftPow = .2;
             }
             else{
                 liftPow = 0;
             }
 
-            if(gamepad1.dpad_down){
+            if(gamepad1.right_trigger > .5){
                 robot.jewelservo.setPosition(robot.jewelservodown);
             }
-            else if(gamepad1.dpad_up){
+            else if(gamepad1.right_bumper){
                 robot.jewelservo.setPosition(robot.jewelservoup);
             }
-            if(gamepad1.left_trigger > .5){
-                lift2Pow = -.4;
+
+            if(gamepad1.dpad_left){
+                lift2Pow = -.1;
             }
-            else if(gamepad1.left_bumper){
-                lift2Pow = .2;
+            else if(gamepad1.dpad_right){
+                lift2Pow = .1;
             }
             else {
                 lift2Pow = 0;
@@ -111,15 +112,14 @@ public class driverControlled extends LinearOpMode {
 
             telemetry.addData("jewelservo position", robot.jewelservo.getPosition());
             telemetry.addData("jewelservo direction", robot.jewelservo.getDirection());
-            telemetry.addData("grip", robot.lift2.getCurrentPosition());
             telemetry.addData("red", robot.cs.red());
-            telemetry.addData("green", robot.cs.green());
             telemetry.addData("blue", robot.cs.blue());
-
+            telemetry.addData("ods", robot.ods.getLightDetected());
+            telemetry.addData("ods", robot.ods.getRawLightDetected());
             telemetry.update();
 
-            robot.leftMotor.setPower(leftPow);
-            robot.rightMotor.setPower(rightPow);
+            robot.leftMotor.setPower(targets[1]);
+            robot.rightMotor.setPower(targets[0]);
             robot.armmotor.setPower(armPow);
             robot.gripmotor.setPower(gripPow);
 
@@ -130,14 +130,13 @@ public class driverControlled extends LinearOpMode {
     }
     private double[] accel(double[] powers, double[] targets){
         for(int i = 0; i<powers.length; i++){
-            if(powers[i]<targets[i]-.0003){
-                targets[i] += .0003;
+            if(powers[i]<targets[i]-.0001){
+                powers[i] += .0001;
             }
-            else if (powers[i]>targets[i]+.0003) {
-                targets[i] -= .0003;
+            else if (powers[i]>targets[i]+.0001) {
+                powers[i] -= .0001;
             }
-
         }
-        return targets;
+        return powers;
     }
 }

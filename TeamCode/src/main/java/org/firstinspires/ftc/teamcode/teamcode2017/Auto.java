@@ -26,40 +26,49 @@ public class Auto extends LinearOpMode{
         //Wait for the match to begin, presses start button
         waitForStart();
         while (opModeIsActive()) {
-
             gripglyph();
             wait1(1000);
+            robot.jewelservo.setPosition(robot.jewelservodown);
+            robot.leftMotor.setPower(.2);
+            robot.rightMotor.setPower(.2);
+
+            while (robot.ods.getLightDetected() > .5){
+
+            }
+            robot.leftMotor.setPower(0);
+            robot.rightMotor.setPower(0);
+
             analyzeJewels();
             wait1(1000);
             robot.drive.move(3);
 
 
-            //red right
-            if(robot.startPosition == StartPosition.right && robot.teamColor == TeamColor.blue){
+
+            if(robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.blue){
                 robot.drive.turnRight();
-                robot.drive.move(48);
-                robot.drive.turn(-32);
-                robot.drive.move(20);
-            }
-            //blue left
-            else if(robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.red){
-                robot.drive.turnLeft();
                 robot.drive.move(48);
                 robot.drive.turn(32);
                 robot.drive.move(20);
             }
-            //red left
-            else if(robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.blue){
-                robot.drive.turnRight();
-                robot.drive.move(21);
-                robot.drive.turn(58);
-                robot.drive.move(20);
-            }
-            //blue right
+
             else if(robot.startPosition == StartPosition.right && robot.teamColor == TeamColor.red){
                 robot.drive.turnLeft();
+                robot.drive.move(48);
+                robot.drive.turn(-32);
+                robot.drive.move(20);
+            }
+
+            else if(robot.startPosition == StartPosition.right && robot.teamColor == TeamColor.blue){
+                robot.drive.turnRight();
                 robot.drive.move(21);
                 robot.drive.turn(-58);
+                robot.drive.move(20);
+            }
+
+            else if(robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.red){
+                robot.drive.turnLeft();
+                robot.drive.move(21);
+                robot.drive.turn(58);
                 robot.drive.move(20);
             }
             armForward();
@@ -69,8 +78,11 @@ public class Auto extends LinearOpMode{
             robot.lift1.setPower(-.4);
             wait1(600);
             robot.lift1.setPower(0);
+
             idle();
+
             wait1(30000);
+
         }
 
     }
@@ -107,7 +119,7 @@ public class Auto extends LinearOpMode{
     }
 
     private void gripglyph() throws InterruptedException {
-        robot.gripmotor.setPower(-.2);
+        robot.gripmotor.setPower(.2);
         wait1(600);
         robot.gripmotor.setPower(0);
         robot.lift1.setPower(-.4);
@@ -115,7 +127,7 @@ public class Auto extends LinearOpMode{
         robot.lift1.setPower(0);
     }
     private void ungripglyph() throws InterruptedException{
-        robot.gripmotor.setPower(.2);
+        robot.gripmotor.setPower(-.2);
         wait1(200);
         robot.gripmotor.setPower(0);
     }
@@ -127,7 +139,7 @@ public class Auto extends LinearOpMode{
         TimeUnit.MILLISECONDS.sleep(t);
     }
     public void analyzeJewels() throws InterruptedException{
-        robot.jewelservo.setPosition(robot.jewelservodown);
+
         wait1(2000);
         telemetry.addData("red", robot.cs.red());
         telemetry.addData("blue", robot.cs.blue());

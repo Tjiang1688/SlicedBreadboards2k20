@@ -42,6 +42,10 @@ public class singleJoystick extends LinearOpMode {
         double gripPow = 0;
         double liftPow = 0;
         double lift2Pow = 0;
+        double pow = 0;
+        double angle = 0;
+        double x = 0;
+        double y = 0;
         //motor power is from -1.0 to 1.0;
         telemetry.addData("Status", "Initialized");
         telemetry.addData("colorsensor", robot.cs.getDeviceName());
@@ -50,20 +54,28 @@ public class singleJoystick extends LinearOpMode {
 
             // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards
             //float to double, get power from controller
+            x = gamepad1.right_stick_x;
+            y = gamepad1.right_stick_y;
+            angle = Math.toDegrees(Math.atan(y/x));
+            pow = Math.sqrt((y*y) + (x*x));
+            if(x > 0){
+                leftPow = pow;
+                rightPow = angle/90 * pow;
+            }
+            else if (x < 0){
+                rightPow = pow;
+                leftPow = angle/90 * pow;
+            }
+            else {
+                rightPow = pow;
+                leftPow = pow;
+            }
 
+            if(y<0){
+                leftPow = -leftPow;
+                rightPow = -rightPow;
+            }
 
-            if(gamepad1.right_stick_x <0){
-                rightPow = 1.0;
-                leftPow = (double) gamepad1.right_stick_y;
-            }
-            else if (gamepad2.right_stick_x > 0){
-                rightPow = (double) gamepad1.right_stick_y;
-                leftPow = 1.0;
-            }
-            else{
-                rightPow = (double) gamepad1.right_stick_y;
-                leftPow = (double) gamepad1.right_stick_y;
-            }
             telemetry.addData("left", robot.leftMotor.getCurrentPosition());
             telemetry.addData("right", robot.rightMotor.getCurrentPosition());
 
@@ -103,10 +115,10 @@ public class singleJoystick extends LinearOpMode {
             }
 
             if(gamepad1.left_trigger> .5){
-                robot.jewelservo.setPosition(1);
+                robot.jewelservo.setPosition(robot.jewelservodown);
             }
             else if(gamepad1.right_trigger > .5){
-                robot.jewelservo.setPosition(0);
+                robot.jewelservo.setPosition(robot.jewelservoup);
             }
             if(gamepad1.dpad_right){
                 lift2Pow = -.4;
@@ -157,15 +169,13 @@ public class singleJoystick extends LinearOpMode {
         for(int i = 0; i<powers.length; i++){
             if(i < 2){
                 if(powers[i]<targets[i]-.0003){
-                    targets[i] += .0003;
+                    powers[i] += .0003;
                 }
                 else if (powers[i]>targets[i]+.0003){
-                    targets[i] -= .0003;
+                    powers[i] -= .0003;
                 }
             }
-
         }
-
-        return targets;
+        return powers;
     }
 }
