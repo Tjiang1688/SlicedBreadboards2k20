@@ -77,9 +77,7 @@ public class Robot2017 {
         rightMotor  = hwMap.dcMotor.get("rightmotor");
 
         gripmotor = hwMap.dcMotor.get("gripmotor");
-        gripmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        gripmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        gripmotor.setDirection(DcMotor.Direction.FORWARD);
+        gripmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lift1 = hwMap.dcMotor.get("lift1");
         lift2 = hwMap.dcMotor.get("lift2");
         lift1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
