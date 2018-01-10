@@ -1,6 +1,6 @@
 include ':FtcRobotController'
 include ':TeamCode'
 include ':ftc-visionlib'
-include ':opencv-java'
 include ':ModernRobotics-release'
-
+include ':opencv-java'
+include ':ftc-cameratest'

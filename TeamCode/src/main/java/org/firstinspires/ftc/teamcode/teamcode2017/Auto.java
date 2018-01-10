@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.teamcode2017;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.game.robot.*;
 
@@ -17,10 +18,9 @@ public class Auto extends LinearOpMode{
     public void runOpMode() throws InterruptedException {
         robot = new Robot2017(TeamColor.red, StartPosition.left);
         robot.init(hardwareMap);
-        robot.initDriveTrain();
-        robot.drive.resetMotors();
         robot.setTelemetry(telemetry);
         robot.setTime(runtime);
+
         inputGameConfig();
 
         //Wait for the match to begin, presses start button
@@ -32,9 +32,9 @@ public class Auto extends LinearOpMode{
             robot.leftMotor.setPower(.2);
             robot.rightMotor.setPower(.2);
 
-            while (robot.ods.getLightDetected() > .5){
+            //while (robot.ods.getLightDetected() > .5){
 
-            }
+           // }
             robot.leftMotor.setPower(0);
             robot.rightMotor.setPower(0);
 
