@@ -66,7 +66,6 @@ public class Robot2017 {
     public void init(HardwareMap hwMap) {
         initHardwareMap(hwMap);
         initDriveTrain();
-
         hwMap.logDevices();
     }
 
@@ -90,8 +89,6 @@ public class Robot2017 {
         //check if can cast over
         cs = hwMap.colorSensor.get("colorSensor");
         cs.enableLed(true);
-        ods = hwMap.opticalDistanceSensor.get("ods");
-        ods.enableLed(true);
     }
 
     /**

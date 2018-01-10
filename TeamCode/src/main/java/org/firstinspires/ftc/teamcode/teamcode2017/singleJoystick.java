@@ -30,8 +30,6 @@ public class singleJoystick extends LinearOpMode {
         telemetry.update();
         Robot2017 robot = new Robot2017();
         robot.init(hardwareMap);
-        robot.initDriveTrain();
-        robot.drive.resetMotors();
         // Wait for the game to start (driver presses PLAY)
         // run until the end of the match (driver presses STOP)
         waitForStart();
