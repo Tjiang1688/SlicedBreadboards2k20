@@ -74,11 +74,6 @@ public class singleJoystick extends LinearOpMode {
                 rightPow = -rightPow;
             }
 
-            telemetry.addData("left", robot.leftMotor.getCurrentPosition());
-            telemetry.addData("right", robot.rightMotor.getCurrentPosition());
-
-
-
             if(gamepad1.a){
                 armPow = .5;
 
@@ -93,14 +88,11 @@ public class singleJoystick extends LinearOpMode {
             }
 
             if(gamepad1.x){
-                //ungrip
-                gripPow = .2;
+                robot.ungrip();
             }else if(gamepad1.y){
-                gripPow = -.2;
+                robot.grip();
             }
-            else{
-                gripPow = 0;
-            }
+
 
             if(gamepad1.dpad_up){
                 liftPow = -.4;
@@ -118,39 +110,20 @@ public class singleJoystick extends LinearOpMode {
             else if(gamepad1.right_trigger > .5){
                 robot.jewelservo.setPosition(robot.jewelservoup);
             }
-            if(gamepad1.dpad_right){
-                lift2Pow = -.4;
-            }
-            else if(gamepad1.dpad_left){
-                lift2Pow = .2;
-            }
-            else {
-                lift2Pow = 0;
-            }
-            double[] targets = {rightPow, leftPow, armPow, gripPow, liftPow, lift2Pow};
-            double[] powers = {robot.rightMotor.getPower(),
-                                robot.leftMotor.getPower(),
-                                robot.armmotor.getPower(),
-                                robot.gripmotor.getPower(),
-                                robot.lift1.getPower(),
-                                robot.lift2.getPower()};
-            targets = accel(powers, targets);
+
             telemetry.addData("jewelservo position", robot.jewelservo.getPosition());
             telemetry.addData("jewelservo direction", robot.jewelservo.getDirection());
-            telemetry.addData("grip", robot.lift2.getCurrentPosition());
             telemetry.addData("red", robot.cs.red());
             telemetry.addData("green", robot.cs.green());
             telemetry.addData("blue", robot.cs.blue());
 
             telemetry.update();
 
-            robot.leftMotor.setPower(targets[0]);
-            robot.rightMotor.setPower(targets[1]);
-            robot.armmotor.setPower(targets[2]);
-            robot.gripmotor.setPower(targets[3]);
+            robot.flMotor.setPower(leftPow);
+            robot.frMotor.setPower(rightPow);
+            robot.armmotor.setPower(armPow);
 
-            robot.lift1.setPower(targets[4]);
-            robot.lift2.setPower(targets[5]);
+            robot.lift1.setPower(liftPow);
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
     }

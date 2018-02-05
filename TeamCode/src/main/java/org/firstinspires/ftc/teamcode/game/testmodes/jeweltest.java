@@ -7,13 +7,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.game.robot.StartPosition;
 import org.firstinspires.ftc.teamcode.teamcode2017.Robot2017;
 import org.firstinspires.ftc.teamcode.game.robot.TeamColor;
-import org.lasarobotics.vision.android.Cameras;
-import org.lasarobotics.vision.ftc.resq.Beacon;
-import org.lasarobotics.vision.opmode.LinearVisionOpMode;
-import org.lasarobotics.vision.opmode.VisionOpMode;
-import org.lasarobotics.vision.opmode.extensions.CameraControlExtension;
-import org.lasarobotics.vision.util.ScreenOrientation;
-import org.opencv.core.Size;
 
 /**
  * Created by e.xing on 2/10/2017.

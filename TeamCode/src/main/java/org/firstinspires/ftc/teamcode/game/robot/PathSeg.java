@@ -14,8 +14,10 @@ public class PathSeg {
     public double speed;
 
     //encoder tick target for motors
-    public int leftTarget;
-    public int rightTarget;
+    public int flTarget;
+    public int frTarget;
+    public int blTarget;
+    public int brTarget;
 
     ElapsedTime runtime;
     double timeOut = 10000;
@@ -29,7 +31,8 @@ public class PathSeg {
 
         this.leftDistance = leftDistance;
         this.rightDistance = rightDistance;
-        speed = .2;
+
+        speed = .5;
         this.runtime = runtime;
 
     }

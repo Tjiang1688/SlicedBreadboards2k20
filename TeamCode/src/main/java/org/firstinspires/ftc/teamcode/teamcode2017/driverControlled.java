@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.teamcode2017;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -40,6 +41,8 @@ public class driverControlled extends LinearOpMode {
         double gripPow = 0;
         double liftPow = 0;
         double lift2Pow = 0;
+        double[] targets = {0, 0};
+        double[] powers = {0, 0};
         //motor power is from -1.0 to 1.0;
         telemetry.addData("Status", "Initialized");
         telemetry.addData("colorsensor", robot.cs.getDeviceName());
@@ -51,13 +54,15 @@ public class driverControlled extends LinearOpMode {
             //float to double, get power from controller
             rightPow = (double) gamepad1.right_stick_y/3*2;
             leftPow = (double) gamepad1.left_stick_y/3*2;
-            telemetry.addData("left", robot.leftMotor.getCurrentPosition());
-            telemetry.addData("right", robot.rightMotor.getCurrentPosition());
-            if(gamepad1.a){
+            telemetry.addData("left", "Running to %7d :%7d", robot.flMotor.getCurrentPosition(), robot.blMotor.getCurrentPosition());
+            telemetry.addData("right", "Running to %7d :%7d", robot.frMotor.getCurrentPosition(), robot.brMotor.getCurrentPosition());
+
+            //arm
+            if(gamepad2.a){
                 armPow = .5;
 
             }
-            else if(gamepad1.b){
+            else if(gamepad2.b){
                 //out
                 armPow = -.5;
 
@@ -66,73 +71,77 @@ public class driverControlled extends LinearOpMode {
                 armPow = 0;
             }
 
-            if(gamepad1.x){
-                //ungrip
-                gripPow = .1;
-            }else if(gamepad1.y){
-                gripPow = -.1;
-            }
-            else{
-                gripPow = 0;
+
+
+            //grip
+            if(gamepad2.x){
+                robot.ungrip();
+            }else if(gamepad2.y){
+                robot.grip();
             }
 
-            if(gamepad1.dpad_up){
+            if(gamepad2.dpad_up){
                 liftPow = -.4;
             }
-            else if(gamepad1.dpad_down){
+            else if(gamepad2.dpad_down){
                 liftPow = .2;
             }
             else{
                 liftPow = 0;
             }
 
-            if(gamepad1.right_trigger > .5){
-                robot.jewelservo.setPosition(robot.jewelservodown);
+
+            if(gamepad2.left_trigger > .5 && robot.gripl.getPosition() < .989){
+                robot.gripl.setPosition(robot.gripl.getPosition() + .01);
             }
-            else if(gamepad1.right_bumper){
-                robot.jewelservo.setPosition(robot.jewelservoup);
+            else if(gamepad2.left_bumper && robot.gripl.getPosition() > .011){
+                robot.gripl.setPosition(robot.gripl.getPosition() - .01);
             }
 
-            if(gamepad1.dpad_left){
-                lift2Pow = -.1;
+
+            if(gamepad2.right_trigger > .5 && robot.gripr.getPosition() < .989){
+                robot.gripl.setPosition(robot.gripl.getPosition() + .01);
             }
-            else if(gamepad1.dpad_right){
-                lift2Pow = .1;
-            }
-            else {
-                lift2Pow = 0;
+            else if(gamepad2.right_bumper && robot.gripr.getPosition() > .011){
+                robot.gripr.setPosition(robot.gripr.getPosition() - .01);
             }
 
-            double[] targets = {rightPow, leftPow};
-            double[] powers = {robot.rightMotor.getPower(),
-                    robot.leftMotor.getPower()};
+
+            if(gamepad1.right_trigger > .5 && robot.jewelservo.getPosition() < .989){
+                robot.jewelservo.setPosition(robot.jewelservo.getPosition() + .01);
+            }
+            else if(gamepad1.right_bumper && robot.jewelservo.getPosition() > .011){
+                robot.jewelservo.setPosition(robot.jewelservo.getPosition() - .01);
+            }
+
+            targets[0] = rightPow;
+            targets[1] = leftPow;
+            powers[0] = robot.frMotor.getPower();
+            powers[1] = robot.flMotor.getPower();
             targets = accel(powers, targets);
 
             telemetry.addData("jewelservo position", robot.jewelservo.getPosition());
             telemetry.addData("jewelservo direction", robot.jewelservo.getDirection());
             telemetry.addData("red", robot.cs.red());
             telemetry.addData("blue", robot.cs.blue());
-            telemetry.addData("ods", robot.ods.getLightDetected());
-            telemetry.addData("ods", robot.ods.getRawLightDetected());
             telemetry.update();
 
-            robot.leftMotor.setPower(targets[1]);
-            robot.rightMotor.setPower(targets[0]);
+            robot.flMotor.setPower(leftPow);
+            robot.frMotor.setPower(rightPow);
+            robot.blMotor.setPower(leftPow);
+            robot.brMotor.setPower(rightPow);
             robot.armmotor.setPower(armPow);
-            robot.gripmotor.setPower(gripPow);
-
             robot.lift1.setPower(liftPow);
-            robot.lift2.setPower(lift2Pow);
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
     }
     private double[] accel(double[] powers, double[] targets){
         for(int i = 0; i<powers.length; i++){
-            if(powers[i]<targets[i]-.0001){
-                powers[i] += .0001;
+            if(powers[i]<targets[i]){
+                powers[i] += .001;
             }
-            else if (powers[i]>targets[i]+.0001) {
-                powers[i] -= .0001;
+            else if (powers[i]>targets[i]) {
+                powers[i] -= .001;
             }
         }
         return powers;
