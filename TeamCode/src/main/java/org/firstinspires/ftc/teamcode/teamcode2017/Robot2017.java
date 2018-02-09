@@ -123,6 +123,7 @@ public class Robot2017 {
         DcMotor.Direction leftDefaultDir = DcMotor.Direction.FORWARD;
         DcMotor.Direction rightDefaultDir = DcMotor.Direction.REVERSE;
 
+
         Queue<PathSeg> paths = new LinkedBlockingQueue();
 
         public DriveTrain() {
@@ -153,25 +154,31 @@ public class Robot2017 {
             brMotor.setDirection(rightDefaultDir);
         }
 
+        public void horizontal(double length)throws InterruptedException{
+            PathSeg right = new PathSeg(-length, length, length, -length, time);
+            startPath(right);
+            wait1((int)length/12*500);
+            wait1(1000);
+        }
 
         public void turnRight() throws InterruptedException{
-            PathSeg left = new PathSeg(-TURN_LENGTH, TURN_LENGTH, time);
+            PathSeg left = new PathSeg(-TURN_LENGTH, TURN_LENGTH, -TURN_LENGTH, TURN_LENGTH, time);
             startPath(left);
             wait1(2000);
         }
         public void turnLeft() throws InterruptedException{
-            PathSeg right = new PathSeg(TURN_LENGTH, -TURN_LENGTH, time);
+            PathSeg right = new PathSeg(TURN_LENGTH, -TURN_LENGTH, TURN_LENGTH, -TURN_LENGTH, time);
             startPath(right);
             wait1(2000);
         }
         public void turn(int degree) throws InterruptedException{
-            PathSeg turn = new PathSeg(-TURN_LENGTH*degree/90, TURN_LENGTH*degree/90, time);
+            PathSeg turn = new PathSeg(-TURN_LENGTH*degree/90, TURN_LENGTH*degree/90, -TURN_LENGTH*degree/90, TURN_LENGTH*degree/90, time);
             startPath(turn);
             wait1(Math.abs(degree*10));
             wait1(1000);
         }
-        public void move(double length)throws InterruptedException{
-            PathSeg path = new PathSeg(-length, -length, time);
+        public void vertical(double length)throws InterruptedException{
+            PathSeg path = new PathSeg(-length, -length, -length, -length, time);
             startPath(path);
             wait1((int)length/12*500);
             wait1(1000);
@@ -200,10 +207,10 @@ public class Robot2017 {
             brMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // Determine new target position, and pass to motor controller
-            path.flTarget = flMotor.getCurrentPosition() + (int)(path.leftDistance * COUNTS_PER_INCH);
-            path.frTarget = frMotor.getCurrentPosition() + (int)(path.rightDistance * COUNTS_PER_INCH);
-            path.blTarget = blMotor.getCurrentPosition() + (int)(path.leftDistance * COUNTS_PER_INCH);
-            path.brTarget = brMotor.getCurrentPosition() + (int)(path.rightDistance * COUNTS_PER_INCH);
+            path.flTarget = flMotor.getCurrentPosition() + (int)(path.fld * COUNTS_PER_INCH);
+            path.frTarget = frMotor.getCurrentPosition() + (int)(path.frd * COUNTS_PER_INCH);
+            path.blTarget = blMotor.getCurrentPosition() + (int)(path.bld * COUNTS_PER_INCH);
+            path.brTarget = brMotor.getCurrentPosition() + (int)(path.brd * COUNTS_PER_INCH);
 
             flMotor.setTargetPosition(path.flTarget);
             frMotor.setTargetPosition(path.frTarget);

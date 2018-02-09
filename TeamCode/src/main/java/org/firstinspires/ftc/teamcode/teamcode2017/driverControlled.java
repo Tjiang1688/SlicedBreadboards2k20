@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.teamcode2017;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -90,14 +89,12 @@ public class driverControlled extends LinearOpMode {
                 liftPow = 0;
             }
 
-
             if(gamepad2.left_trigger > .5 && robot.gripl.getPosition() < .989){
                 robot.gripl.setPosition(robot.gripl.getPosition() + .01);
             }
             else if(gamepad2.left_bumper && robot.gripl.getPosition() > .011){
                 robot.gripl.setPosition(robot.gripl.getPosition() - .01);
             }
-
 
             if(gamepad2.right_trigger > .5 && robot.gripr.getPosition() < .989){
                 robot.gripl.setPosition(robot.gripl.getPosition() + .01);
@@ -106,7 +103,6 @@ public class driverControlled extends LinearOpMode {
                 robot.gripr.setPosition(robot.gripr.getPosition() - .01);
             }
 
-
             if(gamepad1.right_trigger > .5 && robot.jewelservo.getPosition() < .989){
                 robot.jewelservo.setPosition(robot.jewelservo.getPosition() + .01);
             }
@@ -114,11 +110,11 @@ public class driverControlled extends LinearOpMode {
                 robot.jewelservo.setPosition(robot.jewelservo.getPosition() - .01);
             }
 
-            targets[0] = rightPow;
+            /*targets[0] = rightPow;
             targets[1] = leftPow;
             powers[0] = robot.frMotor.getPower();
             powers[1] = robot.flMotor.getPower();
-            targets = accel(powers, targets);
+            targets = accel(powers, targets);*/
 
             telemetry.addData("jewelservo position", robot.jewelservo.getPosition());
             telemetry.addData("jewelservo direction", robot.jewelservo.getDirection());

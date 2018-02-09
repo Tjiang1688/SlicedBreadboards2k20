@@ -129,37 +129,24 @@ public class Auto extends LinearOpMode{
     public void analyzeJewels() throws InterruptedException{
 
         wait1(2000);
-        telemetry.addData("red", robot.cs.red());
-        telemetry.addData("blue", robot.cs.blue());
-        telemetry.update();
         int count = 0;
         while(robot.cs.red() == 0 && robot.cs.blue() == 0){
-            robot.drive.move(.3);
+            robot.drive.vertical(.2);
             count++;
         }
         int red = robot.cs.red();
         int blue = robot.cs.blue();
-        robot.drive.move(2.5);
+        robot.drive.vertical(2.5);
         if(red>blue){
             telemetry.addData("ball color", "red");
             if(robot.teamColor.equals(TeamColor.red)){
-                telemetry.addData("turning left", "");
-                robot.drive.turn(-40);
-                wait1(1000);
-                robot.drive.move(6);
+                robot.drive.vertical(6);
                 robot.jewelservo.setPosition(robot.jewelservoup);
-                wait1(1000);
-                robot.drive.turn(40);
                 wait1(1000);
             }
             else{
-                telemetry.addData("turning right", "");
-                robot.drive.turn(40);
-                wait1(1000);
-                robot.drive.move(6);
+                robot.drive.vertical(6);
                 robot.jewelservo.setPosition(robot.jewelservoup);
-                wait1(1000);
-                robot.drive.turn(-40);
                 wait1(1000);
             }
         }
@@ -169,7 +156,7 @@ public class Auto extends LinearOpMode{
                 telemetry.addData("turning left", "");
                 robot.drive.turn(-40);
                 wait1(1000);
-                robot.drive.move(6);
+                robot.drive.vertical(6);
                 robot.jewelservo.setPosition(robot.jewelservoup);
                 wait1(1000);
                 robot.drive.turn(40);
@@ -179,14 +166,14 @@ public class Auto extends LinearOpMode{
                 telemetry.addData("turning right", "");
                 robot.drive.turn(40);
                 wait1(1000);
-                robot.drive.move(6);
+                robot.drive.vertical(6);
                 robot.jewelservo.setPosition(robot.jewelservoup);
                 wait1(1000);
                 robot.drive.turn(-40);
                 wait1(1000);
             }
         }
-        robot.drive.move(-.3*count);
+        robot.drive.vertical(-.3*count);
     }
     public android.hardware.Camera initVision(){
         android.hardware.Camera camera = android.hardware.Camera.open(0);

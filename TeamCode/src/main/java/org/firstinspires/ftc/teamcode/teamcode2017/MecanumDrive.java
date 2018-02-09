@@ -37,8 +37,8 @@ public class MecanumDrive extends LinearOpMode {
         runtime.reset();
         double armPow = 0;
         double liftPow = 0;
-        double[] targets = {0, 0};
-        double[] powers = {0, 0};
+        double[] targets = {0, 0, 0, 0};
+        double[] powers = {0, 0, 0, 0};
         //motor power is from -1.0 to 1.0;
         telemetry.addData("Status", "Initialized");
         telemetry.addData("colorsensor", robot.cs.getDeviceName());
@@ -46,7 +46,7 @@ public class MecanumDrive extends LinearOpMode {
         robot.jewelservo.setPosition(robot.jewelservoup);
         while (opModeIsActive()) {
             double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
-            double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
+            double robotAngle = Math.toRadians(Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x)) - Math.PI / 4;
             double rightX = gamepad1.right_stick_x;
             final double v1 = r * Math.cos(robotAngle) + rightX;
             final double v2 = r * Math.sin(robotAngle) - rightX;
@@ -118,6 +118,8 @@ public class MecanumDrive extends LinearOpMode {
 
             powers[0] = robot.frMotor.getPower();
             powers[1] = robot.flMotor.getPower();
+            powers[2] = robot.brMotor.getPower();
+            powers[3] = robot.blMotor.getPower();
             targets = accel(powers, targets);
 
             telemetry.addData("jewelservo position", robot.jewelservo.getPosition());

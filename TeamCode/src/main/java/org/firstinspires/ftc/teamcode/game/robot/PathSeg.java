@@ -7,8 +7,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 public class PathSeg {
     //desired distance for each motor
-    public double leftDistance;
-    public double rightDistance;
+    public double fld;
+    public double frd;
+    public double bld;
+    public double brd;
+
 
     //desired speed
     public double speed;
@@ -22,15 +25,20 @@ public class PathSeg {
     ElapsedTime runtime;
     double timeOut = 10000;
     double startTime;
+    final double rat45 = Math.sqrt(2)/2;
 
     static final double timeError = 50; //50 milliseconds
 
     public PathSeg(double leftDistance,
                    double rightDistance,
+                   double bld,
+                   double brd,
                    ElapsedTime runtime) {
 
-        this.leftDistance = leftDistance;
-        this.rightDistance = rightDistance;
+        this.fld = rat45*leftDistance;
+        this.frd = rat45*rightDistance;
+        this.bld = rat45*bld;
+        this.brd = rat45*brd;
 
         speed = .5;
         this.runtime = runtime;
