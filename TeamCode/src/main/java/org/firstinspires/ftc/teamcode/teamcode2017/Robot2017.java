@@ -1,14 +1,8 @@
 package org.firstinspires.ftc.teamcode.teamcode2017;
-
-import com.qualcomm.hardware.hitechnic.HiTechnicNxtColorSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.TouchSensor;
-import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -34,24 +28,21 @@ public class Robot2017 {
     public DcMotor  brMotor;
     public Servo gripl;
     public Servo gripr;
-    // possibly a motor
     public DcMotor lift1;
     public DcMotor armmotor;
 
     public Servo jewelservo;
     public ColorSensor cs;
-    //public OpticalDistanceSensor ods;
-    /* local OpMode members. */
     private HardwareMap hwMap;
     private Telemetry telemetry;
     private ElapsedTime time;
     public DriveTrain drive;
-    final float jewelservodown = (float) .90;
-    final float jewelservoup = (float) 0.24;
-    final float griplin = 0;
-    final float griprin = 0;
-    final float griplout = 0;
-    final float griprout = 0;
+    final float jewelservodown = .90f;
+    final float jewelservoup = .20f;
+    final float griplin = 0.04f;
+    final float griprin = .90f;
+    final float griplout = .42f;
+    final float griprout = .48f;
 
     public Robot2017() {
 
@@ -95,10 +86,9 @@ public class Robot2017 {
         lift1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armmotor = hwMap.dcMotor.get("armmotor");
         jewelservo = hwMap.servo.get("jewelservo");
+        gripl = hwMap.servo.get("gripl");
+        gripr = hwMap.servo.get("gripr");
         jewelservo.setDirection(Servo.Direction.FORWARD);
-        //colorSensor = hwMap.colorSensor.get("colorSensor");
-        //colorSensor.enableLed(true);
-        //check if can cast over
         cs = hwMap.colorSensor.get("colorSensor");
         cs.enableLed(true);
 
@@ -162,17 +152,18 @@ public class Robot2017 {
         }
 
         public void turnRight() throws InterruptedException{
-            PathSeg left = new PathSeg(-TURN_LENGTH, TURN_LENGTH, -TURN_LENGTH, TURN_LENGTH, time);
+            PathSeg left = new PathSeg(-2*TURN_LENGTH, 2*TURN_LENGTH, -2*TURN_LENGTH, 2*TURN_LENGTH, time);
             startPath(left);
             wait1(2000);
+
         }
         public void turnLeft() throws InterruptedException{
-            PathSeg right = new PathSeg(TURN_LENGTH, -TURN_LENGTH, TURN_LENGTH, -TURN_LENGTH, time);
+            PathSeg right = new PathSeg(2*TURN_LENGTH, -2*TURN_LENGTH, 2*TURN_LENGTH, -2*TURN_LENGTH, time);
             startPath(right);
             wait1(2000);
         }
         public void turn(int degree) throws InterruptedException{
-            PathSeg turn = new PathSeg(-TURN_LENGTH*degree/90, TURN_LENGTH*degree/90, -TURN_LENGTH*degree/90, TURN_LENGTH*degree/90, time);
+            PathSeg turn = new PathSeg(-2*TURN_LENGTH*degree/90, 2*TURN_LENGTH*degree/90, -2*TURN_LENGTH*degree/90, 2*TURN_LENGTH*degree/90, time);
             startPath(turn);
             wait1(Math.abs(degree*10));
             wait1(1000);

@@ -37,9 +37,7 @@ public class singleJoystick extends LinearOpMode {
         double leftPow = 0;
         double rightPow = 0;
         double armPow = 0;
-        double gripPow = 0;
         double liftPow = 0;
-        double lift2Pow = 0;
         double pow = 0;
         double angle = 0;
         double x = 0;

@@ -4,8 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.game.robot.*;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
 import java.util.concurrent.TimeUnit;
 
 
@@ -30,50 +28,48 @@ public class Auto extends LinearOpMode{
             wait1(1000);
             robot.jewelservo.setPosition(robot.jewelservodown);
             armForward();
-            robot.jewelservo.setPosition(1.0);
             analyzeJewels();
             wait1(1000);
-            /*robot.drive.move(3);
-
-
 
             if(robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.blue){
-                robot.drive.turnRight();
-                robot.drive.move(24);
-                //robot.drive.turn(32);
-                //robot.drive.move(20);
+                robot.drive.vertical(-24);
+                robot.drive.turn(180);
+                robot.drive.horizontal(12);
+                robot.drive.vertical(6);
+                robot.ungrip();
+                wait1(1000);
+                robot.drive.vertical(-3);
             }
 
             else if(robot.startPosition == StartPosition.right && robot.teamColor == TeamColor.red){
-                robot.drive.turnLeft();
-                robot.drive.move(24);
-                //robot.drive.turn(-32);
-                //robot.drive.move(20);
+                robot.drive.vertical(24);
+                robot.drive.horizontal(-12);
+                robot.drive.vertical(6);
+                robot.ungrip();
+                wait1(1000);
+                robot.drive.vertical(-3);
             }
 
             else if(robot.startPosition == StartPosition.right && robot.teamColor == TeamColor.blue){
+                robot.drive.vertical(-36);
                 robot.drive.turnRight();
-                robot.drive.move(21);
-               // robot.drive.turn(-58);
-                robot.drive.turn(-66);
-                robot.drive.move(20);
+                robot.drive.vertical(6);
+                robot.ungrip();
+                wait1(1000);
+                robot.drive.vertical(-3);
             }
 
             else if(robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.red){
-                robot.drive.turnLeft();
-                robot.drive.move(21);
-                //robot.drive.turn(58);
-                robot.drive.turn(66);
-                robot.drive.move(20);
+                robot.drive.vertical(36);
+                robot.drive.turnRight();
+                robot.drive.vertical(6);
+                robot.ungrip();
+                wait1(1000);
+                robot.drive.vertical(-3);
             }
-            *//*armForward();
-            wait1(1000);
-            robot.ungrip();
+
             wait1(500);
-            robot.lift1.setPower(-.4);
-            wait1(600);
-            robot.lift1.setPower(0);
-*/
+
             idle();
 
             wait1(30000);
@@ -115,7 +111,7 @@ public class Auto extends LinearOpMode{
 
     private void gripglyph() throws InterruptedException {
         robot.grip();
-        robot.lift1.setPower(-.4);
+        robot.lift1.setPower(.2);
         wait1(400);
         robot.lift1.setPower(0);
     }
@@ -131,49 +127,55 @@ public class Auto extends LinearOpMode{
         wait1(2000);
         int count = 0;
         while(robot.cs.red() == 0 && robot.cs.blue() == 0){
-            robot.drive.vertical(.2);
+            robot.drive.vertical(-.2);
             count++;
         }
         int red = robot.cs.red();
         int blue = robot.cs.blue();
-        robot.drive.vertical(2.5);
         if(red>blue){
-            telemetry.addData("ball color", "red");
+            telemetry.addData("saw red", "sdlkfjslkfd");
+            telemetry.update();
             if(robot.teamColor.equals(TeamColor.red)){
-                robot.drive.vertical(6);
+                robot.drive.vertical(5);
+                wait1(1000);
                 robot.jewelservo.setPosition(robot.jewelservoup);
+                wait1(1000);
+                robot.drive.vertical(-5);
                 wait1(1000);
             }
             else{
-                robot.drive.vertical(6);
+                robot.drive.vertical(-5);
+                wait1(1000);
                 robot.jewelservo.setPosition(robot.jewelservoup);
+                wait1(1000);
+                robot.drive.vertical(5);
                 wait1(1000);
             }
         }
         else if(red<blue){
-            telemetry.addData("ball color", "red");
+            telemetry.addData("saw blue", "sdkfk");
+            telemetry.update();
             if(robot.teamColor.equals(TeamColor.blue)){
-                telemetry.addData("turning left", "");
-                robot.drive.turn(-40);
+                robot.drive.vertical(5);
                 wait1(1000);
-                robot.drive.vertical(6);
                 robot.jewelservo.setPosition(robot.jewelservoup);
                 wait1(1000);
-                robot.drive.turn(40);
+                robot.drive.vertical(-5);
                 wait1(1000);
             }
             else{
-                telemetry.addData("turning right", "");
-                robot.drive.turn(40);
+                robot.drive.vertical(-5);
                 wait1(1000);
-                robot.drive.vertical(6);
                 robot.jewelservo.setPosition(robot.jewelservoup);
                 wait1(1000);
-                robot.drive.turn(-40);
+                robot.drive.vertical(5);
                 wait1(1000);
             }
         }
-        robot.drive.vertical(-.3*count);
+        else{
+            robot.jewelservo.setPosition(robot.jewelservoup);
+        }
+        robot.drive.vertical(.2*count);
     }
     public android.hardware.Camera initVision(){
         android.hardware.Camera camera = android.hardware.Camera.open(0);

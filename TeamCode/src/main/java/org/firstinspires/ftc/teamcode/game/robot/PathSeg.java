@@ -25,7 +25,7 @@ public class PathSeg {
     ElapsedTime runtime;
     double timeOut = 10000;
     double startTime;
-    final double rat45 = Math.sqrt(2)/2;
+    final double rat45 = 1;
 
     static final double timeError = 50; //50 milliseconds
 

@@ -37,9 +37,7 @@ public class driverControlled extends LinearOpMode {
         double leftPow = 0;
         double rightPow = 0;
         double armPow = 0;
-        double gripPow = 0;
         double liftPow = 0;
-        double lift2Pow = 0;
         double[] targets = {0, 0};
         double[] powers = {0, 0};
         //motor power is from -1.0 to 1.0;
@@ -89,18 +87,11 @@ public class driverControlled extends LinearOpMode {
                 liftPow = 0;
             }
 
-            if(gamepad2.left_trigger > .5 && robot.gripl.getPosition() < .989){
-                robot.gripl.setPosition(robot.gripl.getPosition() + .01);
+            if(gamepad2.left_trigger > .5){
+                robot.ungrip();
             }
-            else if(gamepad2.left_bumper && robot.gripl.getPosition() > .011){
-                robot.gripl.setPosition(robot.gripl.getPosition() - .01);
-            }
-
-            if(gamepad2.right_trigger > .5 && robot.gripr.getPosition() < .989){
-                robot.gripl.setPosition(robot.gripl.getPosition() + .01);
-            }
-            else if(gamepad2.right_bumper && robot.gripr.getPosition() > .011){
-                robot.gripr.setPosition(robot.gripr.getPosition() - .01);
+            else if(gamepad2.right_trigger > .5){
+             robot.grip();
             }
 
             if(gamepad1.right_trigger > .5 && robot.jewelservo.getPosition() < .989){

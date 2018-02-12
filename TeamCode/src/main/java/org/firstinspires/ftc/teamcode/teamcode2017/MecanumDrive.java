@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.teamcode2017;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -44,14 +43,18 @@ public class MecanumDrive extends LinearOpMode {
         telemetry.addData("colorsensor", robot.cs.getDeviceName());
         telemetry.update();
         robot.jewelservo.setPosition(robot.jewelservoup);
+        robot.gripl.setPosition(.5);
+        robot.gripr.setPosition(.5);
         while (opModeIsActive()) {
             double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
             double robotAngle = Math.toRadians(Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x)) - Math.PI / 4;
             double rightX = gamepad1.right_stick_x;
-            final double v1 = r * Math.cos(robotAngle) + rightX;
-            final double v2 = r * Math.sin(robotAngle) - rightX;
-            final double v3 = r * Math.sin(robotAngle) + rightX;
-            final double v4 = r * Math.cos(robotAngle) - rightX;
+            double leftX = gamepad1.left_stick_x;
+            double leftY = gamepad1.left_stick_y;
+            double v1 = leftY - leftX - rightX;
+            double v2 = leftY + leftX + rightX;
+            double v3 = leftY + leftX - rightX;
+            double v4 = leftY - leftX + rightX;
 
 
             // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards
@@ -82,48 +85,40 @@ public class MecanumDrive extends LinearOpMode {
                 robot.grip();
             }
 
-            if(gamepad2.dpad_up){
-                liftPow = -.4;
+            if(gamepad2.dpad_down){
+                liftPow = -.2;
             }
-            else if(gamepad2.dpad_down){
-                liftPow = .2;
+            else if(gamepad2.dpad_up){
+                liftPow = .4;
             }
             else{
                 liftPow = 0;
             }
 
 
-            if(gamepad2.left_trigger > .5 && robot.gripl.getPosition() < .989){
-                robot.gripl.setPosition(robot.gripl.getPosition() + .01);
+            if(gamepad2.left_trigger > .5){
+                robot.ungrip();
             }
-            else if(gamepad2.left_bumper && robot.gripl.getPosition() > .011){
-                robot.gripl.setPosition(robot.gripl.getPosition() - .01);
-            }
-
-
-            if(gamepad2.right_trigger > .5 && robot.gripr.getPosition() < .989){
-                robot.gripl.setPosition(robot.gripl.getPosition() + .01);
-            }
-            else if(gamepad2.right_bumper && robot.gripr.getPosition() > .011){
-                robot.gripr.setPosition(robot.gripr.getPosition() - .01);
+            else if(gamepad2.right_trigger > .5){
+                robot.grip();
             }
 
 
-            if(gamepad1.right_trigger > .5 && robot.jewelservo.getPosition() < .989){
+            if(gamepad1.right_trigger > .5 && robot.jewelservo.getPosition() < 1.489){
                 robot.jewelservo.setPosition(robot.jewelservo.getPosition() + .01);
             }
-            else if(gamepad1.right_bumper && robot.jewelservo.getPosition() > .011){
+            else if(gamepad1.right_bumper && robot.jewelservo.getPosition() > -.489){
                 robot.jewelservo.setPosition(robot.jewelservo.getPosition() - .01);
             }
 
-            powers[0] = robot.frMotor.getPower();
+      /*      powers[0] = robot.frMotor.getPower();
             powers[1] = robot.flMotor.getPower();
             powers[2] = robot.brMotor.getPower();
             powers[3] = robot.blMotor.getPower();
-            targets = accel(powers, targets);
+            targets = accel(powers, targets);*/
 
-            telemetry.addData("jewelservo position", robot.jewelservo.getPosition());
-            telemetry.addData("jewelservo direction", robot.jewelservo.getDirection());
+            telemetry.addData("gripl", robot.gripl.getPosition());
+            telemetry.addData("gripr", robot.gripr.getPosition());
             telemetry.addData("red", robot.cs.red());
             telemetry.addData("blue", robot.cs.blue());
             telemetry.update();
