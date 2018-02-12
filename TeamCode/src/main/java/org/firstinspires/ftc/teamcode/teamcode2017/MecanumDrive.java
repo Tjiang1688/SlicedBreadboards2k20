@@ -1,22 +1,10 @@
 package org.firstinspires.ftc.teamcode.teamcode2017;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-/**
- * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
- * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
- * of the FTC Driver Station. When an selection is made from the menu, the corresponding OpMode
- * class is instantiated on the Robot Controller and executed.
- *
- * This particular OpMode just executes a basic Tank Drive Teleop for a PushBot
- * It includes all the skeletal structure that all linear OpModes contain.
- *
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
- */
-
-@TeleOp(name="mecanum", group="red")  // @Autonomous(...) is the other common choice
+@TeleOp(name = "mecanum", group = "red")  // @Autonomous(...) is the other common choice
 //@Disabled
 
 public class MecanumDrive extends LinearOpMode {
@@ -46,8 +34,6 @@ public class MecanumDrive extends LinearOpMode {
         robot.gripl.setPosition(.5);
         robot.gripr.setPosition(.5);
         while (opModeIsActive()) {
-            double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
-            double robotAngle = Math.toRadians(Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x)) - Math.PI / 4;
             double rightX = gamepad1.right_stick_x;
             double leftX = gamepad1.left_stick_x;
             double leftY = gamepad1.left_stick_y;
@@ -56,58 +42,47 @@ public class MecanumDrive extends LinearOpMode {
             double v3 = leftY + leftX - rightX;
             double v4 = leftY - leftX + rightX;
 
-
             // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards
             //float to double, get power from controller
             telemetry.addData("left", "Running to %7d :%7d", robot.flMotor.getCurrentPosition(), robot.blMotor.getCurrentPosition());
             telemetry.addData("right", "Running to %7d :%7d", robot.frMotor.getCurrentPosition(), robot.brMotor.getCurrentPosition());
 
             //arm
-            if(gamepad2.a){
+            if (gamepad2.a) {
                 armPow = .5;
 
-            }
-            else if(gamepad2.b){
+            } else if (gamepad2.b) {
                 //out
                 armPow = -.5;
 
-            }
-            else{
+            } else {
                 armPow = 0;
             }
 
-
-
             //grip
-            if(gamepad2.x){
+            if (gamepad2.x) {
                 robot.ungrip();
-            }else if(gamepad2.y){
+            } else if (gamepad2.y) {
                 robot.grip();
             }
 
-            if(gamepad2.dpad_down){
+            if (gamepad2.dpad_down) {
                 liftPow = -.2;
-            }
-            else if(gamepad2.dpad_up){
+            } else if (gamepad2.dpad_up) {
                 liftPow = .4;
-            }
-            else{
+            } else {
                 liftPow = 0;
             }
 
-
-            if(gamepad2.left_trigger > .5){
+            if (gamepad2.left_trigger > .5) {
                 robot.ungrip();
-            }
-            else if(gamepad2.right_trigger > .5){
+            } else if (gamepad2.right_trigger > .5) {
                 robot.grip();
             }
 
-
-            if(gamepad1.right_trigger > .5 && robot.jewelservo.getPosition() < 1.489){
+            if (gamepad1.right_trigger > .5 && robot.jewelservo.getPosition() < 1.489) {
                 robot.jewelservo.setPosition(robot.jewelservo.getPosition() + .01);
-            }
-            else if(gamepad1.right_bumper && robot.jewelservo.getPosition() > -.489){
+            } else if (gamepad1.right_bumper && robot.jewelservo.getPosition() > -.489) {
                 robot.jewelservo.setPosition(robot.jewelservo.getPosition() - .01);
             }
 
@@ -132,12 +107,12 @@ public class MecanumDrive extends LinearOpMode {
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
     }
-    private double[] accel(double[] powers, double[] targets){
-        for(int i = 0; i<powers.length; i++){
-            if(powers[i]<targets[i]){
+
+    private double[] accel(double[] powers, double[] targets) {
+        for (int i = 0; i < powers.length; i++) {
+            if (powers[i] < targets[i]) {
                 powers[i] += .001;
-            }
-            else if (powers[i]>targets[i]) {
+            } else if (powers[i] > targets[i]) {
                 powers[i] -= .001;
             }
         }

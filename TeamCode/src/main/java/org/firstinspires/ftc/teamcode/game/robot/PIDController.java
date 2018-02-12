@@ -3,9 +3,6 @@ package org.firstinspires.ftc.teamcode.game.robot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-/**
- * Created by e.xing on 2/10/2017.
- */
 public class PIDController {
     DcMotor motor;
 
@@ -31,7 +28,7 @@ public class PIDController {
 
         if (motor.getDirection().equals(DcMotor.Direction.FORWARD)) {
             controllerDirection = 1;
-        } else if (motor.getDirection().equals(DcMotor.Direction.REVERSE)){
+        } else if (motor.getDirection().equals(DcMotor.Direction.REVERSE)) {
             controllerDirection = -1;
         }
     }

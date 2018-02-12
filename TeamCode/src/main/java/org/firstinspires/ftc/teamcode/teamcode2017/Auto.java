@@ -1,15 +1,18 @@
 package org.firstinspires.ftc.teamcode.teamcode2017;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import org.firstinspires.ftc.teamcode.game.robot.*;
+
+import org.firstinspires.ftc.teamcode.game.robot.StartPosition;
+import org.firstinspires.ftc.teamcode.game.robot.TeamColor;
 
 import java.util.concurrent.TimeUnit;
 
-
-@TeleOp(name="Autonomous", group="red")
-public class Auto extends LinearOpMode{
-    //variables
+@Autonomous(name = "Autonomous", group = "red")
+//originally had it as TeleOp b/c Autonomous wasn't working, but changed back over
+//if it still doesn't work just change to annotate to TeleOp again -- pretty sure there aren't regulations about this
+public class Auto extends LinearOpMode {
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -31,7 +34,7 @@ public class Auto extends LinearOpMode{
             analyzeJewels();
             wait1(1000);
 
-            if(robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.blue){
+            if (robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.blue) {
                 robot.drive.vertical(-24);
                 robot.drive.turn(180);
                 robot.drive.horizontal(12);
@@ -39,27 +42,21 @@ public class Auto extends LinearOpMode{
                 robot.ungrip();
                 wait1(1000);
                 robot.drive.vertical(-3);
-            }
-
-            else if(robot.startPosition == StartPosition.right && robot.teamColor == TeamColor.red){
+            } else if (robot.startPosition == StartPosition.right && robot.teamColor == TeamColor.red) {
                 robot.drive.vertical(24);
                 robot.drive.horizontal(-12);
                 robot.drive.vertical(6);
                 robot.ungrip();
                 wait1(1000);
                 robot.drive.vertical(-3);
-            }
-
-            else if(robot.startPosition == StartPosition.right && robot.teamColor == TeamColor.blue){
+            } else if (robot.startPosition == StartPosition.right && robot.teamColor == TeamColor.blue) {
                 robot.drive.vertical(-36);
                 robot.drive.turnRight();
                 robot.drive.vertical(6);
                 robot.ungrip();
                 wait1(1000);
                 robot.drive.vertical(-3);
-            }
-
-            else if(robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.red){
+            } else if (robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.red) {
                 robot.drive.vertical(36);
                 robot.drive.turnRight();
                 robot.drive.vertical(6);
@@ -67,22 +64,19 @@ public class Auto extends LinearOpMode{
                 wait1(1000);
                 robot.drive.vertical(-3);
             }
-
             wait1(500);
-
             idle();
-
             wait1(30000);
-
         }
-
     }
-    private void armForward() throws InterruptedException{
+
+    private void armForward() throws InterruptedException {
         robot.armmotor.setPower(-.5);
         wait1(1400);
         robot.armmotor.setPower(0);
     }
-    private void inputGameConfig() throws InterruptedException{
+
+    private void inputGameConfig() throws InterruptedException {
         telemetry.addData("Input team color", "Red (press b) or Blue (press x)");
         telemetry.update();
         while (!gamepad1.b && !gamepad1.x) {
@@ -116,34 +110,35 @@ public class Auto extends LinearOpMode{
         robot.lift1.setPower(0);
     }
 
-    private void readpictograph(){
+    private void readpictograph() {
         //back burner
     }
-    public void wait1(int t) throws InterruptedException{
+
+    public void wait1(int t) throws InterruptedException {
         TimeUnit.MILLISECONDS.sleep(t);
     }
-    public void analyzeJewels() throws InterruptedException{
+
+    public void analyzeJewels() throws InterruptedException {
 
         wait1(2000);
         int count = 0;
-        while(robot.cs.red() == 0 && robot.cs.blue() == 0){
+        while (robot.cs.red() == 0 && robot.cs.blue() == 0) {
             robot.drive.vertical(-.2);
             count++;
         }
         int red = robot.cs.red();
         int blue = robot.cs.blue();
-        if(red>blue){
+        if (red > blue) {
             telemetry.addData("saw red", "sdlkfjslkfd");
             telemetry.update();
-            if(robot.teamColor.equals(TeamColor.red)){
+            if (robot.teamColor.equals(TeamColor.red)) {
                 robot.drive.vertical(5);
                 wait1(1000);
                 robot.jewelservo.setPosition(robot.jewelservoup);
                 wait1(1000);
                 robot.drive.vertical(-5);
                 wait1(1000);
-            }
-            else{
+            } else {
                 robot.drive.vertical(-5);
                 wait1(1000);
                 robot.jewelservo.setPosition(robot.jewelservoup);
@@ -151,19 +146,17 @@ public class Auto extends LinearOpMode{
                 robot.drive.vertical(5);
                 wait1(1000);
             }
-        }
-        else if(red<blue){
+        } else if (red < blue) {
             telemetry.addData("saw blue", "sdkfk");
             telemetry.update();
-            if(robot.teamColor.equals(TeamColor.blue)){
+            if (robot.teamColor.equals(TeamColor.blue)) {
                 robot.drive.vertical(5);
                 wait1(1000);
                 robot.jewelservo.setPosition(robot.jewelservoup);
                 wait1(1000);
                 robot.drive.vertical(-5);
                 wait1(1000);
-            }
-            else{
+            } else {
                 robot.drive.vertical(-5);
                 wait1(1000);
                 robot.jewelservo.setPosition(robot.jewelservoup);
@@ -171,13 +164,13 @@ public class Auto extends LinearOpMode{
                 robot.drive.vertical(5);
                 wait1(1000);
             }
-        }
-        else{
+        } else {
             robot.jewelservo.setPosition(robot.jewelservoup);
         }
-        robot.drive.vertical(.2*count);
+        robot.drive.vertical(.2 * count);
     }
-    public android.hardware.Camera initVision(){
+
+    public android.hardware.Camera initVision() {
         android.hardware.Camera camera = android.hardware.Camera.open(0);
 
         return camera;

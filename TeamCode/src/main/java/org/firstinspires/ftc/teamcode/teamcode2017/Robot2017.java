@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode.teamcode2017;
+
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -9,46 +10,46 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.game.robot.PathSeg;
 import org.firstinspires.ftc.teamcode.game.robot.StartPosition;
 import org.firstinspires.ftc.teamcode.game.robot.TeamColor;
+
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
  * This is NOT an opmode.
- *
+ * <p>
  * This class can be used to define all the specific hardware for a single robot.
  */
 public class Robot2017 {
-    public TeamColor teamColor;
-    public StartPosition startPosition;
-
-    public DcMotor  flMotor;
-    public DcMotor  frMotor;
-    public DcMotor  blMotor;
-    public DcMotor  brMotor;
-    public Servo gripl;
-    public Servo gripr;
-    public DcMotor lift1;
-    public DcMotor armmotor;
-
-    public Servo jewelservo;
-    public ColorSensor cs;
-    private HardwareMap hwMap;
-    private Telemetry telemetry;
-    private ElapsedTime time;
-    public DriveTrain drive;
+    //servo positions go from 0 to 1.0, must add suffix to make it a float because Java acts stupid sometimes
     final float jewelservodown = .90f;
     final float jewelservoup = .20f;
     final float griplin = 0.04f;
     final float griprin = .90f;
     final float griplout = .42f;
     final float griprout = .48f;
+    public TeamColor teamColor;
+    public StartPosition startPosition;
+    public DcMotor flMotor;
+    public DcMotor frMotor;
+    public DcMotor blMotor;
+    public DcMotor brMotor;
+    public Servo gripl;
+    public Servo gripr;
+    public DcMotor lift1;
+    public DcMotor armmotor;
+    public Servo jewelservo;
+    public ColorSensor cs;
+    public DriveTrain drive;
+    private HardwareMap hwMap;
+    private Telemetry telemetry;
+    private ElapsedTime time;
 
     public Robot2017() {
 
     }
 
-    public Robot2017(TeamColor color, StartPosition pos){
+    public Robot2017(TeamColor color, StartPosition pos) {
         this.teamColor = color;
         this.startPosition = pos;
     }
@@ -57,12 +58,16 @@ public class Robot2017 {
         this.telemetry = t;
     }
 
-    public void setTime(ElapsedTime time) { this.time = time; }
-    public void ungrip(){
+    public void setTime(ElapsedTime time) {
+        this.time = time;
+    }
+
+    public void ungrip() {
         gripl.setPosition(griplout);
         gripr.setPosition(griprout);
     }
-    public void grip(){
+
+    public void grip() {
         gripl.setPosition(griplin);
         gripr.setPosition(griprin);
     }
@@ -78,10 +83,10 @@ public class Robot2017 {
     public void initHardwareMap(HardwareMap hwMap) {
         this.hwMap = hwMap;
 
-        flMotor   = hwMap.dcMotor.get("flmotor");
-        frMotor  = hwMap.dcMotor.get("frmotor");
-        blMotor   = hwMap.dcMotor.get("blmotor");
-        brMotor  = hwMap.dcMotor.get("brmotor");
+        flMotor = hwMap.dcMotor.get("flmotor");
+        frMotor = hwMap.dcMotor.get("frmotor");
+        blMotor = hwMap.dcMotor.get("blmotor");
+        brMotor = hwMap.dcMotor.get("brmotor");
         lift1 = hwMap.dcMotor.get("liftmotor");
         lift1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armmotor = hwMap.dcMotor.get("armmotor");
@@ -102,14 +107,16 @@ public class Robot2017 {
     public void initDriveTrain() {
         drive = new DriveTrain();
     }
+
     public class DriveTrain {
-        static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder
-        static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
-        static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
-        static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+        static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
+        //andymark is 1440 (this needs to be fact-checked)
+        static final double DRIVE_GEAR_REDUCTION = 1.0;     // This is < 1.0 if geared UP
+        static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
+        static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
                 (WHEEL_DIAMETER_INCHES * Math.PI);
-        static final double     ROBOT_WIDTH = 17.0;
-        static final double     TURN_LENGTH = ROBOT_WIDTH*Math.PI/4;
+        static final double ROBOT_WIDTH = 17.0;
+        static final double TURN_LENGTH = ROBOT_WIDTH * Math.PI / 4;
         DcMotor.Direction leftDefaultDir = DcMotor.Direction.FORWARD;
         DcMotor.Direction rightDefaultDir = DcMotor.Direction.REVERSE;
 
@@ -129,7 +136,7 @@ public class Robot2017 {
             resetMotors();
         }
 
-        public void resetMotors()  {
+        public void resetMotors() {
             flMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             frMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             blMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -144,34 +151,37 @@ public class Robot2017 {
             brMotor.setDirection(rightDefaultDir);
         }
 
-        public void horizontal(double length)throws InterruptedException{
+        public void horizontal(double length) throws InterruptedException {
             PathSeg right = new PathSeg(-length, length, length, -length, time);
             startPath(right);
-            wait1((int)length/12*500);
+            wait1((int) length / 12 * 500);
             wait1(1000);
         }
 
-        public void turnRight() throws InterruptedException{
-            PathSeg left = new PathSeg(-2*TURN_LENGTH, 2*TURN_LENGTH, -2*TURN_LENGTH, 2*TURN_LENGTH, time);
+        public void turnRight() throws InterruptedException {
+            PathSeg left = new PathSeg(-2 * TURN_LENGTH, 2 * TURN_LENGTH, -2 * TURN_LENGTH, 2 * TURN_LENGTH, time);
             startPath(left);
             wait1(2000);
 
         }
-        public void turnLeft() throws InterruptedException{
-            PathSeg right = new PathSeg(2*TURN_LENGTH, -2*TURN_LENGTH, 2*TURN_LENGTH, -2*TURN_LENGTH, time);
+
+        public void turnLeft() throws InterruptedException {
+            PathSeg right = new PathSeg(2 * TURN_LENGTH, -2 * TURN_LENGTH, 2 * TURN_LENGTH, -2 * TURN_LENGTH, time);
             startPath(right);
             wait1(2000);
         }
-        public void turn(int degree) throws InterruptedException{
-            PathSeg turn = new PathSeg(-2*TURN_LENGTH*degree/90, 2*TURN_LENGTH*degree/90, -2*TURN_LENGTH*degree/90, 2*TURN_LENGTH*degree/90, time);
+
+        public void turn(int degree) throws InterruptedException {
+            PathSeg turn = new PathSeg(-2 * TURN_LENGTH * degree / 90, 2 * TURN_LENGTH * degree / 90, -2 * TURN_LENGTH * degree / 90, 2 * TURN_LENGTH * degree / 90, time);
             startPath(turn);
-            wait1(Math.abs(degree*10));
+            wait1(Math.abs(degree * 10));
             wait1(1000);
         }
-        public void vertical(double length)throws InterruptedException{
+
+        public void vertical(double length) throws InterruptedException {
             PathSeg path = new PathSeg(-length, -length, -length, -length, time);
             startPath(path);
-            wait1((int)length/12*500);
+            wait1((int) length / 12 * 500);
             wait1(1000);
         }
        /* public void powerDrive(double leftPow, double rightPow) {
@@ -198,10 +208,10 @@ public class Robot2017 {
             brMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // Determine new target position, and pass to motor controller
-            path.flTarget = flMotor.getCurrentPosition() + (int)(path.fld * COUNTS_PER_INCH);
-            path.frTarget = frMotor.getCurrentPosition() + (int)(path.frd * COUNTS_PER_INCH);
-            path.blTarget = blMotor.getCurrentPosition() + (int)(path.bld * COUNTS_PER_INCH);
-            path.brTarget = brMotor.getCurrentPosition() + (int)(path.brd * COUNTS_PER_INCH);
+            path.flTarget = flMotor.getCurrentPosition() + (int) (path.fld * COUNTS_PER_INCH);
+            path.frTarget = frMotor.getCurrentPosition() + (int) (path.frd * COUNTS_PER_INCH);
+            path.blTarget = blMotor.getCurrentPosition() + (int) (path.bld * COUNTS_PER_INCH);
+            path.brTarget = brMotor.getCurrentPosition() + (int) (path.brd * COUNTS_PER_INCH);
 
             flMotor.setTargetPosition(path.flTarget);
             frMotor.setTargetPosition(path.frTarget);
@@ -227,7 +237,9 @@ public class Robot2017 {
                 if (flMotor.isBusy()
                         && frMotor.isBusy()
                         && flMotor.getCurrentPosition() != path.flTarget
-                        && frMotor.getCurrentPosition() != path.frTarget) { return false; }
+                        && frMotor.getCurrentPosition() != path.frTarget) {
+                    return false;
+                }
             }
 
             telemetry.addData("Path-", "finished");
@@ -247,7 +259,8 @@ public class Robot2017 {
             paths.remove(path);
             stop();
         }
-        private void wait1(int t) throws InterruptedException{
+
+        private void wait1(int t) throws InterruptedException {
             TimeUnit.MILLISECONDS.sleep(t);
         }
     }

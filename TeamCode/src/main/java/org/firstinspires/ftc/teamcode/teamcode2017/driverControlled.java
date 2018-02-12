@@ -1,22 +1,10 @@
 package org.firstinspires.ftc.teamcode.teamcode2017;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-/**
- * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
- * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
- * of the FTC Driver Station. When an selection is made from the menu, the corresponding OpMode
- * class is instantiated on the Robot Controller and executed.
- *
- * This particular OpMode just executes a basic Tank Drive Teleop for a PushBot
- * It includes all the skeletal structure that all linear OpModes contain.
- *
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
- */
-
-@TeleOp(name="driverControlled", group="red")  // @Autonomous(...) is the other common choice
+@TeleOp(name = "driverControlled", group = "red")  // @Autonomous(...) is the other common choice
 //@Disabled
 
 public class driverControlled extends LinearOpMode {
@@ -47,57 +35,50 @@ public class driverControlled extends LinearOpMode {
         robot.jewelservo.setPosition(robot.jewelservoup);
         while (opModeIsActive()) {
 
-            // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards
+            // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
             //float to double, get power from controller
-            rightPow = (double) gamepad1.right_stick_y/3*2;
-            leftPow = (double) gamepad1.left_stick_y/3*2;
+            rightPow = (double) gamepad1.right_stick_y / 3 * 2;
+            leftPow = (double) gamepad1.left_stick_y / 3 * 2;
             telemetry.addData("left", "Running to %7d :%7d", robot.flMotor.getCurrentPosition(), robot.blMotor.getCurrentPosition());
             telemetry.addData("right", "Running to %7d :%7d", robot.frMotor.getCurrentPosition(), robot.brMotor.getCurrentPosition());
 
             //arm
-            if(gamepad2.a){
+            if (gamepad2.a) {
                 armPow = .5;
 
-            }
-            else if(gamepad2.b){
+            } else if (gamepad2.b) {
                 //out
                 armPow = -.5;
 
-            }
-            else{
+            } else {
                 armPow = 0;
             }
 
 
-
             //grip
-            if(gamepad2.x){
+            if (gamepad2.x) {
                 robot.ungrip();
-            }else if(gamepad2.y){
+            } else if (gamepad2.y) {
                 robot.grip();
             }
 
-            if(gamepad2.dpad_up){
+            if (gamepad2.dpad_up) {
                 liftPow = -.4;
-            }
-            else if(gamepad2.dpad_down){
+            } else if (gamepad2.dpad_down) {
                 liftPow = .2;
-            }
-            else{
+            } else {
                 liftPow = 0;
             }
 
-            if(gamepad2.left_trigger > .5){
+            if (gamepad2.left_trigger > .5) {
                 robot.ungrip();
-            }
-            else if(gamepad2.right_trigger > .5){
-             robot.grip();
+            } else if (gamepad2.right_trigger > .5) {
+                robot.grip();
             }
 
-            if(gamepad1.right_trigger > .5 && robot.jewelservo.getPosition() < .989){
+            if (gamepad1.right_trigger > .5 && robot.jewelservo.getPosition() < .989) {
                 robot.jewelservo.setPosition(robot.jewelservo.getPosition() + .01);
-            }
-            else if(gamepad1.right_bumper && robot.jewelservo.getPosition() > .011){
+            } else if (gamepad1.right_bumper && robot.jewelservo.getPosition() > .011) {
                 robot.jewelservo.setPosition(robot.jewelservo.getPosition() - .01);
             }
 
@@ -106,6 +87,7 @@ public class driverControlled extends LinearOpMode {
             powers[0] = robot.frMotor.getPower();
             powers[1] = robot.flMotor.getPower();
             targets = accel(powers, targets);*/
+            //use this stuff for acceleration, sub in for the motor powers below
 
             telemetry.addData("jewelservo position", robot.jewelservo.getPosition());
             telemetry.addData("jewelservo direction", robot.jewelservo.getDirection());
@@ -122,12 +104,12 @@ public class driverControlled extends LinearOpMode {
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
     }
-    private double[] accel(double[] powers, double[] targets){
-        for(int i = 0; i<powers.length; i++){
-            if(powers[i]<targets[i]){
+
+    private double[] accel(double[] powers, double[] targets) {
+        for (int i = 0; i < powers.length; i++) {
+            if (powers[i] < targets[i]) {
                 powers[i] += .001;
-            }
-            else if (powers[i]>targets[i]) {
+            } else if (powers[i] > targets[i]) {
                 powers[i] -= .001;
             }
         }

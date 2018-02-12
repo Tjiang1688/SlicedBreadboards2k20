@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.game.robot;
 
-/**
- * Created by e.xing on 1/7/2017.
- */
 public class TeamColor {
+    //All types of colors
+    public static TeamColor blue = new TeamColor("blue");
+    public static TeamColor red = new TeamColor("red");
     private String color;
 
     public TeamColor(String c) {
@@ -17,11 +17,6 @@ public class TeamColor {
     public String getType() {
         return color;
     }
-
-
-    //All types of colors
-    public static TeamColor blue = new TeamColor("blue");
-    public static TeamColor red = new TeamColor("red");
 
 }
 

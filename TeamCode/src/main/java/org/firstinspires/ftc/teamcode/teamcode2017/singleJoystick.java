@@ -1,22 +1,10 @@
 package org.firstinspires.ftc.teamcode.teamcode2017;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-/**
- * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
- * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
- * of the FTC Driver Station. When an selection is made from the menu, the corresponding OpMode
- * class is instantiated on the Robot Controller and executed.
- *
- * This particular OpMode just executes a basic Tank Drive Teleop for a PushBot
- * It includes all the skeletal structure that all linear OpModes contain.
- *
- * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
- */
-
-@TeleOp(name="singleJoystick", group="red")  // @Autonomous(...) is the other common choice
+@TeleOp(name = "singleJoystick", group = "red")  // @Autonomous(...) is the other common choice
 //@Disabled
 
 public class singleJoystick extends LinearOpMode {
@@ -52,60 +40,53 @@ public class singleJoystick extends LinearOpMode {
             //float to double, get power from controller
             x = gamepad1.right_stick_x;
             y = gamepad1.right_stick_y;
-            angle = Math.toDegrees(Math.atan(y/x));
-            pow = Math.sqrt((y*y) + (x*x));
-            if(x > 0){
+            angle = Math.toDegrees(Math.atan(y / x));
+            pow = Math.sqrt((y * y) + (x * x));
+            if (x > 0) {
                 leftPow = pow;
-                rightPow = angle/90 * pow;
-            }
-            else if (x < 0){
+                rightPow = angle / 90 * pow;
+            } else if (x < 0) {
                 rightPow = pow;
-                leftPow = angle/90 * pow;
-            }
-            else {
+                leftPow = angle / 90 * pow;
+            } else {
                 rightPow = pow;
                 leftPow = pow;
             }
 
-            if(y<0){
+            if (y < 0) {
                 leftPow = -leftPow;
                 rightPow = -rightPow;
             }
 
-            if(gamepad1.a){
+            if (gamepad1.a) {
                 armPow = .5;
 
-            }
-            else if(gamepad1.b){
+            } else if (gamepad1.b) {
                 //out
                 armPow = -.5;
 
-            }
-            else{
+            } else {
                 armPow = 0;
             }
 
-            if(gamepad1.x){
+            if (gamepad1.x) {
                 robot.ungrip();
-            }else if(gamepad1.y){
+            } else if (gamepad1.y) {
                 robot.grip();
             }
 
 
-            if(gamepad1.dpad_up){
+            if (gamepad1.dpad_up) {
                 liftPow = -.4;
-            }
-            else if(gamepad1.dpad_down){
+            } else if (gamepad1.dpad_down) {
                 liftPow = .2;
-            }
-            else{
+            } else {
                 liftPow = 0;
             }
 
-            if(gamepad1.left_trigger> .5){
+            if (gamepad1.left_trigger > .5) {
                 robot.jewelservo.setPosition(robot.jewelservodown);
-            }
-            else if(gamepad1.right_trigger > .5){
+            } else if (gamepad1.right_trigger > .5) {
                 robot.jewelservo.setPosition(robot.jewelservoup);
             }
 
@@ -125,22 +106,13 @@ public class singleJoystick extends LinearOpMode {
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
     }
-    private double min(double a, double b){
-        if(Math.abs(a) > Math.abs(b)){
-            return b;
-        }
-        else if(Math.abs(a) < Math.abs(b)){
-            return a;
-        }
-        return a;
-    }
-    private double[] accel(double[] powers, double[] targets){
-        for(int i = 0; i<powers.length; i++){
-            if(i < 2){
-                if(powers[i]<targets[i]-.0003){
+
+    private double[] accel(double[] powers, double[] targets) {
+        for (int i = 0; i < powers.length; i++) {
+            if (i < 2) {
+                if (powers[i] < targets[i] - .0003) {
                     powers[i] += .0003;
-                }
-                else if (powers[i]>targets[i]+.0003){
+                } else if (powers[i] > targets[i] + .0003) {
                     powers[i] -= .0003;
                 }
             }
