@@ -60,6 +60,7 @@ public class MecanumDrive extends LinearOpMode {
             } else {
                 liftPow = 0;
             }
+            /*
 
             if (gamepad2.right_trigger > .5 && robot.markerServo.getPosition() < 0.7994) {
                 robot.markerServo.setPosition(robot.markerServo.getPosition() + .01);
@@ -102,6 +103,7 @@ public class MecanumDrive extends LinearOpMode {
             robot.liftMotor.setPower(liftPow);
             robot.negLiftMotor.setPower(-liftPow);
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
+            */
         }
     }
 

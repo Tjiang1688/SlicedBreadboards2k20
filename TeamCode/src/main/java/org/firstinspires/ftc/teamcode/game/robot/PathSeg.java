@@ -14,7 +14,7 @@ public class PathSeg {
     public double bld;
     public double brd;
     //desired speed
-    public double speed;
+    public static double speed = 1;
     //encoder tick target for motors
     public int flTarget;
     public int frTarget;
@@ -35,7 +35,7 @@ public class PathSeg {
         this.bld = rat45 * bld;
         this.brd = rat45 * brd;
 
-        speed = .5;
+        //speed = .75; //WAS .5
         this.runtime = runtime;
     }
 
@@ -45,5 +45,9 @@ public class PathSeg {
 
     public boolean isTimedOut(ElapsedTime currTime) {
         return currTime.milliseconds() - (startTime + timeOut) > timeError;
+    }
+
+    public static void setSpeed(double newSpeed){
+        speed = newSpeed;
     }
 }

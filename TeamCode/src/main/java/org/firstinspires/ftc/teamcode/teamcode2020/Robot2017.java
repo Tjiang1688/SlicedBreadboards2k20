@@ -24,6 +24,7 @@ import java.util.Locale;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 /**
  * This is NOT an opmode.
@@ -36,10 +37,7 @@ public class Robot2017 {
     public DcMotor frMotor;
     public DcMotor blMotor;
     public DcMotor brMotor;
-    public Servo markerServo;
-    public DcMotor liftMotor;
-    public DcMotor negLiftMotor;
-    public Servo pulleyHolder;
+    public ColorSensor color_sensor;
     public BNO055IMU imu;
 
     //Drive Trains
@@ -95,10 +93,8 @@ public class Robot2017 {
         frMotor = hwMap.dcMotor.get("frmotor");
         blMotor = hwMap.dcMotor.get("blmotor");
         brMotor = hwMap.dcMotor.get("brmotor");
-        liftMotor = hwMap.dcMotor.get("liftMotor");
-        negLiftMotor = hwMap.dcMotor.get("negLiftMotor");
-        markerServo = hwMap.servo.get("markerServo");
-        pulleyHolder = hwMap.servo.get("pulleyHolder");
+        color_sensor = hwMap.colorSensor.get("color");
+
         imu = hwMap.get(BNO055IMU.class, "imu");
     }
 
@@ -106,9 +102,7 @@ public class Robot2017 {
     /*
         ACTION METHODS - Things to make reading/writing (particularly Autonomous) easier
      */
-    public void setMarkerDown(){ markerServo.setPosition(.487f); }
 
-    public void setMarkerUp(){ markerServo.setPosition(.637f); }
 
     public double getHeading(){ return imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle; }
 

@@ -1,9 +1,8 @@
 package org.firstinspires.ftc.teamcode.game.robot;
 
 public class StartPosition {
-    //All types of colors
-    public static StartPosition left = new StartPosition("left");
-    public static StartPosition right = new StartPosition("right");
+    public static StartPosition marker = new StartPosition("marker");
+    public static StartPosition crater = new StartPosition("crater");
     private String position;
 
     public StartPosition(String p) {
