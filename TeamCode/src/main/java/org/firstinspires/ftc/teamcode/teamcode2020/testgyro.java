@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 
 
-@TeleOp(name = "testgyro", group = "test")
+@TeleOp(name = "testgyro", group = "auto")
 //originally had it as TeleOp b/c Autonomous wasn't working, but changed back over
 public class testgyro extends LinearOpMode {
     private Robot2017 robot;
@@ -46,7 +46,7 @@ public class testgyro extends LinearOpMode {
             telemetry.addData("arrive at", "1");
             telemetry.addData("arrive at", "2");
             telemetry.addData("arrive at", "3");
-            
+
 
 
         }
