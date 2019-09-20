@@ -134,6 +134,7 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
          * with the Vuforia Target Manager: https://developer.vuforia.com/target-manager. PDFs for the
          * example "StonesAndChips", datasets can be found in in this project in the
          * documentation directory.
+         * FtcRobotController/src/main/java/org/firstinspires/ftc/robotcontroller/external/samples/ConceptVuforiaNavigation.java
          */
         VuforiaTrackables stonesAndChips = this.vuforia.loadTrackablesFromAsset("StonesAndChips");
         VuforiaTrackable redTarget = stonesAndChips.get(0);
