@@ -106,18 +106,6 @@ public class VuforiaRecognition extends LinearOpMode {
         // OR...  Do Not Activate the Camera Monitor View, to save power
         // VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
-        /*
-         * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
-         * 'parameters.vuforiaLicenseKey' is initialized is for illustration only, and will not function.
-         * A Vuforia 'Development' license key, can be obtained free of charge from the Vuforia developer
-         * web site at https://developer.vuforia.com/license-manager.
-         *
-         * Vuforia license keys are always 380 characters long, and look as if they contain mostly
-         * random data. As an example, here is a example of a fragment of a valid key:
-         *      ... yIgIzTqZ4mWjk9wd3cZO9T1axEqzuhxoGlfOOI2dRzKS4T0hQ8kT ...
-         * Once you've obtained a license key, copy the string from the Vuforia web site
-         * and paste it in to your code on the next line, between the double quotes.
-         */
         parameters.vuforiaLicenseKey = "AWOqkCj/////AAABmbZveKODzktMn2KgOfwVvMJttzt42+YixY2fNhyAEPSMEqPT3e+Y5BiVmS+VjDEKa2ytk6Xin7nGHVPOGnA7QwDpiUaz1YsJZ/sz4SVQyQ6KV/4mGlwYNkpRUDSt2LDkpQHg2vqCOgBAU/rriU/YZgIgz5mti7cRYpo0NUqsE7qQO8rEFkIaBf+kJd1iO6ohVTpABImEKQnqUrQfupDRz/pR+ImpAwfzLzEWUjHDZYL/WGSyoJDKPuX0PDNtRBrFpvOVvlxmqULRDmP4kRSwnT5ZQBup9psUw7I00fkCHIO9QEmf6yiVosHQ4t4r+W1gYkJqIo94XZQpEP51fRzV439GXfj9ld0qrGds+KX/J9XS";
 
         /**
@@ -262,7 +250,37 @@ public class VuforiaRecognition extends LinearOpMode {
          * - Then we rotate it  90 around the field's Z access to face it away from the audience.
          * - Finally, we translate it back along the X axis towards the red audience wall.
          */
-        OpenGLMatrix redTargetLocationOnField = OpenGLMatrix
+
+        /*
+         VuforiaTrackable red_perimeter_target_1 = SkystoneImages.get(0);
+        red_perimeter_target_1.setName("red_perimeter_target_1");
+
+        VuforiaTrackable rear_perimeter_target_2  = SkystoneImages.get(1);
+        rear_perimeter_target_2.setName("rear_perimeter_target_2");
+
+        VuforiaTrackable rear_perimeter_target_1  = SkystoneImages.get(2);
+        rear_perimeter_target_1.setName("rear_perimeter_target_1");
+
+        VuforiaTrackable front_perimeter_target_2  = SkystoneImages.get(3);
+        front_perimeter_target_2.setName("front_perimeter_target_2");
+
+        VuforiaTrackable front_perimeter_target_1  = SkystoneImages.get(4);
+        front_perimeter_target_1.setName("front_perimeter_target_1");
+
+        VuforiaTrackable blue_perimeter_target_2  = SkystoneImages.get(5);
+        blue_perimeter_target_2.setName("blue_perimeter_target_2");
+
+        VuforiaTrackable blue_perimeter_target_1  = SkystoneImages.get(6);
+        blue_perimeter_target_1.setName("blue_perimeter_target_1");
+
+        VuforiaTrackable red_perimeter_target_2  = SkystoneImages.get(7);
+        red_perimeter_target_2.setName("red_perimeter_target_2");
+         */
+
+
+
+
+        OpenGLMatrix redTarget1LocationOnField = OpenGLMatrix
                 /* Then we translate the target off to the RED WALL. Our translation here
                 is a negative translation in X.*/
                 .translation(-mmFTCFieldWidth/2, 0, 0)
@@ -270,24 +288,32 @@ public class VuforiaRecognition extends LinearOpMode {
                         /* First, in the fixed (field) coordinate system, we rotate 90deg in X, then 90 in Z */
                         AxesReference.EXTRINSIC, AxesOrder.XZX,
                         AngleUnit.DEGREES, 90, 90, 0));
-        redTarget.setLocationFtcFieldFromTarget(redTargetLocationOnField);
-        RobotLog.ii(TAG, "Red Target=%s", format(redTargetLocationOnField));
+        // Make sure to set this var to the one defined with xml
+        red_perimeter_target_1.setLocationFtcFieldFromTarget(redTarget1LocationOnField);
+        RobotLog.ii(TAG, "red_perimeter_target_1=%s", format(redTarget1LocationOnField));
 
-        /*
-         * To place the Stones Target on the Blue Audience wall:
-         * - First we rotate it 90 around the field's X axis to flip it upright
-         * - Finally, we translate it along the Y axis towards the blue audience wall.
-         */
-        OpenGLMatrix blueTargetLocationOnField = OpenGLMatrix
-                /* Then we translate the target off to the Blue Audience wall.
-                Our translation here is a positive translation in Y.*/
-                .translation(0, mmFTCFieldWidth/2, 0)
-                .multiplied(Orientation.getRotationMatrix(
-                        /* First, in the fixed (field) coordinate system, we rotate 90deg in X */
-                        AxesReference.EXTRINSIC, AxesOrder.XZX,
-                        AngleUnit.DEGREES, 90, 0, 0));
-        blueTarget.setLocationFtcFieldFromTarget(blueTargetLocationOnField);
-        RobotLog.ii(TAG, "Blue Target=%s", format(blueTargetLocationOnField));
+
+
+        // comment out this block until later work is done
+             /*
+             * To place the Stones Target on the Blue Audience wall:
+             * - First we rotate it 90 around the field's X axis to flip it upright
+             * - Finally, we translate it along the Y axis towards the blue audience wall.
+             */
+
+        //   OpenGLMatrix blueTargetLocationOnField = OpenGLMatrix
+        //           /* Then we translate the target off to the Blue Audience wall.
+        //           Our translation here is a positive translation in Y.*/
+        //           .translation(0, mmFTCFieldWidth/2, 0)
+        //           .multiplied(Orientation.getRotationMatrix(
+        //                    /* First, in the fixed (field) coordinate system, we rotate 90deg in X */
+        //                    AxesReference.EXTRINSIC, AxesOrder.XZX,
+        //                    AngleUnit.DEGREES, 90, 0, 0));
+        //    blueTarget.setLocationFtcFieldFromTarget(blueTargetLocationOnField);
+        //    RobotLog.ii(TAG, "Blue Target=%s", format(blueTargetLocationOnField));
+
+        // this is just because comments don't work for some reason
+
 
         /**
          * We also need to tell Vuforia where the <em>cameras</em> are relative to the robot.
@@ -348,6 +374,8 @@ public class VuforiaRecognition extends LinearOpMode {
          * plane) is then CCW, as one would normally expect from the usual classic 2D geometry.
          */
 
+
+        // TODO: Make this actually work for the bot
         OpenGLMatrix robotFromCamera = OpenGLMatrix
                 .translation(mmBotWidth/2,0,0)
                 .multiplied(Orientation.getRotationMatrix(
@@ -360,8 +388,9 @@ public class VuforiaRecognition extends LinearOpMode {
          * listener is a {@link VuforiaTrackableDefaultListener} and can so safely cast because
          * we have not ourselves installed a listener of a different type.
          */
-        ((VuforiaTrackableDefaultListener)redTarget.getListener()).setCameraLocationOnRobot(parameters.cameraName, robotFromCamera);
-        ((VuforiaTrackableDefaultListener)blueTarget.getListener()).setCameraLocationOnRobot(parameters.cameraName, robotFromCamera);
+        //TODO: Update this for all the tracklable thingys
+        ((VuforiaTrackableDefaultListener)red_perimeter_target_1.getListener()).setCameraLocationOnRobot(parameters.cameraName, robotFromCamera);
+        //((VuforiaTrackableDefaultListener)blueTarget.getListener()).setCameraLocationOnRobot(parameters.cameraName, robotFromCamera);
 
         /**
          * A brief tutorial: here's how all the math is going to work:
@@ -388,7 +417,7 @@ public class VuforiaRecognition extends LinearOpMode {
         waitForStart();
 
         /** Start tracking the data sets we care about. */
-        stonesAndChips.activate();
+        SkystoneImages.activate();
 
         boolean buttonPressed = false;
         while (opModeIsActive()) {
@@ -423,6 +452,7 @@ public class VuforiaRecognition extends LinearOpMode {
             telemetry.update();
         }
     }
+
 
     /**
      * A simple utility that extracts positioning information from a transformation matrix
